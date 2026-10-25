@@ -1,0 +1,2691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Saver</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    html,
+    body {
+      overflow-x: hidden !important;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff;
+      color: #111827
+    }
+
+    .fs-wide {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 12px
+    }
+
+    /* LOADER */
+    .fs-page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      overflow: hidden;
+      background: transparent;
+      transition: opacity .65s ease, visibility .65s ease
+    }
+
+    .fs-page-loader.fs-loader-done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none
+    }
+
+    .fs-loader-center {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #139b45 0%, #16b34f 48%, #0c7d36 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      animation: fsCenterHide .7s forwards;
+      animation-delay: 2.7s
+    }
+
+    .fs-loader-center img {
+      width: 190px;
+      background: #fff;
+      padding: 18px;
+      border-radius: 30px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, .18)
+    }
+
+    .fs-loader-slice {
+      position: absolute;
+      top: 0;
+      width: 25%;
+      height: 100%;
+      background: linear-gradient(135deg, #0c7d36, #139b45, #1fd160);
+      border-right: 2px solid rgba(255, 255, 255, .16);
+      box-shadow: inset 0 0 45px rgba(0, 0, 0, .12)
+    }
+
+    .fs-slice-1 {
+      left: 0;
+      animation: fsSliceUp 1.2s forwards;
+      animation-delay: 3s
+    }
+
+    .fs-slice-2 {
+      left: 25%;
+      animation: fsSliceUp 1.2s forwards;
+      animation-delay: 3.4s
+    }
+
+    .fs-slice-3 {
+      left: 50%;
+      animation: fsSliceUp 1.2s forwards;
+      animation-delay: 3.8s
+    }
+
+    .fs-slice-4 {
+      left: 75%;
+      border-right: 0;
+      animation: fsSliceUp 1.2s forwards;
+      animation-delay: 4.2s
+    }
+
+    @keyframes fsSliceUp {
+      to {
+        transform: translateY(-105%)
+      }
+    }
+
+    @keyframes fsCenterHide {
+      to {
+        opacity: 0;
+        visibility: hidden
+      }
+    }
+
+    /* NAVBAR */
+.fs-navbar {
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .05);
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+  padding: 12px 0;
+}
+
+.fs-logo img {
+  width: 130px;
+  height: auto;
+  display: block;
+}
+
+.fs-nav-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.fs-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fs-nav-menu a {
+  text-decoration: none;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 700;
+  position: relative;
+  transition: .3s ease;
+  padding: 6px 0;
+}
+
+.fs-nav-menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2.5px;
+  background: #139b45;
+  border-radius: 2px;
+  transition: .35s ease;
+}
+
+.fs-nav-menu a.active,
+.fs-nav-menu a:hover {
+  color: #139b45;
+}
+
+.fs-nav-menu a:hover::after,
+.fs-nav-menu a.active::after {
+  width: 100%;
+}
+
+/* AUTH BUTTONS GROUP */
+.fs-auth-btns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fs-signin-btn,
+.fs-login-btn {
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: .3s ease;
+}
+
+.fs-signin-btn {
+  background: #ecfdf1;
+  color: #139b45;
+  border: 1.5px solid transparent;
+}
+
+.fs-signin-btn:hover {
+  background: #dcfce7;
+  color: #0c7d36;
+  transform: translateY(-2px);
+}
+
+.fs-login-btn {
+  background: #139b45;
+  color: #fff;
+  border: 1.5px solid #139b45;
+  box-shadow: 0 4px 14px rgba(19, 155, 69, .25);
+}
+
+.fs-login-btn:hover {
+  background: #0c7d36;
+  color: #fff;
+  border-color: #0c7d36;
+  transform: translateY(-2px);
+}
+
+/* MOBILE TOGGLE */
+.fs-toggle {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  background: #139b45;
+  border-radius: 10px;
+  display: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.fs-toggle span {
+  position: absolute;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: .35s ease;
+}
+
+.fs-toggle span:nth-child(1) { top: 13px; }
+.fs-toggle span:nth-child(2) { top: 20px; }
+.fs-toggle span:nth-child(3) { top: 27px; }
+
+.fs-toggle.active span:nth-child(1) {
+  top: 20px;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.fs-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.fs-toggle.active span:nth-child(3) {
+  top: 20px;
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+/* MOBILE MEDIA QUERY */
+@media (max-width: 991px) {
+  .fs-toggle {
+    display: block;
+  }
+
+  .fs-nav-wrap {
+    position: absolute;
+    top: 100%;
+    left: 14px;
+    right: 14px;
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-15px) scale(.96);
+    transition: .35s ease;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .fs-nav-wrap.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(10px) scale(1);
+  }
+
+  .fs-nav-menu {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .fs-nav-menu a {
+    display: block;
+    background: #f0fff4;
+    padding: 12px 15px;
+    border-radius: 12px;
+  }
+
+  .fs-nav-menu a::after {
+    display: none;
+  }
+
+  .fs-auth-btns {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .fs-auth-btns a {
+    width: 100%;
+  }
+}
+
+    /* HERO */
+    .fs-hero {
+      padding: 75px 0 65px;
+      background: #fff;
+      overflow: hidden
+    }
+
+    .fs-title {
+      font-size: 65px;
+      font-weight: 900;
+      line-height: 1.1
+    }
+
+    #typewriter::after {
+      content: "";
+      display: none;
+      color: #139b45;
+      animation: none .7s infinite
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0
+      }
+    }
+
+    .fs-desc {
+      font-size: 17px;
+      margin: 25px 0;
+      max-width: 520px
+    }
+
+    .fs-hero-img {
+      width: 100%;
+      max-width: 550px;
+      display: block;
+      margin-left: auto;
+      opacity: 0;
+      transform: translateX(40px);
+      transition: .9s ease
+    }
+
+    .fs-hero.fs-hero-show .fs-hero-img {
+      opacity: 1;
+      transform: translateX(0)
+    }
+
+    .fs-stats {
+      margin-top: 60px
+    }
+
+    .fs-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, .06);
+      transition: .4s;
+      height: 100%
+    }
+
+    .fs-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 45px rgba(19, 155, 69, .15)
+    }
+
+    .fs-icon {
+      font-size: 35px;
+      color: #139b45;
+      margin-bottom: 15px
+    }
+
+    .fs-orange {
+      color: #f59e0b
+    }
+
+    /* GENERAL */
+    .fs-section {
+      padding: 75px 0;
+      background-color: #defcea88;
+    }
+
+    .fs-title-sm {
+      text-align: center;
+      font-weight: 900;
+      font-size: 36px;
+      margin-bottom: 10px
+    }
+
+    .fs-sub {
+      text-align: center;
+      color: #555;
+      font-weight: 600;
+      margin-bottom: 40px
+    }
+
+    /* HOW */
+    .fs-step {
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .06);
+      height: 100%
+    }
+
+    .fs-step-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #eaf8ef;
+      color: #139b45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      margin: 0 auto 18px
+    }
+
+    .fs-step h5 {
+      font-weight: 900
+    }
+
+    /* IMPACT */
+    .fs-impact {
+      background: #ffff
+    }
+
+    .fs-impact-img {
+      width: 100%;
+      max-width: 430px;
+      display: block;
+      margin: auto
+    }
+
+    .fs-impact-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .06);
+      height: 100%
+    }
+
+    .fs-impact-card h3 {
+      color: #139b45;
+      font-weight: 900
+    }
+
+    /* SERVICES + OFFERS */
+    .offer-card {
+      background: #fff;
+      padding: 35px 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+      height: 100%;
+      transition: .4s;
+      text-align: center
+    }
+
+    .offer-card:hover {
+      transform: translateY(-8px)
+    }
+
+    .offer-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px
+    }
+
+    .offer-icon.green {
+      background: #eaf8ef;
+      color: #16a34a
+    }
+
+    .offer-icon.orange {
+      background: #fff4e5;
+      color: #f59e0b
+    }
+
+    /* DONATIONS LIST */
+    .fs-donation-list {
+      background: #fff
+    }
+
+    .fs-donation-list .fs-wide {
+      position: relative
+    }
+
+    .fs-search-box {
+      background: #fff;
+      border: 1px solid rgba(19, 155, 69, .10);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, .055);
+    }
+
+    .fs-search-box .form-control,
+    .fs-search-box .form-select {
+      min-height: 48px;
+      border-radius: 10px;
+      border-color: #dce7df;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .fs-search-box .form-control:focus,
+    .fs-search-box .form-select:focus {
+      border-color: #139b45;
+      box-shadow: 0 0 0 3px rgba(19, 155, 69, .10);
+    }
+
+    .fs-list-card {
+      background: #fff;
+      border: 1px solid rgba(19, 155, 69, .10);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .055);
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 18px;
+      transition: .42s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .fs-list-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 45px rgba(19, 155, 69, .13);
+      border-color: rgba(19, 155, 69, .22);
+    }
+
+    .fs-list-card img {
+      width: 126px;
+      height: 92px;
+      object-fit: cover;
+      border-radius: 14px
+    }
+
+    .fs-list-card h5 {
+      font-weight: 900;
+      margin-bottom: 5px;
+      color: #111827
+    }
+
+    .fs-list-meta {
+      font-size: 14px;
+      color: #475467;
+      font-weight: 600;
+      margin-bottom: 6px
+    }
+
+    .fs-list-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px
+    }
+
+    .fs-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 30px;
+      background: #ecfdf1;
+      color: #139b45;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 5px 10px
+    }
+
+    .fs-tag.orange {
+      background: #fff4e5;
+      color: #f59e0b
+    }
+
+    .fs-tag.red {
+      background: #fff1f0;
+      color: #ef4444
+    }
+
+    .fs-status-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 30px;
+      background: #ecfdf1;
+      color: #139b45;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 7px 12px;
+      white-space: nowrap
+    }
+
+    .fs-status-badge.claimed {
+      background: #f2f4f7;
+      color: #667085
+    }
+
+    .fs-list-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end
+    }
+
+    .fs-empty-box {
+      background: #fff;
+      border: 1px dashed rgba(19, 155, 69, .35);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      color: #475467;
+      font-weight: 700;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, .04)
+    }
+
+    .fs-reset-btn {
+      background: #fff;
+      color: #139b45;
+      border: 2px solid #139b45
+    }
+
+    .fs-reset-btn:hover {
+      background: #139b45;
+      color: #fff
+    }
+
+    /* PREMIUM DONATION DETAILS */
+    .fs-donation-section {
+      padding: 80px 0;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .fs-details-head {
+      max-width: 720px;
+      margin: 0 auto 34px;
+      text-align: center;
+    }
+
+    .fs-details-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ecfdf1;
+      color: #139b45;
+      border-radius: 999px;
+      padding: 8px 15px;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      margin-bottom: 14px;
+    }
+
+    .fs-donation-card {
+      position: relative;
+      background: #fff;
+      border: 1px solid rgba(19, 155, 69, .12);
+      border-radius: 26px;
+      padding: 18px;
+      box-shadow: 0 24px 70px rgba(16, 24, 40, .10);
+      opacity: 0;
+      transform: translateY(35px);
+      transition: .9s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .fs-donation-section.fs-show .fs-donation-card {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .fs-detail-photo-panel {
+      position: relative;
+      background: #f9fffb;
+      border: 1px solid rgba(19, 155, 69, .10);
+      border-radius: 22px;
+      padding: 14px;
+      height: 100%;
+    }
+
+    .fs-food-main-img {
+      width: 100%;
+      height: 430px;
+      object-fit: cover;
+      border-radius: 18px;
+      display: block;
+    }
+
+    .fs-detail-floating-status {
+      position: absolute;
+      top: 28px;
+      left: 28px;
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 8px 10px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, .12);
+    }
+
+    .fs-food-thumbs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px
+    }
+
+    .fs-food-thumbs img {
+      width: 100%;
+      height: 82px;
+      object-fit: cover;
+      border-radius: 14px;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: .3s
+    }
+
+    .fs-food-thumbs img.active,
+    .fs-food-thumbs img:hover {
+      border-color: #139b45;
+      transform: translateY(-3px)
+    }
+
+    .fs-detail-info-panel {
+      height: 100%;
+      border-radius: 22px;
+      padding: 12px 6px 12px 2px;
+    }
+
+    .fs-detail-title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px
+    }
+
+    .fs-detail-title-row h2 {
+      font-size: 32px;
+      line-height: 1.12;
+      font-weight: 950;
+      color: #101828;
+      margin: 0
+    }
+
+    .fs-detail-id-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #f2f4f7;
+      color: #475467;
+      font-size: 12px;
+      font-weight: 950;
+      padding: 8px 12px;
+      white-space: nowrap;
+    }
+
+    .fs-detail-meta-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #344054;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .fs-detail-meta-line i {
+      color: #139b45;
+      font-size: 18px;
+      line-height: 1.2
+    }
+
+    .fs-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+      margin: 24px 0
+    }
+
+    .fs-detail-grid div {
+      background: #fff;
+      border: 1px solid rgba(19, 155, 69, .12);
+      border-radius: 16px;
+      padding: 15px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .04);
+    }
+
+    .fs-detail-grid span {
+      display: block;
+      font-size: 11px;
+      color: #667085;
+      font-weight: 950;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 5px
+    }
+
+    .fs-detail-grid b {
+      display: block;
+      font-size: 15px;
+      color: #111827
+    }
+
+    .fs-detail-description-box {
+      background: #fbfffc;
+      border: 1px solid rgba(19, 155, 69, .10);
+      border-radius: 18px;
+      padding: 16px;
+      color: #475467;
+      font-weight: 600;
+      line-height: 1.7;
+    }
+
+    .fs-detail-description-box h5 {
+      color: #101828;
+      margin-bottom: 8px
+    }
+
+    .fs-claim-note {
+      display: none;
+      margin-top: 14px;
+      background: #ecfdf1;
+      color: #139b45;
+      border-radius: 13px;
+      padding: 12px 14px;
+      font-weight: 900
+    }
+
+    .fs-claim-note.show {
+      display: block
+    }
+
+    .fs-map-card {
+      background: #fff;
+      border: 1px solid rgba(19, 155, 69, .10);
+      border-radius: 22px;
+      padding: 14px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .055);
+      height: 100%;
+    }
+
+    .fs-map-card h4 {
+      font-size: 17px;
+      font-weight: 950;
+      margin: 2px 0 12px;
+      color: #101828
+    }
+
+    .fs-map-box {
+      width: 100%;
+      height: calc(100% - 92px);
+      min-height: 360px;
+      border-radius: 18px;
+      background: #eefaf1;
+      position: relative;
+      overflow: hidden
+    }
+
+    .fs-map-box iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      filter: saturate(1.04) contrast(1.02)
+    }
+
+    .fs-pickup-address {
+      margin-top: -3px;
+      background: #f6fff7;
+      border: 1px solid rgba(19, 155, 69, .12);
+      border-radius: 14px;
+      padding: 4px 12px;
+      color: #344054;
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 750
+    }
+
+    .fs-map-box::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(19, 155, 69, .08));
+      pointer-events: none
+    }
+
+
+    .fs-detail-fade {
+      animation: fsDetailFade .55s ease both
+    }
+
+    @keyframes fsDetailFade {
+      from {
+        opacity: 0;
+        transform: translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* VOLUNTEER */
+    .fs-volunteer-section {
+      padding: 75px 0;
+      background: #fff;
+      overflow: hidden
+    }
+
+    .fs-volunteer-content h2 {
+      font-size: 48px;
+      font-weight: 900;
+      margin-bottom: 10px
+    }
+
+    .fs-volunteer-content p {
+      font-size: 16px;
+      color: #555;
+      font-weight: 500;
+      margin-bottom: 38px
+    }
+
+    .fs-feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 35px
+    }
+
+    .fs-feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 24px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #222;
+      opacity: 0;
+      transform: translateX(-25px);
+      transition: .65s ease
+    }
+
+    .fs-volunteer-section.fs-show .fs-feature-list li {
+      opacity: 1;
+      transform: translateX(0)
+    }
+
+    .fs-volunteer-section.fs-show .fs-feature-list li:nth-child(1) {
+      transition-delay: .15s
+    }
+
+    .fs-volunteer-section.fs-show .fs-feature-list li:nth-child(2) {
+      transition-delay: .28s
+    }
+
+    .fs-volunteer-section.fs-show .fs-feature-list li:nth-child(3) {
+      transition-delay: .41s
+    }
+
+    .fs-volunteer-section.fs-show .fs-feature-list li:nth-child(4) {
+      transition-delay: .54s
+    }
+
+    .fs-feature-list span {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #ecfdf1;
+      color: #139b45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .fs-volunteer-img {
+      width: 100%;
+      max-width: 620px;
+      display: block;
+      margin-left: auto;
+      clip-path: circle(0% at 50% 50%);
+      transform: scale(.25);
+      opacity: 0
+    }
+
+    .fs-volunteer-img.fs-img-show {
+      animation: fsCirclePop 1.55s cubic-bezier(.68, -.55, .27, 1.55) forwards
+    }
+
+    @keyframes fsCirclePop {
+      0% {
+        clip-path: circle(0%);
+        transform: scale(.25);
+        opacity: 0
+      }
+
+      25% {
+        clip-path: circle(18%);
+        transform: scale(.45);
+        opacity: 1
+      }
+
+      50% {
+        clip-path: circle(38%);
+        transform: scale(.68)
+      }
+
+      75% {
+        clip-path: circle(62%);
+        transform: scale(.88)
+      }
+
+      100% {
+        clip-path: circle(100%);
+        transform: scale(1);
+        opacity: 1
+      }
+    }
+
+    /* LOGIN */
+    .fs-auth {
+      position: relative;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(19, 155, 69, .13), transparent 30%),
+        radial-gradient(circle at 88% 70%, rgba(245, 158, 11, .10), transparent 28%),
+        linear-gradient(180deg, #ffffff 0%, #f6fff7 100%);
+      overflow: hidden;
+    }
+
+    .fs-auth::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: rgba(19, 155, 69, .08);
+      filter: blur(2px);
+      left: -170px;
+      bottom: -160px;
+    }
+
+    .fs-auth::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(245, 158, 11, .10);
+      right: -135px;
+      top: 75px;
+    }
+
+    .fs-auth .fs-wide {
+      position: relative;
+      z-index: 2
+    }
+
+    .fs-auth-panel {
+      position: relative;
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(19, 155, 69, .13);
+      border-radius: 32px;
+      padding: 18px;
+      box-shadow: 0 28px 80px rgba(16, 24, 40, .10);
+      backdrop-filter: blur(18px);
+    }
+
+    .fs-auth-intro {
+      position: relative;
+      height: 100%;
+      min-height: 100%;
+      overflow: hidden;
+      border-radius: 26px;
+      padding: 34px 30px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 85% 16%, rgba(255, 255, 255, .20), transparent 30%),
+        linear-gradient(135deg, #0c7d36 0%, #139b45 55%, #16b34f 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 18px 45px rgba(19, 155, 69, .20);
+    }
+
+    .fs-auth-intro::before {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border: 1px solid rgba(255, 255, 255, .20);
+      border-radius: 50%;
+      right: -55px;
+      top: -55px;
+    }
+
+    .fs-auth-intro::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      left: -45px;
+      bottom: 55px;
+      transform: rotate(22deg);
+    }
+
+    .fs-auth-badge {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, .16);
+      border: 1px solid rgba(255, 255, 255, .20);
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .fs-auth-intro h3 {
+      position: relative;
+      z-index: 2;
+      font-size: 34px;
+      line-height: 1.12;
+      font-weight: 950;
+      margin-bottom: 14px;
+    }
+
+    .fs-auth-intro p {
+      position: relative;
+      z-index: 2;
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, .88);
+      font-weight: 650;
+      margin-bottom: 26px;
+    }
+
+    .fs-auth-benefits {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 13px;
+      margin: 0 0 28px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fs-auth-benefits li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .fs-auth-benefits span {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .17);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .fs-auth-mini-stats {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .fs-auth-mini-stat {
+      background: rgba(255, 255, 255, .14);
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 16px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+
+    .fs-auth-mini-stat b {
+      display: block;
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .fs-auth-mini-stat small {
+      display: block;
+      color: rgba(255, 255, 255, .80);
+      font-size: 10px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .fs-auth-forms {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .fs-auth-box {
+      position: relative;
+      background: #fff;
+      border: 1px solid rgba(19, 155, 69, .11);
+      border-radius: 26px;
+      padding: 28px;
+      box-shadow: 0 18px 45px rgba(16, 24, 40, .08);
+      height: 100%;
+      transition: .45s cubic-bezier(.22, 1, .36, 1);
+      overflow: hidden;
+    }
+
+    .fs-auth-box::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #139b45, #1fd160, #f59e0b);
+    }
+
+    .fs-auth-box:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 26px 60px rgba(19, 155, 69, .14);
+      border-color: rgba(19, 155, 69, .22);
+    }
+
+    .fs-auth-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .fs-auth-head-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ecfdf1, #dff7e6);
+      color: #139b45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      flex-shrink: 0;
+      box-shadow: 0 10px 22px rgba(19, 155, 69, .12);
+    }
+
+    .fs-auth-head h3 {
+      font-size: 23px;
+      line-height: 1.15;
+      font-weight: 950;
+      margin: 0 0 3px;
+      color: #101828;
+    }
+
+    .fs-auth-head p {
+      margin: 0;
+      color: #667085;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .fs-auth-field {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .fs-auth-field i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #139b45;
+      font-size: 16px;
+      z-index: 2;
+    }
+
+    .fs-auth-field input,
+    .fs-auth-field select {
+      width: 100%;
+      min-height: 50px;
+      border: 1px solid #dce7df;
+      border-radius: 14px;
+      padding: 0 15px 0 44px;
+      font-size: 14px;
+      color: #101828;
+      background: #fbfffc;
+      font-weight: 700;
+      outline: none;
+      transition: .3s;
+      appearance: auto;
+    }
+
+    .fs-auth-field select {
+      cursor: pointer
+    }
+
+    .fs-auth-field input::placeholder {
+      color: #98a2b3
+    }
+
+    .fs-auth-field input:focus,
+    .fs-auth-field select:focus {
+      border-color: #139b45;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(19, 155, 69, .10);
+    }
+
+    .fs-auth-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 2px 0 18px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .fs-auth-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #475467;
+      user-select: none;
+    }
+
+    .fs-auth-check input {
+      width: 16px;
+      height: 16px;
+      accent-color: #139b45;
+    }
+
+    .fs-auth-row a {
+      color: #139b45;
+      text-decoration: none;
+    }
+
+    .fs-auth-row a:hover {
+      text-decoration: underline
+    }
+
+    .fs-auth-submit {
+      width: 100%;
+      min-height: 52px;
+      border-radius: 15px;
+      gap: 8px;
+      box-shadow: 0 14px 26px rgba(19, 155, 69, .20);
+    }
+
+    .fs-auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #98a2b3;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin: 18px 0 0;
+    }
+
+    .fs-auth-divider::before,
+    .fs-auth-divider::after {
+      content: "";
+      height: 1px;
+      background: #e4eee6;
+      flex: 1;
+    }
+
+    .fs-role-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .fs-role-pills span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: #f6fff7;
+      color: #139b45;
+      font-size: 12px;
+      font-weight: 950;
+      border: 1px solid rgba(19, 155, 69, .12);
+    }
+
+
+
+    @media(max-width:991px) {
+      .fs-auth-intro {
+        min-height: auto
+      }
+
+      .fs-auth-intro h3 {
+        font-size: 30px
+      }
+    }
+
+    @media(max-width:575px) {
+      .fs-auth-panel {
+        padding: 12px;
+        border-radius: 24px
+      }
+
+      .fs-auth-intro {
+        padding: 26px 22px;
+        border-radius: 20px
+      }
+
+      .fs-auth-intro h3 {
+        font-size: 25px
+      }
+
+      .fs-auth-mini-stats {
+        grid-template-columns: 1fr
+      }
+
+      .fs-auth-box {
+        padding: 22px;
+        border-radius: 20px
+      }
+
+      .fs-auth-head {
+        align-items: flex-start
+      }
+
+      .fs-auth-head-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px
+      }
+
+      .fs-auth-row {
+        flex-direction: column;
+        align-items: flex-start
+      }
+    }
+
+    /* AOS SMOOTH FEEL */
+    [data-aos] {
+      pointer-events: none
+    }
+
+    [data-aos].aos-animate {
+      pointer-events: auto
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* FOOTER */
+    .fs-footer {
+      background: #fff;
+      padding-top: 40px;
+      margin-top: auto
+    }
+
+    .fs-footer-logo {
+      width: 145px;
+      margin-bottom: 12px
+    }
+
+    .fs-footer p {
+      font-size: 14px;
+      color: #344054;
+      line-height: 1.7;
+      font-weight: 500;
+      margin-bottom: 14px
+    }
+
+    .fs-footer a {
+      font-size: 14px;
+      color: #344054;
+      text-decoration: none;
+      font-weight: 600;
+      transition: .3s
+    }
+
+    .fs-footer h4 {
+      font-size: 15px;
+      font-weight: 750;
+      margin-bottom: 13px;
+      color: #111827
+    }
+
+    .fs-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0
+    }
+
+    .fs-footer li {
+      margin-bottom: 8px
+    }
+
+    .fs-social {
+      display: flex;
+      gap: 12px
+    }
+
+    .fs-social a {
+      width: 28px;
+      height: 28px;
+      background: #139b45;
+      color: #fff !important;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 13px
+    }
+
+    .fs-social a:hover {
+      background: #0c7d36;
+      color: #fff !important;
+      transform: translateY(-4px)
+    }
+
+    .fs-footer a:hover {
+      color: #139b45;
+      padding-left: 4px
+    }
+
+    .fs-footer-bottom {
+      background: #139b45;
+      padding: 13px 0;
+      margin-top: 25px
+    }
+
+    .fs-footer-bottom p,
+    .fs-footer-bottom a {
+      color: #fff;
+      margin: 0;
+      font-size: 14px
+    }
+
+    .fs-footer-bottom a:hover {
+      color: #fff;
+      padding-left: 0
+    }
+
+    @media(max-width:991px) {
+      .fs-toggle {
+        display: block
+      }
+
+      .fs-nav-wrap {
+        position: absolute;
+        top: 76px;
+        left: 14px;
+        right: 14px;
+        background: #fff;
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, .12);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-15px) scale(.96);
+        transition: .35s
+      }
+
+      .fs-nav-wrap.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1)
+      }
+
+      .fs-nav-menu {
+        flex-direction: column;
+        gap: 8px
+      }
+
+      .fs-nav-menu a {
+        display: block;
+        background: #f0fff4;
+        padding: 12px 15px;
+        border-radius: 12px
+      }
+
+      .fs-login {
+        display: none
+      }
+
+      .fs-title {
+        font-size: 48px;
+        text-align: center
+      }
+
+      .fs-desc {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto
+      }
+
+      .fs-action {
+        justify-content: center
+      }
+
+      .fs-hero-img,
+      .fs-volunteer-img {
+        margin: 35px auto 0
+      }
+
+      .fs-volunteer-section {
+        text-align: center
+      }
+
+      .fs-feature-list {
+        max-width: 420px;
+        margin: 0 auto 30px
+      }
+
+      .fs-feature-list li {
+        text-align: left
+      }
+
+      .fs-detail-title-row h2 {
+        font-size: 28px
+      }
+
+      .fs-detail-info-panel {
+        padding: 0
+      }
+
+      .fs-map-box {
+        min-height: 300px
+      }
+    }
+
+    @media(max-width:575px) {
+      .fs-wide {
+        padding: 0 15px
+      }
+
+      .fs-hero {
+        padding-top: 55px
+      }
+
+      .fs-title {
+        font-size: 34px
+      }
+
+      .fs-section {
+        padding: 55px 0
+      }
+
+      .fs-action {
+        flex-direction: column
+      }
+
+      .fs-action a {
+        width: 100%
+      }
+
+      .fs-list-card {
+        flex-direction: column;
+        text-align: center
+      }
+
+      .fs-list-card img {
+        width: 100%;
+        height: 170px
+      }
+
+      .fs-list-tags {
+        justify-content: center
+      }
+
+      .fs-list-actions {
+        align-items: center;
+        width: 100%
+      }
+
+      .fs-list-actions .fs-btn {
+        width: 100%
+      }
+
+      .fs-detail-grid {
+        grid-template-columns: 1fr
+      }
+
+      .fs-list-card {
+        align-items: stretch
+      }
+
+      .fs-detail-title-row {
+        flex-direction: column;
+        gap: 10px
+      }
+
+      .fs-food-main-img {
+        height: 265px
+      }
+
+      .fs-food-thumbs img {
+        height: 72px
+      }
+
+      .fs-map-box {
+        min-height: 260px
+      }
+
+      .fs-donation-card {
+        padding: 14px;
+        border-radius: 20px
+      }
+
+      .fs-footer {
+        text-align: center
+      }
+
+      .fs-social {
+        justify-content: center
+      }
+
+      .fs-footer-bottom .fs-wide {
+        justify-content: center !important;
+        text-align: center
+      }
+    }
+    
+/* ==================================
+   FIX ALL FOOD SAVER BUTTONS
+   Add at the END of existing CSS
+================================== */
+
+/* General buttons */
+a.fs-btn,
+button.fs-btn,
+.fs-action a.fs-btn,
+.fs-list-actions a.fs-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 25px;
+    min-height: 46px;
+    border: 2px solid #139b45;
+    border-radius: 8px;
+    background-color: #139b45;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(19, 155, 69, 0.15);
+    transition: background-color .3s ease,
+                color .3s ease,
+                border-color .3s ease,
+                transform .3s ease,
+                box-shadow .3s ease;
+}
+
+a.fs-btn:hover,
+button.fs-btn:hover {
+    background-color: #0c7d36;
+    border-color: #0c7d36;
+    color: #ffffff;
+    text-decoration: none;
+    transform: translateY(-3px);
+    box-shadow: 0 9px 20px rgba(19, 155, 69, 0.22);
+}
+
+/* Outline button: Join as NGO */
+a.fs-btn.fs-btn-outline,
+button.fs-btn.fs-btn-outline {
+    background-color: #ffffff;
+    color: #139b45;
+    border: 2px solid #139b45;
+    box-shadow: none;
+}
+
+a.fs-btn.fs-btn-outline:hover,
+button.fs-btn.fs-btn-outline:hover {
+    background-color: #139b45;
+    border-color: #139b45;
+    color: #ffffff;
+}
+
+/* Navbar Register / Sign In */
+.fs-auth-btns .fs-signin-btn,
+.fs-auth-btns .fs-login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.4;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .3s ease;
+}
+
+.fs-auth-btns .fs-signin-btn {
+    background-color: #ecfdf1;
+    color: #139b45;
+    border: 2px solid #139b45;
+}
+
+.fs-auth-btns .fs-signin-btn:hover {
+    background-color: #dcfce7;
+    color: #0c7d36;
+    transform: translateY(-2px);
+}
+
+.fs-auth-btns .fs-login-btn {
+    background-color: #139b45;
+    color: #ffffff;
+    border: 2px solid #139b45;
+}
+
+.fs-auth-btns .fs-login-btn:hover {
+    background-color: #0c7d36;
+    border-color: #0c7d36;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Reset button */
+button.fs-reset-btn,
+a.fs-reset-btn {
+    background-color: #ffffff;
+    color: #139b45;
+    border: 2px solid #139b45;
+}
+
+button.fs-reset-btn:hover,
+a.fs-reset-btn:hover {
+    background-color: #139b45;
+    color: #ffffff;
+}
+
+/* Mobile hero buttons */
+@media (max-width: 575px) {
+    .fs-action {
+        gap: 12px !important;
+    }
+
+    .fs-action a.fs-btn {
+        width: 100%;
+        min-height: 48px;
+    }
+}
+
+  </style>
+</head>
+
+<body>
+
+  <div class="fs-page-loader" id="fsLoader">
+    <div class="fs-loader-slice fs-slice-1"></div>
+    <div class="fs-loader-slice fs-slice-2"></div>
+    <div class="fs-loader-slice fs-slice-3"></div>
+    <div class="fs-loader-slice fs-slice-4"></div>
+    <div class="fs-loader-center"><img src="images/logo.png" alt="Food Saver"></div>
+  </div>
+
+  <nav class="fs-navbar">
+  <div class="fs-wide">
+    <div class="d-flex justify-content-between align-items-center">
+
+      <!-- Logo -->
+      <a href="index.html" class="fs-logo">
+        <img src="images/logo.png" alt="Food Saver">
+      </a>
+
+      <!-- Navigation & Buttons Wrapper -->
+      <div class="fs-nav-wrap" id="fsMenu">
+        <ul class="fs-nav-menu">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <!-- Mobile view me ye buttons menu ke andar shift ho jayenge -->
+        <div class="fs-auth-btns d-lg-none mt-3">
+          <a href="register.html" class="fs-signin-btn">Register</a>
+          <a href="login.html" class="fs-login-btn">Login</a>
+        </div>
+      </div>
+
+      <!-- Desktop Auth Buttons -->
+      <div class="fs-auth-btns d-none d-lg-flex">
+        <a href="register.html" class="fs-signin-btn">Register</a>
+        <a href="login.html" class="fs-login-btn">Login</a>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="fs-toggle" id="fsToggle" type="button" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </div>
+</nav>
+
+  <section class="fs-hero" id="home">
+    <div class="fs-wide">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 class="fs-title" data-aos="fade-up" data-aos-delay="120"><span id="typewriter"></span></h1>
+          <p class="fs-desc" data-aos="fade-up" data-aos-delay="280">Connecting surplus food with people in need.
+            Together we can reduce waste and end hunger.</p>
+          <div class="fs-action d-flex gap-3 flex-wrap" data-aos="fade-up" data-aos-delay="430">
+            <a href="register.html" class="fs-btn">Donate Food</a>
+            <a href="register.html" class="fs-btn fs-btn-outline">Join as NGO</a>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <img src="images/donate.png" class="fs-hero-img" alt="Donate Food">
+        </div>
+      </div>
+
+      <div class="row g-4 fs-stats" data-aos="fade-up" data-aos-delay="160">
+        <div class="col-6 col-lg-3">
+          <div class="fs-card">
+            <div class="fs-icon"><i class="bi bi-gift"></i></div>
+            <h4 class="counter" data-target="12540">0</h4>
+            <p>Kg Food Saved</p>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="fs-card">
+            <div class="fs-icon fs-orange"><i class="bi bi-balloon-heart"></i></div>
+            <h4 class="counter" data-target="25680">0</h4>
+            <p>Meals Served</p>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="fs-card">
+            <div class="fs-icon"><i class="bi bi-people"></i></div>
+            <h4 class="counter" data-target="320">0</h4>
+            <p>NGOs Connected</p>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="fs-card">
+            <div class="fs-icon"><i class="bi bi-person-heart"></i></div>
+            <h4 class="counter" data-target="1850">0</h4>
+            <p>Volunteers</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section" id="works">
+    <div class="fs-wide">
+      <h2 class="fs-title-sm" data-aos="fade-up">How Food Saver Works</h2>
+      <p class="fs-sub" data-aos="fade-up" data-aos-delay="120">Simple steps to make a big impact</p>
+      <div class="row g-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-md-6 col-lg-3" data-aos="fade-up">
+          <div class="fs-step">
+            <div class="fs-step-icon"><i class="bi bi-upload"></i></div>
+            <h5>Donor Uploads</h5>
+            <p>Donors add surplus food details.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="120">
+          <div class="fs-step">
+            <div class="fs-step-icon"><i class="bi bi-building"></i></div>
+            <h5>NGO Accepts</h5>
+            <p>Nearby NGOs get notified.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="240">
+          <div class="fs-step">
+            <div class="fs-step-icon"><i class="bi bi-truck"></i></div>
+            <h5>Volunteer Pickup</h5>
+            <p>Volunteers collect food.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="360">
+          <div class="fs-step">
+            <div class="fs-step-icon"><i class="bi bi-people-fill"></i></div>
+            <h5>Food Delivered</h5>
+            <p>Food reaches people in need.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section fs-impact" id="impact">
+    <div class="fs-wide">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <h2 class="fs-title-sm text-lg-start" data-aos="fade-right">Our Impact</h2>
+          <p class="text-muted fw-semibold" data-aos="fade-right" data-aos-delay="120">Together, we are creating a
+            better tomorrow.</p>
+          <div class="row g-4 mt-2" data-aos="fade-up" data-aos-delay="220">
+            <div class="col-6">
+              <div class="fs-impact-card">
+                <h3>12,540+</h3>
+                <p>Kg Food Saved</p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="fs-impact-card">
+                <h3>25,680+</h3>
+                <p>Meals Served</p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="fs-impact-card">
+                <h3>320+</h3>
+                <p>NGOs Connected</p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="fs-impact-card">
+                <h3>1,850+</h3>
+                <p>Active Volunteers</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6"><img src="images/impact.png" class="fs-impact-img" alt="Impact" data-aos="zoom-in"
+            data-aos-delay="240"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section" id="services">
+    <div class="fs-wide">
+      <h2 class="fs-title-sm" data-aos="fade-up">What We Offer</h2>
+      <p class="fs-sub" data-aos="fade-up" data-aos-delay="120">Complete solution for food redistribution</p>
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6" data-aos="zoom-in-up" data-aos-delay="80">
+          <div class="offer-card">
+            <div class="offer-icon green"><i class="bi bi-box2-heart"></i></div>
+            <h5>For Donors</h5>
+            <p>Easily donate surplus food and track your impact.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6" data-aos="zoom-in-up" data-aos-delay="180">
+          <div class="offer-card">
+            <div class="offer-icon orange"><i class="bi bi-bag-heart"></i></div>
+            <h5>For NGOs</h5>
+            <p>Find and manage donations efficiently.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6" data-aos="zoom-in-up" data-aos-delay="280">
+          <div class="offer-card">
+            <div class="offer-icon orange"><i class="bi bi-people"></i></div>
+            <h5>For Volunteers</h5>
+            <p>Be a part of the mission and help in delivery.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6" data-aos="zoom-in-up" data-aos-delay="380">
+          <div class="offer-card">
+            <div class="offer-icon green"><i class="bi bi-person"></i></div>
+            <h5>For Admins</h5>
+            <p>Monitor, manage and analyze the entire system.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section fs-donation-list" id="donations">
+    <div class="fs-wide">
+      <h2 class="fs-title-sm" data-aos="fade-up">Available Food Donations</h2>
+      <p class="fs-sub" data-aos="fade-up" data-aos-delay="120">Find and claim available donations near you</p>
+
+      <div class="fs-search-box mb-4" data-aos="fade-up" data-aos-delay="180">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <input class="form-control" id="fsDonationSearch" placeholder="Search title, donor, or location">
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" id="fsFoodTypeFilter">
+              <option value="all">All Food Types</option>
+              <option value="Cooked Food">Cooked Food</option>
+              <option value="Bakery Items">Bakery Items</option>
+              <option value="Vegetables">Vegetables</option>
+              <option value="Fruits">Fruits</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" id="fsDonationSort">
+              <option value="nearest">Sort: Nearest Expiry</option>
+              <option value="quantity-high">Quantity: High to Low</option>
+              <option value="quantity-low">Quantity: Low to High</option>
+              <option value="available">Available First</option>
+            </select>
+          </div>
+          <div class="col-md-2 d-flex gap-2">
+            <button class="fs-btn w-100" id="fsDonationSearchBtn" type="button">Search</button>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3">
+          <p class="m-0 fw-bold text-muted" id="fsDonationCount">Showing 0 donations</p>
+          <button class="fs-btn fs-reset-btn py-2 px-3" id="fsDonationResetBtn" type="button">Reset</button>
+        </div>
+      </div>
+
+      <div id="fsDonationList"></div>
+    </div>
+  </section>
+
+  <section class="fs-volunteer-section" id="volunteer">
+    <div class="fs-wide">
+      <div class="row align-items-center">
+        <div class="col-lg-5">
+          <div class="fs-volunteer-content" data-aos="fade-right">
+            <h2>Become a Volunteer</h2>
+            <p>Join our mission and make a difference</p>
+            <ul class="fs-feature-list">
+              <li><span><i class="bi bi-recycle"></i></span>Pick up food from donors</li>
+              <li><span><i class="bi bi-shield-check"></i></span>Deliver to NGOs and shelters</li>
+              <li><span><i class="bi bi-people"></i></span>Help reduce hunger</li>
+              <li><span><i class="bi bi-award"></i></span>Earn rewards and recognition</li>
+            </ul>
+            <a href="register.html" class="fs-btn">Register as Volunteer</a>
+          </div>
+        </div>
+        <div class="col-lg-7"><img src="images/volunteer.png" class="fs-volunteer-img" alt="Volunteer"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-donation-section" id="details">
+    <div class="fs-wide">
+      <div class="fs-details-head">
+        <span class="fs-details-kicker" data-aos="fade-up"><i class="bi bi-box2-heart"></i> Selected Donation</span>
+        <h2 class="fs-title-sm" data-aos="fade-up" data-aos-delay="90">Donation Details</h2>
+        <p class="fs-sub" data-aos="fade-up" data-aos-delay="160">Click any donation from the list and this detail card
+          will update automatically.</p>
+      </div>
+
+      <div class="fs-donation-card" data-aos="fade-up" data-aos-delay="120">
+        <div class="row g-4 align-items-stretch">
+          <div class="col-lg-4">
+            <div class="fs-detail-photo-panel">
+              <img src="images/donate.png" onerror="this.onerror=null;this.src='images/donate.png'" class="fs-food-main-img" id="fsMainFoodImg" alt="Selected Food Donation">
+              <div class="fs-detail-floating-status">
+                <span class="fs-status-badge" id="fsDetailStatus">Available</span>
+              </div>
+              <div class="fs-food-thumbs" id="fsFoodThumbs"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-5" id="fsDonationDetailContent">
+            <div class="fs-detail-info-panel">
+              <div class="fs-detail-title-row">
+                <h2 id="fsDetailTitle">Cooked Food Package</h2>
+                <span class="fs-detail-id-chip" id="fsDetailId">#FS12345</span>
+              </div>
+
+              <p class="fs-detail-meta-line"><i class="bi bi-shop"></i> <span><strong>Donor:</strong> <span
+                    id="fsDetailDonor">Restaurant XYZ</span></span></p>
+              <p class="fs-detail-meta-line"><i class="bi bi-geo-alt-fill"></i> <span id="fsDetailLocation">Aptech I.I.
+                  Chundrigar, Karachi</span></p>
+
+              <div class="fs-detail-grid">
+                <div><span>Quantity</span><b id="fsDetailQuantity">20 Packets</b></div>
+                <div><span>Expiry Time</span><b id="fsDetailExpiry">Today, 08:00 PM</b></div>
+                <div><span>Food Type</span><b id="fsDetailType">Cooked Food</b></div>
+                <div><span>Pickup Window</span><b id="fsDetailPickup">7:00 PM - 8:30 PM</b></div>
+              </div>
+
+              <div class="fs-detail-description-box">
+                <h5 class="fw-bold">Description</h5>
+                <p class="mb-0" id="fsDetailDescription">Freshly cooked vegetarian meals. Hygienically packed.</p>
+              </div>
+
+              <button class="fs-btn mt-3" id="fsClaimBtn" type="button">Claim Donation</button>
+              <div class="fs-claim-note" id="fsClaimNote"><i class="bi bi-check-circle-fill me-2"></i>Donation claimed
+                successfully.</div>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="fs-map-card">
+              <h4><i class="bi bi-geo-alt-fill text-success me-1"></i> Pickup Location</h4>
+              <div class="fs-map-box" id="fsMapBox">
+                <iframe src="https://www.google.com/maps?q=Aptech%20I.I.%20Chundrigar%20Karachi&output=embed"
+                  loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                  title="Aptech I.I. Chundrigar Karachi Map"></iframe>
+                <i class="bi bi-geo-alt-fill fs-map-pin" id="fsMapPin"></i>
+              </div>
+              <div class="fs-pickup-address"><i class="bi bi-building me-1"></i><span id="fsPickupAddress">Aptech I.I.
+                  Chundrigar, 1st Floor, Saima Trade Tower, I.I.C Road, Karachi</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="fs-footer">
+    <div class="fs-wide">
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+          <img src="images/logo.png" class="fs-footer-logo" alt="Food Saver">
+          <p>Connecting surplus food with people in need. Together we can build a hunger-free world.</p>
+          <div class="fs-social"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i
+                class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i
+                class="bi bi-linkedin"></i></a></div>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#works">How It Works</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h4>For Donors</h4>
+          <ul>
+            <li><a href="#">Add Donation</a></li>
+            <li><a href="#">Donation History</a></li>
+            <li><a href="#">Rewards Program</a></li>
+            <li><a href="#">Guidelines</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h4>For NGOs</h4>
+          <ul>
+            <li><a href="#">Available Donations</a></li>
+            <li><a href="#">My Requests</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h4>For Volunteers</h4>
+          <ul>
+            <li><a href="#">Become a Volunteer</a></li>
+            <li><a href="#">My Assignments</a></li>
+            <li><a href="#">Performance</a></li>
+            <li><a href="#">Leaderboard</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="fs-footer-bottom">
+      <div class="fs-wide d-flex flex-wrap justify-content-between gap-2">
+        <p>© 2026 Food Saver. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    const fsToggle = document.getElementById("fsToggle");
+    const fsMenu = document.getElementById("fsMenu");
+
+    fsToggle.addEventListener("click", () => {
+      fsToggle.classList.toggle("active");
+      fsMenu.classList.toggle("show");
+    });
+
+    AOS.init({
+      duration: 1700,
+      easing: "ease-out-cubic",
+      offset: 105,
+      delay: 120,
+      once: true,
+      mirror: false
+    });
+
+    const fsLoader = document.getElementById("fsLoader");
+
+    function hideLoader() {
+      fsLoader.classList.add("fs-loader-done");
+      document.querySelector(".fs-hero").classList.add("fs-hero-show");
+      AOS.refresh();
+      typeWriter();
+      startCounters();
+    }
+
+    function replayLoader() {
+      fsLoader.classList.remove("fs-loader-done");
+      const animatedParts = fsLoader.querySelectorAll(".fs-loader-center,.fs-loader-slice");
+      animatedParts.forEach(part => {
+        part.style.animation = "none";
+        void part.offsetWidth;
+        part.style.animation = "";
+      });
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(hideLoader, 5600);
+    });
+
+    const text = "Save Food,\nFeed Lives";
+    const el = document.getElementById("typewriter");
+    let i = 0;
+
+    function typeWriter() {
+      if (el.dataset.done === "true") return;
+      if (i < text.length) {
+        el.innerHTML += text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 80);
+      } else {
+        el.dataset.done = "true";
+      }
+    }
+
+    function startCounters() {
+      document.querySelectorAll(".counter").forEach(counter => {
+        if (counter.dataset.started === "true") return;
+        counter.dataset.started = "true";
+        const target = +counter.dataset.target;
+        const update = () => {
+          const count = +counter.innerText.replace(/,/g, '').replace('+', '');
+          const inc = target / 100;
+          if (count < target) {
+            counter.innerText = Math.ceil(count + inc).toLocaleString();
+            setTimeout(update, 20);
+          } else {
+            counter.innerText = target.toLocaleString() + "+";
+          }
+        };
+        update();
+      });
+    }
+
+    const fsVolunteerSection = document.getElementById("volunteer");
+    const fsVolunteerImg = document.querySelector(".fs-volunteer-img");
+
+    new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          fsVolunteerSection.classList.add("fs-show");
+          fsVolunteerImg.classList.add("fs-img-show");
+        }
+      });
+    }, { threshold: .35 }).observe(fsVolunteerSection);
+
+    const fsDonationSection = document.getElementById("details");
+
+    new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          fsDonationSection.classList.add("fs-show");
+        }
+      });
+    }, { threshold: .25 }).observe(fsDonationSection);
+
+    const aptechPickupLocation = "Aptech I.I. Chundrigar, Karachi";
+    const aptechPickupAddress = "Aptech I.I. Chundrigar,1st Floor, Saima Trade Tower, I.I.C Road, Karachi";
+
+    const donationData = [
+      {
+        id: "FS12345",
+        title: "Cooked Food Package",
+        donor: "Restaurant XYZ",
+        location: aptechPickupLocation,
+        quantity: 20,
+        unit: "Packets",
+        expiry: "Today, 08:00 PM",
+        expiryOrder: 1,
+        type: "Cooked Food",
+        pickup: "7:00 PM - 8:30 PM",
+        pickupAddress: aptechPickupAddress,
+        description: "Freshly cooked vegetarian meals. Hygienically packed and ready for pickup.",
+        status: "Available",
+        images: ["https://img.magnific.com/free-photo/sliced-herbal-salad-cutlets_140725-6461.jpg?semt=ais_hybrid&w=740&q=80", "https://img.magnific.com/free-photo/side-view-diet-food-pasta-with-chicken-slice-lemon-with-ruccola_140725-11475.jpg?semt=ais_hybrid&w=740&q=80", "https://img.magnific.com/free-photo/sliced-herbal-salad-cutlets_140725-6461.jpg?semt=ais_hybrid&w=740&q=80"],
+        pin: { left: "50%", top: "49%" }
+      },
+      {
+        id: "FS12346",
+        title: "Bread & Bakery Items",
+        donor: "Bakery House",
+        location: aptechPickupLocation,
+        quantity: 50,
+        unit: "Pieces",
+        expiry: "Tomorrow, 10:00 AM",
+        expiryOrder: 3,
+        type: "Bakery Items",
+        pickup: "8:30 AM - 10:30 AM",
+        pickupAddress: aptechPickupAddress,
+        description: "Fresh bread, buns, and bakery items packed safely for community distribution.",
+        status: "Available",
+        images: ["https://img.magnific.com/free-photo/top-view-table-full-food_23-2149209223.jpg?semt=ais_hybrid&w=740&q=80", "https://media.istockphoto.com/id/475263838/photo/many-mixed-breads-and-rolls-shot-from-above.jpg?s=612x612&w=0&k=20&c=pU1DEpAsdYPBU4_Qn-xCxf3N16PGhUyVRbQ3wkwWrG0=", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9SUyEtRk9nPQImJE1Dp_nw5VUdsI0S7scC-edU9HnzSsW_buOJsrkFX7U&s=10"],
+        pin: { left: "50%", top: "49%" }
+      },
+      {
+        id: "FS12347",
+        title: "Mixed Vegetables",
+        donor: "Green Supermart",
+        location: aptechPickupLocation,
+        quantity: 15,
+        unit: "KG",
+        expiry: "Today, 04:00 PM",
+        expiryOrder: 0,
+        type: "Vegetables",
+        pickup: "3:00 PM - 4:30 PM",
+        pickupAddress: aptechPickupAddress,
+        description: "Fresh mixed vegetables suitable for cooking meals for shelters and NGOs.",
+        status: "Available",
+        images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7V0TpZwTySfe_wLoU69omI5z-Hh4wBxwwU8HC6eGHeg&s=10", "https://4.imimg.com/data4/CG/NE/MY-14164686/green_veg_large-500x500.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRN7mwcG7flEu0CBLXQSx6mTI9pLeVn6dftMoTYyBaLI4yknpwQ7-p4xhB&s=10"],
+        pin: { left: "50%", top: "49%" }
+      },
+      {
+        id: "FS12348",
+        title: "Fresh Fruit Boxes",
+        donor: "Fruit Market Supplier",
+        location: aptechPickupLocation,
+        quantity: 35,
+        unit: "Boxes",
+        expiry: "Tomorrow, 02:00 PM",
+        expiryOrder: 4,
+        type: "Fruits",
+        pickup: "12:00 PM - 2:30 PM",
+        pickupAddress: aptechPickupAddress,
+        description: "Seasonal fruits packed in boxes. Best for quick distribution to families.",
+        status: "Available",
+        images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPZd2A25_wGqxtzn4rNZHvAF3POUSRd2tld5InyKo7Sg&s=10", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs6JJKU-nNhjKdwHgRnXoyjb3gkge40KdsW5r1vDs1Tg&s", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPiL87u_a7xls5OUXkmBDEXhBbi6-1_MUjjdnGQ0HuZg&s=10"],
+        pin: { left: "50%", top: "49%" }
+      }
+    ];
+
+    let selectedDonationId = donationData[0].id;
+
+    const fsDonationList = document.getElementById("fsDonationList");
+    const fsDonationSearch = document.getElementById("fsDonationSearch");
+    const fsFoodTypeFilter = document.getElementById("fsFoodTypeFilter");
+    const fsDonationSort = document.getElementById("fsDonationSort");
+    const fsDonationSearchBtn = document.getElementById("fsDonationSearchBtn");
+    const fsDonationResetBtn = document.getElementById("fsDonationResetBtn");
+    const fsDonationCount = document.getElementById("fsDonationCount");
+    const fsMainFoodImg = document.getElementById("fsMainFoodImg");
+    const fsFoodThumbs = document.getElementById("fsFoodThumbs");
+    const fsDetailContent = document.getElementById("fsDonationDetailContent");
+    const fsClaimBtn = document.getElementById("fsClaimBtn");
+    const fsClaimNote = document.getElementById("fsClaimNote");
+    const fsMapPin = document.getElementById("fsMapPin");
+
+    function getFilteredDonations() {
+      const searchValue = fsDonationSearch.value.trim().toLowerCase();
+      const typeValue = fsFoodTypeFilter.value;
+      const sortValue = fsDonationSort.value;
+
+      let filtered = donationData.filter(item => {
+        const searchMatch = `${item.title} ${item.donor} ${item.location} ${item.type}`.toLowerCase().includes(searchValue);
+        const typeMatch = typeValue === "all" || item.type === typeValue;
+        return searchMatch && typeMatch;
+      });
+
+      filtered.sort((a, b) => {
+        if (sortValue === "quantity-high") return b.quantity - a.quantity;
+        if (sortValue === "quantity-low") return a.quantity - b.quantity;
+        if (sortValue === "available") {
+          if (a.status === b.status) return a.expiryOrder - b.expiryOrder;
+          return a.status === "Available" ? -1 : 1;
+        }
+        return a.expiryOrder - b.expiryOrder;
+      });
+
+      return filtered;
+    }
+
+    function renderDonationList() {
+      const donations = getFilteredDonations();
+      fsDonationCount.textContent = `Showing ${donations.length} donation${donations.length === 1 ? "" : "s"}`;
+
+      if (!donations.length) {
+        fsDonationList.innerHTML = `
+      <div class="fs-empty-box" data-aos="fade-up">
+        <i class="bi bi-search fs-icon d-block"></i>
+        No donation found. Try another location or food type.
+      </div>
+    `;
+        AOS.refresh();
+        return;
+      }
+
+      fsDonationList.innerHTML = donations.map((item, index) => `
+    <div class="fs-list-card" data-aos="fade-up" data-aos-delay="${Math.min(index * 110, 330)}">
+      <img src="${item.images[0]}" alt="${item.title}" onerror="this.onerror=null;this.src='images/donate.png'">
+      <div class="flex-grow-1">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+          <h5 class="mb-0">${item.title}</h5>
+          <span class="fs-status-badge ${item.status === "Claimed" ? "claimed" : ""}">${item.status}</span>
+        </div>
+        <p class="fs-list-meta mb-0">${item.donor} · ${item.quantity} ${item.unit} · ${item.expiry}</p>
+        <p class="fs-list-meta mb-0"><i class="bi bi-geo-alt-fill text-success"></i> ${item.location}</p>
+        <div class="fs-list-tags">
+          <span class="fs-tag"><i class="bi bi-box2-heart"></i>${item.type}</span>
+          <span class="fs-tag orange"><i class="bi bi-clock"></i>${item.pickup}</span>
+        </div>
+      </div>
+      <div class="fs-list-actions">
+        <button class="fs-btn fs-view-detail-btn" type="button" data-id="${item.id}">View Details</button>
+      </div>
+    </div>
+  `).join("");
+
+      document.querySelectorAll(".fs-view-detail-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          showDonationDetails(btn.dataset.id, true);
+        });
+      });
+
+      AOS.refresh();
+    }
+
+    function showDonationDetails(id, shouldScroll = false) {
+      const item = donationData.find(donation => donation.id === id) || donationData[0];
+      selectedDonationId = item.id;
+
+      fsMainFoodImg.src = item.images[0];
+      fsMainFoodImg.alt = item.title;
+      fsMainFoodImg.onerror = () => { fsMainFoodImg.onerror = null; fsMainFoodImg.src = "images/donate.png"; };
+
+      fsFoodThumbs.innerHTML = item.images.map((image, index) => `
+    <img src="${image}" alt="${item.title} image ${index + 1}" class="${index === 0 ? "active" : ""}" onerror="this.onerror=null;this.src='images/donate.png'">
+  `).join("");
+
+      fsFoodThumbs.querySelectorAll("img").forEach(thumb => {
+        thumb.addEventListener("click", () => {
+          fsFoodThumbs.querySelectorAll("img").forEach(img => img.classList.remove("active"));
+          thumb.classList.add("active");
+          fsMainFoodImg.src = thumb.src;
+        });
+      });
+
+      document.getElementById("fsDetailTitle").textContent = item.title;
+      document.getElementById("fsDetailDonor").textContent = item.donor;
+      document.getElementById("fsDetailLocation").textContent = item.location;
+      document.getElementById("fsDetailId").textContent = "#" + item.id;
+      document.getElementById("fsDetailQuantity").textContent = `${item.quantity} ${item.unit}`;
+      document.getElementById("fsDetailExpiry").textContent = item.expiry;
+      document.getElementById("fsDetailType").textContent = item.type;
+      document.getElementById("fsDetailPickup").textContent = item.pickup;
+      document.getElementById("fsPickupAddress").textContent = item.pickupAddress || aptechPickupAddress;
+      document.getElementById("fsDetailDescription").textContent = item.description;
+
+      const detailStatus = document.getElementById("fsDetailStatus");
+      detailStatus.textContent = item.status;
+      detailStatus.classList.toggle("claimed", item.status === "Claimed");
+
+      fsClaimBtn.disabled = item.status === "Claimed";
+      fsClaimBtn.textContent = item.status === "Claimed" ? "Already Claimed" : "Claim Donation";
+      fsClaimNote.classList.toggle("show", item.status === "Claimed");
+
+      fsMapPin.style.left = item.pin.left;
+      fsMapPin.style.top = item.pin.top;
+
+      fsDetailContent.classList.remove("fs-detail-fade");
+      void fsDetailContent.offsetWidth;
+      fsDetailContent.classList.add("fs-detail-fade");
+
+      fsDonationSection.classList.add("fs-show");
+
+      if (shouldScroll) {
+        document.getElementById("details").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function claimSelectedDonation() {
+      const item = donationData.find(donation => donation.id === selectedDonationId);
+      if (!item || item.status === "Claimed") return;
+      item.status = "Claimed";
+      showDonationDetails(item.id, false);
+      renderDonationList();
+    }
+
+    fsDonationSearchBtn.addEventListener("click", renderDonationList);
+    fsDonationSearch.addEventListener("input", renderDonationList);
+    fsFoodTypeFilter.addEventListener("change", renderDonationList);
+    fsDonationSort.addEventListener("change", renderDonationList);
+    fsDonationResetBtn.addEventListener("click", () => {
+      fsDonationSearch.value = "";
+      fsFoodTypeFilter.value = "all";
+      fsDonationSort.value = "nearest";
+      renderDonationList();
+    });
+    fsClaimBtn.addEventListener("click", claimSelectedDonation);
+
+    renderDonationList();
+    showDonationDetails(selectedDonationId, false);
+
+    document.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", function (e) {
+        const href = this.getAttribute("href");
+        if (
+          href &&
+          href !== "#" &&
+          !href.startsWith("#") &&
+          !href.startsWith("tel:") &&
+          !href.startsWith("mailto:") &&
+          !href.startsWith("http") &&
+          !this.hasAttribute("target")
+        ) {
+          e.preventDefault();
+          replayLoader();
+          setTimeout(() => {
+            window.location.href = href;
+          }, 950);
+        }
+      });
+    });
+    /* SCROLL TO TOP BUTTON */
+const fsScrollTop = document.getElementById("fsScrollTop");
+if (fsScrollTop) {
+    window.addEventListener("scroll", function () {
+        fsScrollTop.classList.toggle("show", window.scrollY > 400);
+    });
+    fsScrollTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
+  </script>
+
+</body>
+
+</html>

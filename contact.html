@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Food Saver</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            overflow-x: hidden !important;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #fff;
+            color: #101828;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fs-page-main {
+            flex: 1
+        }
+
+        /* PAGE LOADER SESSION STRT  */
+        .fs-page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            overflow: hidden;
+            background: transparent;
+            pointer-events: none;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity .45s ease, visibility .45s ease;
+            will-change: opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .fs-page-loader.fs-loader-active {
+            pointer-events: auto;
+        }
+
+        .fs-page-loader.fs-loader-done {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .fs-loader-center {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #139b45 0%, #16b34f 48%, #0c7d36 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .fs-loader-center img {
+            width: 190px;
+            background: #fff;
+            padding: 18px;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .18);
+        }
+
+        .fs-loader-slice {
+            position: absolute;
+            top: 0;
+            width: 25%;
+            height: 100%;
+            background: linear-gradient(135deg, #0c7d36, #139b45, #1fd160);
+            border-right: 2px solid rgba(255, 255, 255, .16);
+            box-shadow: inset 0 0 45px rgba(0, 0, 0, .12);
+            transform: translateY(-105%) translateZ(0);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .fs-slice-1 {
+            left: 0;
+        }
+
+        .fs-slice-2 {
+            left: 25%;
+        }
+
+        .fs-slice-3 {
+            left: 50%;
+        }
+
+        .fs-slice-4 {
+            left: 75%;
+            border-right: 0;
+        }
+
+        .fs-page-loader.fs-first-load .fs-loader-center {
+            animation: fsCenterHide .7s forwards;
+            animation-delay: 2.7s;
+        }
+
+        .fs-page-loader.fs-first-load .fs-loader-slice {
+            transform: translateY(0);
+        }
+
+        .fs-page-loader.fs-first-load .fs-slice-1 {
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 3s;
+        }
+
+        .fs-page-loader.fs-first-load .fs-slice-2 {
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 3.4s;
+        }
+
+        .fs-page-loader.fs-first-load .fs-slice-3 {
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 3.8s;
+        }
+
+        .fs-page-loader.fs-first-load .fs-slice-4 {
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 4.2s;
+        }
+
+        .fs-page-loader.fs-page-exit .fs-loader-center {
+            display: none;
+        }
+
+        .fs-page-loader.fs-page-exit .fs-slice-1 {
+            animation: fsSliceDown .78s forwards;
+            animation-delay: 0s;
+        }
+
+        .fs-page-loader.fs-page-exit .fs-slice-2 {
+            animation: fsSliceDown .78s forwards;
+            animation-delay: .12s;
+        }
+
+        .fs-page-loader.fs-page-exit .fs-slice-3 {
+            animation: fsSliceDown .78s forwards;
+            animation-delay: .24s;
+        }
+
+        .fs-page-loader.fs-page-exit .fs-slice-4 {
+            animation: fsSliceDown .78s forwards;
+            animation-delay: .36s;
+        }
+
+        html.fs-page-switch-entering .fs-page-loader.fs-first-load .fs-loader-center {
+            display: none;
+        }
+
+        html.fs-page-switch-entering .fs-page-loader.fs-first-load .fs-loader-slice {
+            transform: translateY(0);
+        }
+
+        html.fs-page-switch-entering .fs-page-loader.fs-first-load .fs-slice-1 {
+            animation: fsSliceUp .85s forwards;
+            animation-delay: .05s;
+        }
+
+        html.fs-page-switch-entering .fs-page-loader.fs-first-load .fs-slice-2 {
+            animation: fsSliceUp .85s forwards;
+            animation-delay: .15s;
+        }
+
+        html.fs-page-switch-entering .fs-page-loader.fs-first-load .fs-slice-3 {
+            animation: fsSliceUp .85s forwards;
+            animation-delay: .25s;
+        }
+
+        html.fs-page-switch-entering .fs-page-loader.fs-first-load .fs-slice-4 {
+            animation: fsSliceUp .85s forwards;
+            animation-delay: .35s;
+        }
+
+        @keyframes fsSliceDown {
+            from {
+                transform: translateY(-105%) translateZ(0);
+            }
+
+            to {
+                transform: translateY(0) translateZ(0);
+            }
+        }
+
+        @keyframes fsSliceUp {
+            to {
+                transform: translateY(-105%) translateZ(0);
+            }
+        }
+
+        @keyframes fsCenterHide {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        [data-aos] {
+            pointer-events: none;
+        }
+
+        [data-aos].aos-animate {
+            pointer-events: auto;
+        }
+
+        .fs-main-img-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            margin-left: auto;
+            overflow: hidden;
+            border-radius: 28px;
+            opacity: 0;
+            transform: translateX(70px) scaleX(1.12);
+            transform-origin: right center;
+            filter: blur(12px);
+            transition: transform 1.85s cubic-bezier(.16, 1, .3, 1), opacity 1.45s ease, filter 1.45s ease;
+        }
+
+        .fs-main-img-wrap::before {
+            content: "";
+            position: absolute;
+            inset: 8% 8% 5% 12%;
+            border-radius: 34px;
+            background: rgba(19, 155, 69, .16);
+            filter: blur(24px);
+            transform: scale(.8);
+            opacity: 0;
+            transition: transform 1.8s ease .35s, opacity 1.8s ease .35s;
+            z-index: 0;
+        }
+
+        .fs-main-img-wrap::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #ffffff 52%, #eaffef 100%);
+            transform: translateX(0) scaleX(1);
+            transform-origin: right center;
+            transition: transform 1.75s cubic-bezier(.16, 1, .3, 1) .18s;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .fs-main-img-wrap .fs-hero-img {
+            position: relative;
+            z-index: 1;
+            margin-left: 0;
+            clip-path: inset(0 0 0 100%);
+            transform: scale(1.08);
+            transition: clip-path 1.85s cubic-bezier(.16, 1, .3, 1) .12s, transform 1.85s cubic-bezier(.16, 1, .3, 1) .12s;
+        }
+
+        .fs-main-img-wrap.is-visible {
+            opacity: 1;
+            transform: translateX(0) scaleX(1);
+            filter: blur(0);
+        }
+
+        .fs-main-img-wrap.is-visible::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .fs-main-img-wrap.is-visible::after {
+            transform: translateX(-105%) scaleX(.08);
+        }
+
+        .fs-main-img-wrap.is-visible .fs-hero-img {
+            clip-path: inset(0 0 0 0);
+            transform: scale(1);
+            animation: fsMainImgFloat 6.8s ease-in-out 2s infinite;
+        }
+
+        @keyframes fsMainImgFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-9px);
+            }
+        }
+
+        @media(prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+        /* PAGE LOADER SESSION END  */
+
+        /* =====================================
+   FOOD SAVER NAVBAR - CONTACT PAGE
+===================================== */
+
+.fs-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    padding: 10px 0;
+    background: #fff;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .06);
+}
+
+.fs-wide.fs-main-nav {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.fs-logo {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.fs-logo img {
+    display: block;
+    width: 125px;
+    height: auto;
+}
+
+.fs-nav-wrap {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+}
+
+.fs-nav-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.fs-nav-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.fs-nav-menu a {
+    display: inline-block;
+    padding: 8px 0;
+    color: #101828;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: color .3s ease;
+}
+
+.fs-nav-menu a:hover,
+.fs-nav-menu a.active {
+    color: #139b45;
+}
+
+.fs-auth-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.fs-signin-btn,
+.fs-login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 41px;
+    padding: 9px 19px;
+    border: 1px solid #139b45;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: .3s ease;
+}
+
+.fs-signin-btn {
+    color: #139b45;
+    background: #fff;
+}
+
+.fs-signin-btn:hover {
+    color: #fff;
+    background: #139b45;
+}
+
+.fs-login-btn {
+    color: #fff;
+    background: #139b45;
+}
+
+.fs-login-btn:hover {
+    color: #fff;
+    background: #0c7d36;
+    border-color: #0c7d36;
+}
+
+/* HAMBURGER */
+
+.fs-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: #139b45;
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.fs-toggle span {
+    position: absolute;
+    left: 50%;
+    width: 21px;
+    height: 2px;
+    border-radius: 2px;
+    background: #fff;
+    transform: translateX(-50%);
+    transition: .3s ease;
+}
+
+.fs-toggle span:nth-child(1) { top: 13px; }
+.fs-toggle span:nth-child(2) { top: 20px; }
+.fs-toggle span:nth-child(3) { top: 27px; }
+
+.fs-toggle.active span:nth-child(1) {
+    top: 20px;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.fs-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.fs-toggle.active span:nth-child(3) {
+    top: 20px;
+    transform: translateX(-50%) rotate(-45deg);
+}
+
+/* TABLET AND MOBILE */
+
+@media (max-width: 991px) {
+    .fs-wide.fs-main-nav {
+        width: calc(100% - 30px);
+        position: relative;
+        gap: 15px;
+    }
+
+    .fs-toggle {
+        display: block;
+    }
+
+    .fs-nav-wrap {
+        position: absolute;
+        top: calc(100% + 12px);
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        padding: 18px;
+        background: #fff;
+        border: 1px solid #e8f3eb;
+        border-radius: 15px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, .12);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: opacity .3s ease, transform .3s ease,
+                    visibility .3s ease;
+    }
+
+    .fs-nav-wrap.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .fs-nav-menu {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        margin: 0;
+    }
+
+    .fs-nav-menu li,
+    .fs-nav-menu a {
+        display: block;
+        width: 100%;
+    }
+
+    .fs-nav-menu a {
+        padding: 12px 14px;
+        border-radius: 8px;
+        white-space: normal;
+    }
+
+    .fs-nav-menu a:hover,
+    .fs-nav-menu a.active {
+        background: #f0fff4;
+    }
+
+    .fs-auth-actions {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .fs-signin-btn,
+    .fs-login-btn {
+        flex: 1;
+    }
+}
+
+@media (max-width: 575px) {
+    .fs-logo img {
+        width: 105px;
+    }
+
+    .fs-nav-wrap {
+        padding: 15px;
+    }
+
+    .fs-auth-actions {
+        flex-direction: column;
+    }
+
+    .fs-signin-btn,
+    .fs-login-btn {
+        width: 100%;
+    }
+}
+
+/* END NAVBAR CSS */
+
+        /* NAVBAR SESSION END */
+
+        /* HERO SESSION STRT */
+        .fs-hero {
+            padding: 48px 0 35px;
+            overflow: hidden;
+        }
+
+        .fs-label {
+            color: #139b45;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        .fs-hero h1 {
+            font-size: 50px;
+            line-height: 1.05;
+            font-weight: 850;
+            color: #111827;
+            margin-bottom: 18px;
+        }
+
+        .fs-hero p {
+            max-width: 520px;
+            font-size: 16px;
+            line-height: 1.7;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .fs-hero-img {
+            width: 100%;
+            max-width: 520px;
+            display: block;
+            margin-left: auto;
+        }
+
+        @keyframes floatImg {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-10px)
+            }
+        }
+        /* HERO SESSION END */
+
+        /* INFO CARDS SESSION STRT */
+        .fs-info-wrap {
+            background: #defcea88;
+            position: relative;
+            z-index: 2;
+            padding: 40px 0;
+        }
+
+        .fs-info-card {
+            height: 100%;
+            background: #fff;
+            border: 1px solid rgba(19, 155, 69, .10);
+            border-radius: 12px;
+            padding: 26px 15px;
+            text-align: center;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, .06);
+            transition: .35s;
+        }
+
+        .fs-info-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 18px 34px rgba(19, 155, 69, .14);
+        }
+
+        .fs-info-icon {
+            font-size: 31px;
+            color: #139b45;
+            margin-bottom: 13px;
+        }
+
+        .fs-info-card h4 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .fs-info-card p,
+        .fs-info-card a {
+            font-size: 15px;
+            color: #374151;
+            text-decoration: none;
+            margin: 0;
+            line-height: 1.55;
+            font-weight: 500;
+        }
+
+        .fs-contact-section {
+            padding: 38px 0 35px;
+            background: #fff;
+        }
+
+        .fs-box {
+            background: #fff;
+            border: 1px solid rgba(19, 155, 69, .10);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, .055);
+            height: 100%;
+        }
+
+        .fs-box h3 {
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 18px;
+        }
+
+        .fs-form input,
+        .fs-form textarea {
+            width: 100%;
+            border: 1px solid #dce7df;
+            border-radius: 6px;
+            outline: none;
+            padding: 13px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 13px;
+            transition: .3s;
+        }
+
+        .fs-form input:focus,
+        .fs-form textarea:focus {
+            border-color: #139b45;
+            box-shadow: 0 0 0 3px rgba(19, 155, 69, .10);
+        }
+
+        .fs-form textarea {
+            height: 125px;
+            resize: none;
+        }
+
+        .fs-submit {
+            background: #139b45;
+            color: #fff;
+            border: 0;
+            border-radius: 7px;
+            padding: 13px 30px;
+            font-size: 13px;
+            font-weight: 900;
+            transition: .35s;
+        }
+
+        .fs-submit:hover {
+            background: #0c7d36;
+            transform: translateY(-4px);
+        }
+
+        .fs-map {
+            width: 100%;
+            height: 315px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e3f4e8, #f3fbf5);
+            position: relative;
+        }
+
+        .fs-map i {
+            position: absolute;
+            left: 50%;
+            top: 48%;
+            transform: translate(-50%, -50%);
+            color: #139b45;
+            font-size: 45px;
+            filter: drop-shadow(0 5px 8px rgba(0, 0, 0, .25));
+            animation: pinBounce 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pinBounce {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%)
+            }
+
+            50% {
+                transform: translate(-50%, -68%)
+            }
+        }
+
+
+
+        .fs-map iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+            filter: saturate(1.04) contrast(1.02);
+        }
+
+        .fs-map-location {
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            bottom: 14px;
+            background: rgba(255, 255, 255, .94);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 12px;
+            line-height: 1.45;
+            font-weight: 800;
+            color: #111827;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, .12);
+            z-index: 2;
+        }
+
+        .fs-map-location span {
+            color: #139b45;
+            display: block;
+            font-size: 13px;
+        }
+
+        /* FAQ */
+        .fs-faq-section {
+            background: #defcea88;
+            padding: 60px 0;
+        }
+
+        .fs-faq-box {
+            background: #fff;
+            border: 1px solid rgba(19, 155, 69, .10);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, .055);
+        }
+
+        .fs-faq-box h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .fs-faq-item {
+            margin-bottom: 9px;
+        }
+
+        .fs-faq-btn {
+            width: 100%;
+            border: 1px solid #e4eee6;
+            background: #fff;
+            border-radius: 7px;
+            padding: 13px 16px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .fs-faq-btn span {
+            font-size: 21px;
+            color: #111;
+            transition: .3s;
+        }
+
+        .fs-faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease;
+        }
+
+        .fs-faq-answer p {
+            font-size: 13px;
+            color: #475467;
+            line-height: 1.7;
+            font-weight: 600;
+            padding: 10px 14px 4px;
+            margin: 0;
+        }
+
+        .fs-faq-item.active .fs-faq-btn {
+            border-color: #139b45;
+        }
+
+        .fs-faq-item.active .fs-faq-btn span {
+            transform: rotate(45deg);
+            color: #139b45;
+        }
+
+        /* FOOTER SESSION STRT  */
+        .fs-footer {
+            background: #fff;
+            padding-top: 32px;
+            margin-top: auto;
+        }
+
+        .fs-footer-main {
+            padding-bottom: 28px;
+        }
+
+        .fs-footer-logo {
+            width: 145px;
+            margin-bottom: 12px;
+        }
+
+        .fs-footer p {
+            font-size: 14px;
+            color: #344054;
+            line-height: 1.7;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .fs-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .fs-social a {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #139b45;
+            color: #fff !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 13px;
+            transition: .3s;
+        }
+
+        .fs-social a:hover {
+            transform: translateY(-4px);
+            background: #0c7d36;
+        }
+
+        .fs-footer h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 13px;
+        }
+
+        .fs-footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .fs-footer li {
+            margin-bottom: 8px;
+        }
+
+        .fs-footer a {
+            color: #344054;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .fs-footer a:hover {
+            color: #139b45;
+            padding-left: 4px;
+        }
+
+        .fs-footer-bottom {
+            background: #139b45;
+            padding: 13px 0;
+        }
+
+        .fs-footer-bottom p {
+            margin: 0;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .fs-footer-bottom a {
+            color: #fff;
+            font-size: 14px;
+        }
+
+        @media(max-width:991px) {
+            .fs-toggle {
+                display: block
+            }
+
+            .fs-menu {
+                position: absolute;
+                top: 76px;
+                left: 15px;
+                right: 15px;
+                background: #fff;
+                padding: 18px;
+                border-radius: 18px;
+                box-shadow: 0 20px 45px rgba(0, 0, 0, .12);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-15px) scale(.96);
+                transition: .35s;
+            }
+
+            .fs-menu.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0) scale(1);
+            }
+
+            .fs-nav {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .fs-nav li {
+                width: 100%
+            }
+
+            .fs-nav a {
+                display: block;
+                width: 100%;
+                padding: 12px 15px;
+                border-radius: 12px;
+                background: #f0fff4;
+            }
+
+            .fs-login {
+                display: none
+            }
+
+            .fs-hero {
+                text-align: center;
+                padding: 42px 0 45px;
+            }
+
+            .fs-hero h1 {
+                font-size: 42px
+            }
+
+            .fs-hero p {
+                margin: auto
+            }
+
+            .fs-main-img-wrap {
+                margin: 30px auto 0;
+                max-width: 420px;
+            }
+
+            .fs-hero-img {
+                margin: 0 auto;
+                max-width: 420px;
+            }
+
+            .fs-info-wrap {
+                margin-top: 25px
+            }
+        }
+
+        @media(max-width:575px) {
+            .fs-logo img {
+                width: 105px
+            }
+
+            .fs-hero h1 {
+                font-size: 34px
+            }
+
+            .fs-hero p {
+                font-size: 14px
+            }
+
+            .fs-info-card {
+                padding: 22px 12px
+            }
+
+            .fs-box,
+            .fs-faq-box {
+                padding: 18px
+            }
+
+            .fs-map {
+                height: 230px
+            }
+
+            .fs-footer {
+                text-align: center;
+            }
+
+            .fs-social {
+                justify-content: center;
+            }
+
+            .fs-footer-bottom .container {
+                justify-content: center !important;
+                text-align: center;
+            }
+        }
+
+
+        /* FOOTER SESSION END */
+    </style>
+</head>
+
+<body>
+
+    <script>
+        if (sessionStorage.getItem("fsPageSwitching") === "yes") {
+            document.documentElement.classList.add("fs-page-switch-entering");
+        }
+    </script>
+
+    <!-- LOADER ANIMATION STRT  -->
+    <div class="fs-page-loader fs-loader-active fs-first-load" id="fsLoader" aria-hidden="true">
+        <div class="fs-loader-slice fs-slice-1"></div>
+        <div class="fs-loader-slice fs-slice-2"></div>
+        <div class="fs-loader-slice fs-slice-3"></div>
+        <div class="fs-loader-slice fs-slice-4"></div>
+        <div class="fs-loader-center">
+            <img src="images/logo.png" alt="Food Saver">
+        </div>
+    </div>
+    <!-- LOADER ANIMATION END  -->
+
+    <main class="fs-page-main">
+
+        <!-- NAVBAR SESSION STRT  -->
+        
+
+<nav class="fs-navbar">
+    <div class="fs-wide fs-main-nav">
+
+        <a href="index.html" class="fs-logo">
+            <img src="images/logo.png" alt="Food Saver">
+        </a>
+
+        <button class="fs-toggle" id="fsToggle"
+                type="button" aria-label="Toggle navigation"
+                aria-controls="fsMenu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="fs-nav-wrap" id="fsMenu">
+            <ul class="fs-nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div class="fs-auth-actions">
+                <a href="register.html" class="fs-signin-btn">Register</a>
+                <a href="login.html" class="fs-login-btn">Login</a>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+
+              
+        <!-- NAVBAR SESSION END  -->
+
+        <!-- HERO SESSION STRT  -->
+        <section class="fs-hero">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <span class="fs-label" data-aos="fade-down" data-aos-delay="100">Contact Us</span>
+                        <h1 data-aos="fade-up" data-aos-delay="220">We’d love to hear<br>from you!</h1>
+                        <p data-aos="fade-up" data-aos-delay="360">
+                            Have questions, suggestions, or want to collaborate?
+                            Reach out to us. We’re here to help!
+                        </p>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="fs-main-img-wrap" id="fsMainImgWrap">
+                            <img src="images/Contact-Us.png" class="fs-hero-img" alt="Contact Food Saver">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- HERO SESSION END  -->
+
+        <!-- INFO-WRAP SESSION STRT  -->
+        <section class="fs-info-wrap">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-6 col-lg-3">
+                        <div class="fs-info-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="fs-info-icon"><i class="bi bi-telephone-fill"></i></div>
+                            <h4>Call Us</h4>
+                            <p>+92 300 1234567<br>Mon - Sat: 9AM - 6PM</p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3">
+                        <div class="fs-info-card" data-aos="fade-up" data-aos-delay="220">
+                            <div class="fs-info-icon"><i class="bi bi-envelope"></i></div>
+                            <h4>Email Us</h4>
+                            <a href="mailto:info@foodsaver.com">info@foodsaver.com</a>
+                            <p>We reply within 24 hours</p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3">
+                        <div class="fs-info-card" data-aos="fade-up" data-aos-delay="340">
+                            <div class="fs-info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                            <h4>Visit Us</h4>
+                            <p>B-115, 1st Floor,<br>I.I. Chundrigar Road, Karachi</p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3">
+                        <div class="fs-info-card" data-aos="fade-up" data-aos-delay="460">
+                            <div class="fs-info-icon"><i class="bi bi-clock"></i></div>
+                            <h4>Working Hours</h4>
+                            <p>Monday - Saturday<br>9:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- INFO-WRAP SESSION END  -->
+
+        <!-- CONTACT SESSION STRT  -->
+        <section class="fs-contact-section">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="fs-box" data-aos="fade-right" data-aos-delay="120">
+                            <h3>Send Us a Message</h3>
+
+                            <form class="fs-form" id="contactForm" novalidate>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <input type="text" id="contactName" name="name" placeholder="Your Name" autocomplete="name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" id="contactEmail" name="email" placeholder="Your Email" autocomplete="email" required>
+                                    </div>
+                                </div>
+
+                                <input type="text" id="contactSubject" name="subject" placeholder="Subject" required>
+                                <textarea id="contactMessage" name="message" placeholder="Your Message" required></textarea>
+                                <div id="contactMsg" role="status" aria-live="polite" style="display:none;margin:10px 0;padding:10px 14px;border-radius:8px;font-size:14px;font-weight:600;"></div>
+
+                                <button type="submit" class="fs-submit">
+                                    Send Message <i class="bi bi-send ms-2"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="fs-box" data-aos="fade-left" data-aos-delay="260">
+                            <h3>Our Location</h3>
+                            <div class="fs-map">
+                                <iframe
+                                    src="https://www.google.com/maps?q=Aptech%20I.I.%20Chundrigar%20Center%20B-115%201st%20Floor%20Saima%20Trade%20Tower%20I.I.%20Chundrigar%20Road%20Karachi&output=embed"
+                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen>
+                                </iframe>
+                                <div class="fs-map-location">
+                                    <span>Aptech I.I. Chundrigar Center</span>
+                                    B-115, 1st Floor, I.I. Chundrigar Road, Karachi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CONTACT SESSION END  -->
+
+        <!-- FAQS SESSION STRT  -->
+        <section class="fs-faq-section">
+            <div class="container">
+                <div class="fs-faq-box" data-aos="fade-up" data-aos-delay="120">
+                    <h3>Frequently Asked Questions</h3>
+
+                    <div class="fs-faq-item" data-aos="fade-up" data-aos-delay="180">
+                        <button class="fs-faq-btn" type="button">
+                            How can I donate food? <span>+</span>
+                        </button>
+                        <div class="fs-faq-answer">
+                            <p>You can donate food by registering as a donor and submitting available food details
+                                through the platform.</p>
+                        </div>
+                    </div>
+
+                    <div class="fs-faq-item" data-aos="fade-up" data-aos-delay="280">
+                        <button class="fs-faq-btn" type="button">
+                            How do NGOs register on Food Saver? <span>+</span>
+                        </button>
+                        <div class="fs-faq-answer">
+                            <p>NGOs can create an account, verify their organization details, and start requesting
+                                available donations.</p>
+                        </div>
+                    </div>
+
+                    <div class="fs-faq-item" data-aos="fade-up" data-aos-delay="380">
+                        <button class="fs-faq-btn" type="button">
+                            Can I become a volunteer? <span>+</span>
+                        </button>
+                        <div class="fs-faq-answer">
+                            <p>Yes, volunteers can register and help with food pickup, delivery, and community support
+                                tasks.</p>
+                        </div>
+                    </div>
+
+                    <div class="fs-faq-item" data-aos="fade-up" data-aos-delay="480">
+                        <button class="fs-faq-btn" type="button">
+                            How is food pickup and delivery managed? <span>+</span>
+                        </button>
+                        <div class="fs-faq-answer">
+                            <p>Once a donation is approved, nearby volunteers or NGOs coordinate pickup and delivery
+                                through the system.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQS SESSION END  -->
+
+    </main>
+
+    <!-- FOOTER SESSION STRT  -->
+    <footer class="fs-footer">
+        <div class="container">
+            <div class="row g-4 fs-footer-main">
+
+                <div class="col-lg-3 col-md-6">
+                    <img src="images/logo.png" class="fs-footer-logo" alt="Food Saver">
+                    <p>
+                        Connecting surplus food with people in need.
+                        Together we can build a hunger-free world.
+                    </p>
+
+                    <div class="fs-social">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="index.html#works">How It Works</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h4>For Donors</h4>
+                    <ul>
+                        <li><a href="#">Add Donation</a></li>
+                        <li><a href="#">Donation History</a></li>
+                        <li><a href="#">Rewards Program</a></li>
+                        <li><a href="#">Guidelines</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h4>For NGOs</h4>
+                    <ul>
+                        <li><a href="#">Available Donations</a></li>
+                        <li><a href="#">My Requests</a></li>
+                        <li><a href="#">Reports</a></li>
+                        <li><a href="#">Resources</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h4>For Volunteers</h4>
+                    <ul>
+                        <li><a href="#">Become a Volunteer</a></li>
+                        <li><a href="#">My Assignments</a></li>
+                        <li><a href="#">Performance</a></li>
+                        <li><a href="#">Leaderboard</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="fs-footer-bottom">
+            <div class="container d-flex flex-wrap justify-content-between gap-2">
+                <p>© 2026 Food Saver. All rights reserved.</p>
+                <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+            </div>
+        </div>
+    </footer>
+    <!-- FOOTER SESSION END  -->
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // LOADER  SESSION 
+        const fsToggle = document.getElementById("fsToggle");
+        const fsMenu = document.getElementById("fsMenu");
+        const fsLoader = document.getElementById("fsLoader");
+        const fsMainImgWrap = document.getElementById("fsMainImgWrap");
+
+        // AOS ANIMATION STRT 
+        AOS.init({
+            duration: 1800,
+            easing: "ease-out-cubic",
+            offset: 110,
+            delay: 150,
+            once: true,
+            mirror: false
+        });
+
+        // LOADER SESSION 
+        function finishFsLoader(delayTime) {
+            setTimeout(() => {
+                fsLoader.className = "fs-page-loader fs-loader-done";
+                document.documentElement.classList.remove("fs-page-switch-entering");
+
+                setTimeout(() => {
+                    if (fsLoader.classList.contains("fs-loader-done")) {
+                        fsLoader.style.display = "none";
+                    }
+                    AOS.refresh();
+                }, 520);
+            }, delayTime);
+        }
+
+        window.addEventListener("load", () => {
+            const isPageSwitch = sessionStorage.getItem("fsPageSwitching") === "yes";
+
+            if (isPageSwitch) {
+                sessionStorage.removeItem("fsPageSwitching");
+                finishFsLoader(1300);
+            } else {
+                finishFsLoader(5400);
+            }
+        });
+
+        const fsImgObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.34,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        if (fsMainImgWrap) {
+            fsImgObserver.observe(fsMainImgWrap);
+        }
+
+       // NAVBAR TOGGLE
+if (fsToggle && fsMenu) {
+
+    fsToggle.addEventListener("click", () => {
+        const isOpen = fsMenu.classList.toggle("show");
+
+        fsToggle.classList.toggle("active", isOpen);
+        fsToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    // Menu link click hone par mobile menu close hoga
+    fsMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            fsMenu.classList.remove("show");
+            fsToggle.classList.remove("active");
+            fsToggle.setAttribute("aria-expanded", "false");
+        });
+    });
+}
+
+        // CONTACT FORM (validation + feedback; previously did nothing and reloaded the page)
+        const contactForm = document.getElementById("contactForm");
+        if (contactForm) {
+            const contactMsg = document.getElementById("contactMsg");
+            const showContactMsg = (text, ok) => {
+                contactMsg.textContent = text;
+                contactMsg.style.display = "block";
+                contactMsg.style.background = ok ? "#e8f7ed" : "#fdecec";
+                contactMsg.style.color = ok ? "#0c7d36" : "#b42318";
+            };
+
+            contactForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const name = document.getElementById("contactName").value.trim();
+                const email = document.getElementById("contactEmail").value.trim();
+                const subject = document.getElementById("contactSubject").value.trim();
+                const message = document.getElementById("contactMessage").value.trim();
+
+                if (!name || !email || !subject || !message) {
+                    showContactMsg("Please fill in all fields.", false);
+                    return;
+                }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showContactMsg("Please enter a valid email address.", false);
+                    return;
+                }
+                showContactMsg("Thank you, " + name + "! Your message has been sent. We'll get back to you soon.", true);
+                contactForm.reset();
+            });
+        }
+
+        document.querySelectorAll(".fs-faq-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const item = btn.parentElement;
+                const answer = item.querySelector(".fs-faq-answer");
+                const isActive = item.classList.contains("active");
+
+                document.querySelectorAll(".fs-faq-item").forEach((faq) => {
+                    faq.classList.remove("active");
+                    faq.querySelector(".fs-faq-answer").style.maxHeight = null;
+                });
+
+                if (!isActive) {
+                    item.classList.add("active");
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+
+        document.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", function (e) {
+                const href = this.getAttribute("href");
+
+                if (
+                    href &&
+                    href !== "#" &&
+                    !href.startsWith("#") &&
+                    !href.startsWith("tel:") &&
+                    !href.startsWith("mailto:") &&
+                    !href.startsWith("http") &&
+                    !this.hasAttribute("target")
+                ) {
+                    e.preventDefault();
+
+                    sessionStorage.setItem("fsPageSwitching", "yes");
+
+                    fsLoader.style.display = "block";
+                    fsLoader.className = "fs-page-loader";
+                    void fsLoader.offsetWidth;
+                    fsLoader.className = "fs-page-loader fs-loader-active fs-page-exit";
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 1150);
+                }
+            });
+        });
+        
+    </script>
+
+</body>
+
+</html>

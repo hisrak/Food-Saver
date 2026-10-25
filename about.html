@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Food Saver</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        if (sessionStorage.getItem("fsPageSwitching") === "yes") {
+            document.documentElement.classList.add("fs-page-switch-entering");
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            overflow-x: hidden !important;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6fff7;
+            color: #111827;
+        }
+
+        .fsab-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+   
+        .fs-page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            overflow: hidden;
+            background: transparent;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity .65s ease, visibility .65s ease;
+        }
+
+        .fs-page-loader.fs-loader-done {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .fs-loader-center {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #139b45 0%, #16b34f 48%, #0c7d36 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            animation: fsCenterHide .7s forwards;
+            animation-delay: 2.7s;
+        }
+
+        .fs-loader-center img {
+            width: 190px;
+            background: #fff;
+            padding: 18px;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .18);
+        }
+
+        .fs-loader-slice {
+            position: absolute;
+            top: 0;
+            width: 25%;
+            height: 100%;
+            background: linear-gradient(135deg, #0c7d36, #139b45, #1fd160);
+            border-right: 2px solid rgba(255, 255, 255, .16);
+            box-shadow: inset 0 0 45px rgba(0, 0, 0, .12);
+            transform: translateY(0);
+        }
+
+        .fs-slice-1 {
+            left: 0;
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 3s
+        }
+
+        .fs-slice-2 {
+            left: 25%;
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 3.4s
+        }
+
+        .fs-slice-3 {
+            left: 50%;
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 3.8s
+        }
+
+        .fs-slice-4 {
+            left: 75%;
+            border-right: 0;
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 4.2s
+        }
+
+        .fs-page-loader.fs-page-exit {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .fs-page-loader.fs-page-exit .fs-loader-center {
+            display: none;
+        }
+
+        .fs-page-loader.fs-page-exit .fs-loader-slice {
+            transform: translateY(-105%);
+        }
+
+        .fs-page-loader.fs-page-exit .fs-slice-1 {
+            animation: fsSliceDown .82s forwards;
+            animation-delay: 0s
+        }
+
+        .fs-page-loader.fs-page-exit .fs-slice-2 {
+            animation: fsSliceDown .82s forwards;
+            animation-delay: .12s
+        }
+
+        .fs-page-loader.fs-page-exit .fs-slice-3 {
+            animation: fsSliceDown .82s forwards;
+            animation-delay: .24s
+        }
+
+        .fs-page-loader.fs-page-exit .fs-slice-4 {
+            animation: fsSliceDown .82s forwards;
+            animation-delay: .36s
+        }
+
+        html.fs-page-switch-entering .fs-page-loader .fs-loader-center {
+            display: none;
+        }
+
+        html.fs-page-switch-entering .fs-page-loader .fs-loader-slice {
+            transform: translateY(0);
+            animation: none;
+        }
+
+        .fs-page-loader.fs-page-enter {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .fs-page-loader.fs-page-enter .fs-loader-center {
+            display: none;
+        }
+
+        .fs-page-loader.fs-page-enter .fs-loader-slice {
+            transform: translateY(0);
+        }
+
+        .fs-page-loader.fs-page-enter .fs-slice-1 {
+            animation: fsSliceUp .9s forwards;
+            animation-delay: .05s
+        }
+
+        .fs-page-loader.fs-page-enter .fs-slice-2 {
+            animation: fsSliceUp .9s forwards;
+            animation-delay: .15s
+        }
+
+        .fs-page-loader.fs-page-enter .fs-slice-3 {
+            animation: fsSliceUp .9s forwards;
+            animation-delay: .25s
+        }
+
+        .fs-page-loader.fs-page-enter .fs-slice-4 {
+            animation: fsSliceUp .9s forwards;
+            animation-delay: .35s
+        }
+
+        @keyframes fsSliceUp {
+            to {
+                transform: translateY(-105%)
+            }
+        }
+
+        @keyframes fsSliceDown {
+            from {
+                transform: translateY(-105%)
+            }
+
+            to {
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes fsCenterHide {
+            to {
+                opacity: 0;
+                visibility: hidden
+            }
+        }
+
+        /* AOS SMOOTH FEEL */
+        [data-aos] {
+            pointer-events: none;
+        }
+
+        [data-aos].aos-animate {
+            pointer-events: auto;
+        }
+
+        /* MAIN ABOUT IMAGE POPUP ANIMATION */
+        .fsab-hero-img-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 540px;
+            margin-left: auto;
+            transform: scale(.78) translateY(45px);
+            opacity: 0;
+            filter: blur(12px);
+            transition: transform 1.75s cubic-bezier(.16, 1, .3, 1), opacity 1.45s ease, filter 1.45s ease;
+        }
+
+        .fsab-hero-img-wrap.is-visible {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        .fsab-hero-img-wrap::before {
+            content: "";
+            position: absolute;
+            inset: 10% 7% 6% 12%;
+            background: rgba(19, 155, 69, .18);
+            border-radius: 34px;
+            filter: blur(22px);
+            transform: scale(.7);
+            opacity: 0;
+            transition: transform 1.65s ease .35s, opacity 1.65s ease .35s;
+        }
+
+        .fsab-hero-img-wrap.is-visible::before {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+
+        @keyframes fsabHeroFloat {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-10px)
+            }
+        }
+
+        /* OUR STORY JS SLICE IMAGE ANIMATION */
+        .fsab-story-slice-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform 1.35s ease, opacity 1.35s ease;
+        }
+
+        .fsab-story-slice-wrap.is-visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .fsab-story-slice-wrap .fsab-story-img {
+            box-shadow: none;
+            opacity: 0;
+        }
+
+        .fsab-story-slices {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            pointer-events: none;
+        }
+
+        .fsab-story-slice {
+            flex: 1;
+            background-image: var(--slice-img);
+            background-size: 600% 100%;
+            background-repeat: no-repeat;
+            transform: translateY(105%) scale(1.04);
+            opacity: 0;
+            filter: blur(8px);
+        }
+
+        .fsab-story-slice:nth-child(1) {
+            background-position: 0% 50%;
+            transition: transform 1.25s cubic-bezier(.16, 1, .3, 1) .08s, opacity 1.25s ease .08s, filter 1.25s ease .08s
+        }
+
+        .fsab-story-slice:nth-child(2) {
+            background-position: 20% 50%;
+            transition: transform 1.25s cubic-bezier(.16, 1, .3, 1) .22s, opacity 1.25s ease .22s, filter 1.25s ease .22s
+        }
+
+        .fsab-story-slice:nth-child(3) {
+            background-position: 40% 50%;
+            transition: transform 1.25s cubic-bezier(.16, 1, .3, 1) .36s, opacity 1.25s ease .36s, filter 1.25s ease .36s
+        }
+
+        .fsab-story-slice:nth-child(4) {
+            background-position: 60% 50%;
+            transition: transform 1.25s cubic-bezier(.16, 1, .3, 1) .50s, opacity 1.25s ease .50s, filter 1.25s ease .50s
+        }
+
+        .fsab-story-slice:nth-child(5) {
+            background-position: 80% 50%;
+            transition: transform 1.25s cubic-bezier(.16, 1, .3, 1) .64s, opacity 1.25s ease .64s, filter 1.25s ease .64s
+        }
+
+        .fsab-story-slice:nth-child(6) {
+            background-position: 100% 50%;
+            transition: transform 1.25s cubic-bezier(.16, 1, .3, 1) .78s, opacity 1.25s ease .78s, filter 1.25s ease .78s
+        }
+
+        .fsab-story-slice-wrap.is-visible .fsab-story-slice {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+        /* NAVBAR */
+        .fsab-navbar {
+            background: #fff;
+            padding: 10px 0;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, .05);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .fsab-logo img {
+            width: 125px
+        }
+
+        .fsab-nav {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .fsab-nav a {
+            color: #111827;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .fsab-nav a.active,
+        .fsab-nav a:hover {
+            color: #139b45
+        }
+
+        .fsab-login {
+            background: #139b45;
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .fsab-login:hover {
+            background: #0c7d36;
+            color: #fff;
+        }
+
+        .fsab-toggle {
+            width: 42px;
+            height: 42px;
+            border: 0;
+            border-radius: 10px;
+            background: #139b45;
+            display: none;
+            position: relative;
+        }
+
+        .fsab-toggle span {
+            position: absolute;
+            width: 21px;
+            height: 2px;
+            background: #fff;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: .35s;
+        }
+
+        .fsab-toggle span:nth-child(1) {
+            top: 13px
+        }
+
+        .fsab-toggle span:nth-child(2) {
+            top: 20px
+        }
+
+        .fsab-toggle span:nth-child(3) {
+            top: 27px
+        }
+
+        .fsab-toggle.active span:nth-child(1) {
+            top: 20px;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .fsab-toggle.active span:nth-child(2) {
+            opacity: 0
+        }
+
+        .fsab-toggle.active span:nth-child(3) {
+            top: 20px;
+            transform: translateX(-50%) rotate(-45deg);
+        }
+
+        /* HERO */
+        .fsab-hero-section {
+            padding: 75px 0 45px;
+            background-color: #fff;
+            /* background:
+    radial-gradient(circle at 78% 45%,rgba(19,155,69,.18),transparent 30%),
+    linear-gradient(180deg,#fbfffb 0%,#eaffef 100%); */
+            overflow: hidden;
+        }
+
+        .fsab-label {
+            color: #139b45;
+            text-transform: uppercase;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .fsab-hero-title {
+            font-size: 50px;
+            line-height: 1.05;
+            font-weight: 900;
+            margin-bottom: 18px;
+        }
+
+        .fsab-hero-title span {
+            color: #139b45
+        }
+
+        .fsab-hero-text {
+            max-width: 500px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #1f2937;
+            font-weight: 600;
+            margin-bottom: 22px;
+        }
+
+        .fsab-btn {
+            background: #139b45;
+            color: #fff;
+            text-decoration: none;
+            padding: 13px 24px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 900;
+            display: inline-flex;
+            transition: .35s;
+        }
+
+        .fsab-btn:hover {
+            color: #fff;
+            background: #0c7d36;
+            transform: translateY(-4px);
+        }
+
+        .fsab-hero-img {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 540px;
+            display: block;
+            margin-left: auto;
+        }
+
+        /* STORY */
+        .fsab-story-section {
+            background: #defcea88;
+            padding: 70px 0 65px;
+        }
+
+        .fsab-section-title {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .fsab-story-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #344054;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .fsab-story-img {
+            width: 100%;
+            border-radius: 14px;
+            display: block;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
+        }
+
+        /* MISSION */
+        .fsab-mission-section {
+            background: #fff;
+            padding: 65px 0 65px;
+        }
+
+        .fsab-center-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+
+        .fsab-center-title::before,
+        .fsab-center-title::after {
+            content: "";
+            width: 55px;
+            height: 3px;
+            background: #16b34f;
+        }
+
+        .fsab-mission-card {
+            height: 100%;
+            background: linear-gradient(180deg, #f5fff7, #eaffef);
+            border: 1px solid rgba(19, 155, 69, .12);
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .fsab-mission-icon {
+            width: 68px;
+            min-width: 68px;
+            height: 68px;
+            color: #139b45;
+            font-size: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fsab-mission-card h4 {
+            font-size: 22px;
+            font-weight: 750;
+            margin-bottom: 8px;
+        }
+
+        .fsab-mission-card p {
+            font-size: 16px;
+            color: #344054;
+            line-height: 1.7;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* VALUES */
+        .fsab-values-section {
+            background: #defcea88;
+            padding: 60px 0 75px;
+        }
+
+        .fsab-value-item {
+            text-align: center;
+            padding: 12px 18px;
+            height: 100%;
+            border-right: 1px solid #dceee1;
+        }
+
+        .fsab-values-section .col:last-child .fsab-value-item {
+            border-right: 0;
+        }
+
+        .fsab-value-item i {
+            font-size: 34px;
+            color: #139b45;
+            margin-bottom: 12px;
+        }
+
+        .fsab-value-item h4 {
+            font-size: 15px;
+            font-weight: 950;
+            margin-bottom: 8px;
+        }
+
+        .fsab-value-item p {
+            font-size: 12px;
+            color: #344054;
+            line-height: 1.6;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* FOOTER */
+        .fsab-footer {
+            background: #fff;
+            padding-top: 40px;
+            margin-top: auto;
+        }
+
+        .fsab-footer-main {
+            padding-bottom: 30px
+        }
+
+        .fsab-footer-logo {
+            width: 145px;
+            margin-bottom: 12px;
+        }
+
+        .fsab-footer p {
+            font-size: 14px;
+            color: #344054;
+            line-height: 1.7;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .fsab-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .fsab-social a {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #139b45;
+            color: #fff !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .fsab-footer h4 {
+            font-size: 15px;
+            font-weight: 750;
+            margin-bottom: 13px;
+        }
+
+        .fsab-footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .fsab-footer li {
+            margin-bottom: 8px
+        }
+
+        .fsab-footer a {
+            color: #344054;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .fsab-footer a:hover {
+            color: #139b45
+        }
+
+        .fsab-footer-bottom {
+            background: #139b45;
+            padding: 13px 0;
+        }
+
+        .fsab-footer-bottom p,
+        .fsab-footer-bottom a {
+            color: #fff;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:991px) {
+            .fsab-toggle {
+                display: block
+            }
+
+            .fsab-login {
+                display: none
+            }
+
+            .fsab-menu {
+                position: absolute;
+                top: 76px;
+                left: 15px;
+                right: 15px;
+                background: #fff;
+                border-radius: 18px;
+                padding: 18px;
+                box-shadow: 0 20px 45px rgba(0, 0, 0, .12);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-15px) scale(.96);
+                transition: .35s;
+            }
+
+            .fsab-menu.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0) scale(1);
+            }
+
+            .fsab-nav {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .fsab-nav li {
+                width: 100%
+            }
+
+            .fsab-nav a {
+                display: block;
+                padding: 12px 15px;
+                border-radius: 12px;
+                background: #f0fff4;
+            }
+
+            .fsab-hero-section {
+                padding: 60px 0 55px;
+                text-align: center;
+            }
+
+            .fsab-hero-title {
+                font-size: 42px
+            }
+
+            .fsab-hero-text {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .fsab-hero-img-wrap {
+                margin: 30px auto 0;
+                max-width: 450px;
+            }
+
+            .fsab-hero-img {
+                margin: 0 auto;
+                max-width: 450px;
+            }
+
+            .fsab-story-section {
+                padding: 60px 0;
+                text-align: center;
+            }
+
+            .fsab-story-slice-wrap {
+                margin-top: 25px
+            }
+
+            .fsab-mission-section {
+                padding: 55px 0;
+            }
+
+            .fsab-mission-card {
+                text-align: center;
+                flex-direction: column;
+            }
+
+            .fsab-values-section {
+                padding: 55px 0 65px;
+            }
+
+            .fsab-value-item {
+                border-right: 0
+            }
+        }
+
+        @media(max-width:575px) {
+            .fsab-logo img {
+                width: 105px
+            }
+
+            .fsab-hero-title {
+                font-size: 34px
+            }
+
+            .fsab-hero-text {
+                font-size: 14px
+            }
+
+            .fsab-section-title {
+                font-size: 20px
+            }
+
+            .fsab-center-title {
+                font-size: 18px
+            }
+
+            .fsab-center-title::before,
+            .fsab-center-title::after {
+                width: 35px
+            }
+
+            .fsab-footer {
+                text-align: center
+            }
+
+            .fsab-social {
+                justify-content: center
+            }
+
+            .fsab-footer-bottom .container {
+                justify-content: center !important;
+                text-align: center;
+            }
+        }
+
+        /* =========================
+           FOOD SAVER NAVBAR
+        ========================= */
+        .fs-navbar {
+            background: #fff;
+            padding: 10px 0;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, .05);
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+        }
+
+        .fs-wide {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .fs-main-nav {
+            position: relative;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .fs-logo {
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fs-logo img {
+            display: block;
+            width: 125px;
+            height: auto;
+        }
+
+        .fs-nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .fs-nav-menu {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
+
+        .fs-nav-menu a {
+            display: block;
+            color: #111827;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            transition: color .25s ease;
+        }
+
+        .fs-nav-menu a:hover,
+        .fs-nav-menu a.active {
+            color: #139b45;
+        }
+
+        .fs-auth-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-left: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fs-signin-btn,
+        .fs-login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border: 2px solid #139b45;
+            border-radius: 6px;
+            background: #139b45;
+            color: #fff;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 700;
+            transition: .25s ease;
+        }
+
+        .fs-signin-btn:hover,
+        .fs-login-btn:hover {
+            background: #0c7d36;
+            border-color: #0c7d36;
+            color: #fff;
+        }
+
+        .fs-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            position: relative;
+            border: 0;
+            border-radius: 10px;
+            background: #139b45;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .fs-toggle span {
+            position: absolute;
+            width: 21px;
+            height: 2px;
+            left: 50%;
+            background: #fff;
+            transform: translateX(-50%);
+            transition: .3s ease;
+        }
+
+        .fs-toggle span:nth-child(1) { top: 13px; }
+        .fs-toggle span:nth-child(2) { top: 20px; }
+        .fs-toggle span:nth-child(3) { top: 27px; }
+
+        .fs-toggle.active span:nth-child(1) {
+            top: 20px;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .fs-toggle.active span:nth-child(2) { opacity: 0; }
+
+        .fs-toggle.active span:nth-child(3) {
+            top: 20px;
+            transform: translateX(-50%) rotate(-45deg);
+        }
+
+        @media (max-width: 1199px) and (min-width: 992px) {
+            .fs-nav-menu { gap: 15px; }
+            .fs-nav-menu a { font-size: 14px; }
+            .fs-signin-btn,
+            .fs-login-btn { padding: 9px 12px; }
+        }
+
+        @media (max-width: 991px) {
+            .fs-main-nav { flex-wrap: wrap; }
+
+            .fs-toggle {
+                display: block;
+                margin-left: auto;
+            }
+
+            .fs-nav-wrap {
+                display: none;
+                position: absolute;
+                top: calc(100% + 10px);
+                left: 0;
+                right: 0;
+                width: 100%;
+                margin: 0;
+                padding: 18px;
+                background: #fff;
+                border-radius: 14px;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, .12);
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+                z-index: 20;
+            }
+
+            .fs-nav-wrap.show { display: flex; }
+
+            .fs-nav-menu {
+                position: static;
+                transform: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 5px;
+                width: 100%;
+            }
+
+            .fs-nav-menu li { width: 100%; }
+
+            .fs-nav-menu a {
+                padding: 12px 14px;
+                border-radius: 8px;
+                background: #f0fff4;
+            }
+
+            .fs-auth-actions {
+                width: 100%;
+                margin: 5px 0 0;
+                gap: 10px;
+            }
+
+            .fs-signin-btn,
+            .fs-login-btn { flex: 1; }
+        }
+
+        @media (max-width: 575px) {
+            .fs-wide { width: 92%; }
+            .fs-logo img { width: 105px; }
+        }
+
+    </style>
+</head>
+
+<body class="fsab-about-page">
+
+    <div class="fs-page-loader" id="fsLoader" aria-hidden="true">
+        <div class="fs-loader-slice fs-slice-1"></div>
+        <div class="fs-loader-slice fs-slice-2"></div>
+        <div class="fs-loader-slice fs-slice-3"></div>
+        <div class="fs-loader-slice fs-slice-4"></div>
+        <div class="fs-loader-center">
+            <img src="images/logo.png" alt="Food Saver">
+        </div>
+    </div>
+
+    <div class="fsab-page">
+
+       
+<nav class="fs-navbar">
+    <div class="fs-wide fs-main-nav">
+
+        <a href="index.html" class="fs-logo">
+            <img src="images/logo.png" alt="Food Saver">
+        </a>
+
+        <button class="fs-toggle" id="fsToggle"
+                type="button" aria-label="Toggle navigation"
+                aria-controls="fsMenu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="fs-nav-wrap" id="fsMenu">
+            <ul class="fs-nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div class="fs-auth-actions">
+                <a href="register.html" class="fs-signin-btn">Register</a>
+                <a href="login.html" class="fs-login-btn">Login</a>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+
+        <main>
+
+            <section class="fsab-hero-section">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <span class="fsab-label" data-aos="fade-down" data-aos-delay="100">About Us</span>
+
+                            <h1 class="fsab-hero-title" data-aos="fade-up" data-aos-delay="220">
+                                Together, we can<br>
+                                create a world with<br>
+                                <span>Zero Food Waste</span><br>
+                                and Zero Hunger.
+                            </h1>
+
+                            <p class="fsab-hero-text" data-aos="fade-up" data-aos-delay="360">
+                                Food Saver is a digital platform that connects food donors with NGOs and volunteers
+                                to ensure surplus food reaches those who need it most.
+                            </p>
+
+                            <a href="register.html" class="fsab-btn" data-aos="fade-up" data-aos-delay="500">Join Our Mission</a>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="fsab-hero-img-wrap" id="fsabHeroImgWrap">
+                                <img src="images/About-Us.png" class="fsab-hero-img" alt="Food Donation">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="fsab-story-section">
+                <div class="container">
+                    <div class="row align-items-center g-4">
+                        <div class="col-lg-6">
+                            <h2 class="fsab-section-title" data-aos="fade-right">Our Story</h2>
+
+                            <p class="fsab-story-text" data-aos="fade-right" data-aos-delay="120">
+                                Food Saver was founded with a simple idea — that no good food should ever go to waste
+                                while people are hungry.
+                            </p>
+
+                            <p class="fsab-story-text" data-aos="fade-right" data-aos-delay="240">
+                                Every day, tons of edible food is wasted by restaurants, hotels, and businesses.
+                                At the same time, millions struggle to get a proper meal.
+                            </p>
+
+                            <p class="fsab-story-text" data-aos="fade-right" data-aos-delay="360">
+                                We built Food Saver to bridge this gap through technology, community, and compassion.
+                            </p>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="fsab-story-slice-wrap" id="fsabStorySlice"
+                                style="--slice-img:url('images/About-02.png')">
+                                <img src="images/About-02.png" class="fsab-story-img" alt="Food Saver Story">
+                                <div class="fsab-story-slices" aria-hidden="true">
+                                    <span class="fsab-story-slice"></span>
+                                    <span class="fsab-story-slice"></span>
+                                    <span class="fsab-story-slice"></span>
+                                    <span class="fsab-story-slice"></span>
+                                    <span class="fsab-story-slice"></span>
+                                    <span class="fsab-story-slice"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="fsab-mission-section">
+                <div class="container">
+                    <h2 class="fsab-center-title" data-aos="fade-up">Our Mission & Vision</h2>
+
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="fsab-mission-card" data-aos="fade-up" data-aos-delay="120">
+                                <div class="fsab-mission-icon">
+                                    <i class="bi bi-bullseye"></i>
+                                </div>
+
+                                <div>
+                                    <h4>Our Mission</h4>
+                                    <p>
+                                        To reduce food waste and fight hunger by connecting food donors with NGOs and
+                                        volunteers
+                                        through a smart and efficient platform.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="fsab-mission-card" data-aos="fade-up" data-aos-delay="260">
+                                <div class="fsab-mission-icon">
+                                    <i class="bi bi-eye"></i>
+                                </div>
+
+                                <div>
+                                    <h4>Our Vision</h4>
+                                    <p>
+                                        A world where no edible food is wasted and every person has access to safe and
+                                        nutritious meals.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="fsab-values-section">
+                <div class="container">
+                    <h2 class="fsab-center-title" data-aos="fade-up">Our Values</h2>
+
+                    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4">
+                        <div class="col">
+                            <div class="fsab-value-item" data-aos="zoom-in-up" data-aos-delay="100">
+                                <i class="bi bi-heart-fill"></i>
+                                <h4>Compassion</h4>
+                                <p>We care for people and our planet.</p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="fsab-value-item" data-aos="zoom-in-up" data-aos-delay="200">
+                                <i class="bi bi-shield-check"></i>
+                                <h4>Integrity</h4>
+                                <p>We operate with honesty and transparency.</p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="fsab-value-item" data-aos="zoom-in-up" data-aos-delay="300">
+                                <i class="bi bi-people-fill"></i>
+                                <h4>Collaboration</h4>
+                                <p>We believe in the power of working together.</p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="fsab-value-item" data-aos="zoom-in-up" data-aos-delay="400">
+                                <i class="bi bi-tree-fill"></i>
+                                <h4>Sustainability</h4>
+                                <p>We promote practices that protect our environment.</p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="fsab-value-item" data-aos="zoom-in-up" data-aos-delay="500">
+                                <i class="bi bi-bar-chart-line-fill"></i>
+                                <h4>Impact</h4>
+                                <p>We focus on creating measurable change.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="fsab-footer">
+            <div class="container">
+                <div class="row g-4 fsab-footer-main">
+                    <div class="col-lg-3 col-md-6">
+                        <img src="images/logo.png" class="fsab-footer-logo" alt="Food Saver">
+
+                        <p>
+                            Connecting surplus food with people in need.
+                            Together we can build a hunger-free world.
+                        </p>
+
+                        <div class="fsab-social">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="index.html#works">How It Works</a></li>
+                            <li><a href="index.html#services">Services</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6">
+                        <h4>For Donors</h4>
+                        <ul>
+                            <li><a href="#">Add Donation</a></li>
+                            <li><a href="#">Donation History</a></li>
+                            <li><a href="#">Rewards Program</a></li>
+                            <li><a href="#">Guidelines</a></li>
+                            <li><a href="#">Support</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6">
+                        <h4>For NGOs</h4>
+                        <ul>
+                            <li><a href="#">Available Donations</a></li>
+                            <li><a href="#">My Requests</a></li>
+                            <li><a href="#">Reports</a></li>
+                            <li><a href="#">Resources</a></li>
+                            <li><a href="#">Support</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <h4>For Volunteers</h4>
+                        <ul>
+                            <li><a href="#">Become a Volunteer</a></li>
+                            <li><a href="#">My Assignments</a></li>
+                            <li><a href="#">Performance</a></li>
+                            <li><a href="#">Leaderboard</a></li>
+                            <li><a href="#">Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fsab-footer-bottom">
+                <div class="container d-flex flex-wrap justify-content-between gap-2">
+                    <p>© 2026 Food Saver. All rights reserved.</p>
+                    <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        const fsabToggle = document.getElementById("fsToggle");
+        const fsabMenu = document.getElementById("fsMenu");
+        const fsLoader = document.getElementById("fsLoader");
+        const fsabHeroImgWrap = document.getElementById("fsabHeroImgWrap");
+        const fsabStorySlice = document.getElementById("fsabStorySlice");
+
+        if (fsabToggle && fsabMenu) {
+            fsabToggle.addEventListener("click", () => {
+                const isOpen = fsabMenu.classList.toggle("show");
+                fsabToggle.classList.toggle("active", isOpen);
+                fsabToggle.setAttribute("aria-expanded", String(isOpen));
+            });
+
+            fsabMenu.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", () => {
+                    fsabMenu.classList.remove("show");
+                    fsabToggle.classList.remove("active");
+                    fsabToggle.setAttribute("aria-expanded", "false");
+                });
+            });
+        }
+
+        AOS.init({
+            duration: 1700,
+            easing: "ease-out-cubic",
+            offset: 105,
+            delay: 140,
+            once: true,
+            mirror: false
+        });
+
+        function revealAboutPage() {
+            AOS.refresh();
+
+            setTimeout(() => {
+                if (fsabHeroImgWrap) {
+                    fsabHeroImgWrap.classList.add("is-visible");
+                }
+            }, 260);
+        }
+
+        function resetLoaderAnimations() {
+            const loaderParts = fsLoader.querySelectorAll(".fs-loader-center,.fs-loader-slice");
+            loaderParts.forEach(part => {
+                part.style.animation = "none";
+                void part.offsetWidth;
+                part.style.animation = "";
+            });
+        }
+
+        window.addEventListener("load", () => {
+            const isPageSwitch = sessionStorage.getItem("fsPageSwitching");
+
+            if (isPageSwitch === "yes") {
+                sessionStorage.removeItem("fsPageSwitching");
+                document.documentElement.classList.remove("fs-page-switch-entering");
+
+                fsLoader.className = "fs-page-loader fs-page-enter";
+                resetLoaderAnimations();
+
+                setTimeout(() => {
+                    fsLoader.className = "fs-page-loader fs-loader-done";
+                    revealAboutPage();
+                }, 1450);
+            } else {
+                setTimeout(() => {
+                    fsLoader.classList.add("fs-loader-done");
+                    revealAboutPage();
+                }, 5600);
+            }
+        });
+
+        const fsabObserverOptions = {
+            threshold: 0.32,
+            rootMargin: "0px 0px -60px 0px"
+        };
+
+        const fsabCustomObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, fsabObserverOptions);
+
+        if (fsabStorySlice) {
+            fsabCustomObserver.observe(fsabStorySlice);
+        }
+
+        document.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", function (e) {
+                const href = this.getAttribute("href");
+
+                if (
+                    href &&
+                    href !== "#" &&
+                    !href.startsWith("#") &&
+                    !href.startsWith("tel:") &&
+                    !href.startsWith("mailto:") &&
+                    !href.startsWith("http") &&
+                    !this.hasAttribute("target")
+                ) {
+                    e.preventDefault();
+
+                    sessionStorage.setItem("fsPageSwitching", "yes");
+                    fsLoader.className = "fs-page-loader fs-page-exit";
+                    resetLoaderAnimations();
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 1150);
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

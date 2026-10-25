@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>How It Works | Food Saver</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<style>
+   /* ========================================
+   BASIC CSS
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+    color: #101828;
+}
+
+
+/* ========================================
+   NAVBAR START
+======================================== */
+
+.fs-navbar {
+    width: 100%;
+    background: #ffffff;
+    padding: 10px 0;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+
+    position: sticky;
+    top: 0;
+
+    z-index: 999;
+}
+
+.fs-logo img {
+    width: 125px;
+}
+
+.fs-nav {
+    display: flex;
+    align-items: center;
+
+    gap: 28px;
+
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+.fs-nav a {
+    text-decoration: none;
+
+    color: #101828;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    transition: 0.3s;
+}
+
+.fs-nav a:hover,
+.fs-nav a.active {
+    color: #139b45;
+}
+
+
+/* LOGIN BUTTON */
+
+.fs-login {
+    background: #139b45;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    padding: 10px 25px;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition: 0.3s;
+}
+
+.fs-login:hover {
+    background: #0c7d36;
+
+    color: #ffffff;
+}
+
+
+/* MOBILE TOGGLE */
+
+.fs-toggle {
+    width: 42px;
+    height: 42px;
+
+    border: none;
+
+    background: #139b45;
+
+    border-radius: 10px;
+
+    display: none;
+
+    position: relative;
+}
+
+.fs-toggle span {
+    position: absolute;
+
+    width: 21px;
+    height: 2px;
+
+    background: #ffffff;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    transition: 0.35s;
+}
+
+.fs-toggle span:nth-child(1) {
+    top: 13px;
+}
+
+.fs-toggle span:nth-child(2) {
+    top: 20px;
+}
+
+.fs-toggle span:nth-child(3) {
+    top: 27px;
+}
+
+.fs-toggle.active span:nth-child(1) {
+    top: 20px;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+}
+
+.fs-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.fs-toggle.active span:nth-child(3) {
+    top: 20px;
+
+    transform:
+        translateX(-50%)
+        rotate(-45deg);
+}
+
+
+/* ========================================
+   HOW IT WORKS HERO START
+======================================== */
+
+.fs-how-hero {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 90px 0 80px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #effff4 0%,
+            #ffffff 55%,
+            #dff9e8 100%
+        );
+}
+
+
+/* BACKGROUND CIRCLE LEFT */
+
+.fs-how-hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(19, 155, 69, 0.10);
+
+    top: -170px;
+    left: -120px;
+}
+
+
+/* BACKGROUND CIRCLE RIGHT */
+
+.fs-how-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(19, 155, 69, 0.08);
+
+    bottom: -160px;
+    right: -100px;
+}
+
+
+/* HERO CONTENT */
+
+.fs-how-hero .container {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* SMALL TAG */
+
+.fs-how-tag {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #139b45;
+
+    background: #ffffff;
+
+    border:
+        1px solid
+        rgba(19, 155, 69, 0.18);
+
+    padding: 10px 18px;
+
+    border-radius: 50px;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 10px 25px
+        rgba(19, 155, 69, 0.08);
+}
+
+
+/* HERO HEADING */
+
+.fs-how-hero h1 {
+    font-size: 55px;
+
+    line-height: 1.08;
+
+    font-weight: 900;
+
+    color: #111827;
+
+    margin-bottom: 20px;
+}
+
+.fs-how-hero h1 span {
+    color: #139b45;
+}
+
+
+/* HERO PARAGRAPH */
+
+.fs-how-hero p {
+    max-width: 560px;
+
+    color: #475467;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    font-weight: 600;
+
+    margin-bottom: 28px;
+}
+
+
+/* HERO BUTTON */
+
+.fs-how-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background: #139b45;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    padding: 14px 26px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    transition: 0.35s;
+
+    box-shadow:
+        0 12px 25px
+        rgba(19, 155, 69, 0.20);
+}
+
+.fs-how-btn:hover {
+    background: #0c7d36;
+
+    color: #ffffff;
+
+    transform:
+        translateY(-4px);
+}
+
+
+/* ========================================
+   HERO IMAGE
+======================================== */
+
+.fs-how-image-box {
+    position: relative;
+
+    max-width: 520px;
+
+    margin-left: auto;
+}
+
+.fs-how-image {
+    width: 100%;
+
+    display: block;
+
+    position: relative;
+
+    z-index: 2;
+
+    animation:
+        fsImageFloat
+        5s
+        ease-in-out
+        infinite;
+}
+
+
+/* IMAGE BACKGROUND CIRCLE */
+
+.fs-image-circle {
+    position: absolute;
+
+    width: 90%;
+    height: 90%;
+
+    border-radius: 50%;
+
+    background: #dff9e8;
+
+    top: 5%;
+    left: 5%;
+
+    z-index: 1;
+}
+
+
+/* IMAGE FLOAT ANIMATION */
+
+@keyframes fsImageFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-12px);
+    }
+
+}
+
+
+/* ========================================
+   TABLET RESPONSIVE
+======================================== */
+
+@media (max-width: 991px) {
+
+    .fs-toggle {
+        display: block;
+    }
+
+
+    .fs-menu {
+        position: absolute;
+
+        top: 76px;
+
+        left: 15px;
+        right: 15px;
+
+        background: #ffffff;
+
+        padding: 18px;
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 20px 45px
+            rgba(0, 0, 0, 0.12);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        transform:
+            translateY(-15px)
+            scale(0.96);
+
+        transition: 0.35s;
+    }
+
+
+    .fs-menu.show {
+        opacity: 1;
+
+        visibility: visible;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+
+    .fs-nav {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    .fs-nav li {
+        width: 100%;
+    }
+
+
+    .fs-nav a {
+        display: block;
+
+        width: 100%;
+
+        padding: 12px 15px;
+
+        border-radius: 12px;
+
+        background: #f0fff4;
+    }
+
+
+    .fs-login {
+        display: none;
+    }
+
+
+    /* HERO */
+
+    .fs-how-hero {
+        text-align: center;
+
+        padding: 70px 0;
+    }
+
+
+    .fs-how-hero h1 {
+        font-size: 46px;
+    }
+
+
+    .fs-how-hero p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .fs-how-image-box {
+        margin: 50px auto 0;
+
+        max-width: 450px;
+    }
+
+}
+
+
+/* ========================================
+   MOBILE RESPONSIVE
+======================================== */
+
+@media (max-width: 575px) {
+
+    .fs-logo img {
+        width: 105px;
+    }
+
+
+    .fs-how-hero {
+        padding: 55px 0;
+    }
+
+
+    .fs-how-hero h1 {
+        font-size: 36px;
+    }
+
+
+    .fs-how-hero p {
+        font-size: 14px;
+    }
+
+
+    .fs-how-tag {
+        font-size: 12px;
+
+        padding: 8px 14px;
+    }
+
+
+    .fs-how-image-box {
+        margin-top: 35px;
+    }
+
+}
+/* =========================================
+   PART 2(B) - PROCESS SECTION START
+========================================= */
+
+.fs-process-section {
+    position: relative;
+    padding: 90px 0;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+
+/* Light Background Shapes */
+
+.fs-process-section::before {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    left: -160px;
+    top: 80px;
+    border-radius: 50%;
+    background: rgba(19, 155, 69, 0.07);
+}
+
+.fs-process-section::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    right: -130px;
+    bottom: 40px;
+    border-radius: 50%;
+    background: rgba(19, 155, 69, 0.07);
+}
+
+
+/* Container Content */
+
+.fs-process-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Heading */
+
+.fs-process-heading {
+    max-width: 720px;
+    margin: 0 auto 55px;
+}
+
+
+.fs-process-label {
+    display: inline-block;
+    color: #139b45;
+    background: rgba(19, 155, 69, 0.10);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 17px;
+}
+
+
+.fs-process-heading h2 {
+    color: #111827;
+    font-size: 42px;
+    font-weight: 850;
+    line-height: 1.15;
+    margin-bottom: 17px;
+}
+
+
+.fs-process-heading p {
+    max-width: 650px;
+    margin: auto;
+    color: #475467;
+    font-size: 16px;
+    line-height: 1.8;
+    font-weight: 500;
+}
+
+
+/* Process Card */
+
+.fs-process-card {
+    position: relative;
+    height: 100%;
+    min-height: 330px;
+    background: #ffffff;
+    border: 1px solid rgba(19, 155, 69, 0.12);
+    border-radius: 22px;
+    padding: 45px 25px 30px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(16, 24, 40, 0.07);
+    overflow: hidden;
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
+}
+
+
+/* Green Bottom Line */
+
+.fs-process-card::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 5px;
+    background: #139b45;
+    border-radius: 10px 10px 0 0;
+    transform: translateX(-50%);
+    transition: width 0.4s ease;
+}
+
+
+/* Card Hover */
+
+.fs-process-card:hover {
+    transform: translateY(-12px);
+    border-color: rgba(19, 155, 69, 0.35);
+    box-shadow: 0 25px 55px rgba(19, 155, 69, 0.16);
+}
+
+
+.fs-process-card:hover::after {
+    width: 100%;
+}
+
+
+/* Step Number */
+
+.fs-step-number {
+    position: absolute;
+    top: 17px;
+    right: 18px;
+    color: rgba(19, 155, 69, 0.13);
+    font-size: 43px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+
+/* Icon Box */
+
+.fs-process-icon {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 24px;
+    border-radius: 22px;
+    background: #eaffef;
+    color: #139b45;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 37px;
+
+    transition:
+        transform 0.4s ease,
+        background 0.4s ease,
+        color 0.4s ease;
+}
+
+
+/* Icon Hover */
+
+.fs-process-card:hover .fs-process-icon {
+    background: #139b45;
+    color: #ffffff;
+    transform: rotate(-7deg) scale(1.08);
+}
+
+
+/* Card Title */
+
+.fs-process-card h3 {
+    color: #111827;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 13px;
+}
+
+
+/* Card Paragraph */
+
+.fs-process-card p {
+    color: #667085;
+    font-size: 14px;
+    line-height: 1.75;
+    font-weight: 500;
+    margin: 0;
+}
+
+
+/* Bottom Message */
+
+.fs-process-bottom {
+    max-width: 780px;
+    margin: 60px auto 0;
+    padding: 22px 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #139b45,
+            #0c7d36
+        );
+
+    border-radius: 18px;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 18px 40px
+        rgba(19, 155, 69, 0.24);
+}
+
+
+/* Bottom Heart Icon */
+
+.fs-process-bottom-icon {
+    flex-shrink: 0;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.18);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 26px;
+}
+
+
+/* Bottom Heading */
+
+.fs-process-bottom h4 {
+    font-size: 19px;
+    font-weight: 800;
+    margin: 0 0 5px;
+}
+
+
+/* Bottom Paragraph */
+
+.fs-process-bottom p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   TABLET RESPONSIVE
+========================================= */
+
+@media (max-width: 991px) {
+
+    .fs-process-section {
+        padding: 75px 0;
+    }
+
+
+    .fs-process-heading h2 {
+        font-size: 37px;
+    }
+
+
+    .fs-process-card {
+        min-height: 310px;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 575px) {
+
+    .fs-process-section {
+        padding: 60px 0;
+    }
+
+
+    .fs-process-heading {
+        margin-bottom: 38px;
+    }
+
+
+    .fs-process-label {
+        font-size: 11px;
+        padding: 7px 14px;
+    }
+
+
+    .fs-process-heading h2 {
+        font-size: 31px;
+    }
+
+
+    .fs-process-heading p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+
+    .fs-process-card {
+        min-height: auto;
+        padding: 40px 20px 28px;
+    }
+
+
+    .fs-process-icon {
+        width: 74px;
+        height: 74px;
+        font-size: 33px;
+        border-radius: 19px;
+    }
+
+
+    .fs-process-card h3 {
+        font-size: 19px;
+    }
+
+
+    .fs-process-bottom {
+        margin-top: 40px;
+        padding: 22px 18px;
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 12px;
+    }
+
+
+    .fs-process-bottom h4 {
+        font-size: 17px;
+    }
+
+
+    .fs-process-bottom p {
+        font-size: 13px;
+    }
+
+}
+
+
+/* =========================================
+   PART 2(B) - PROCESS SECTION END
+========================================= */
+
+/* =====================================
+PART 2(C) FOOTER START
+===================================== */
+
+
+.fs-footer {
+
+    background:#ffffff;
+
+    padding-top:40px;
+
+    margin-top:auto;
+
+}
+
+
+
+.fs-footer-main{
+
+    padding-bottom:35px;
+
+}
+
+
+
+.fs-footer-logo{
+
+    width:145px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.fs-footer p{
+
+    color:#475467;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    font-weight:500;
+
+}
+
+
+
+.fs-social{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+
+
+.fs-social a{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    background:#139b45;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+}
+
+
+
+.fs-social a:hover{
+
+    background:#0c7d36;
+
+    transform:translateY(-5px);
+
+}
+
+
+
+
+.fs-footer h4{
+
+    font-size:17px;
+
+    font-weight:800;
+
+    color:#111827;
+
+    margin-bottom:18px;
+
+}
+
+
+
+.fs-footer ul{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+
+
+.fs-footer li{
+
+    margin-bottom:10px;
+
+}
+
+
+
+.fs-footer a{
+
+    text-decoration:none;
+
+    color:#475467;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+
+.fs-footer a:hover{
+
+    color:#139b45;
+
+    padding-left:5px;
+
+}
+
+
+
+
+/* Bottom */
+
+
+.fs-footer-bottom{
+
+    background:#139b45;
+
+    padding:15px 0;
+
+}
+
+
+
+.fs-footer-bottom p{
+
+    color:white;
+
+    margin:0;
+
+}
+
+
+
+.fs-footer-bottom a{
+
+    color:white;
+
+}
+
+
+
+/* SCROLL BUTTON */
+
+
+.fs-scroll-top{
+
+
+    position:fixed;
+
+
+    right:25px;
+
+    bottom:25px;
+
+
+    width:48px;
+
+    height:48px;
+
+
+    border:none;
+
+
+    border-radius:50%;
+
+
+    background:#139b45;
+
+
+    color:white;
+
+
+    font-size:22px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+    cursor:pointer;
+
+
+    opacity:0;
+
+    visibility:hidden;
+
+
+    transform:translateY(20px);
+
+
+    transition:.35s;
+
+
+    z-index:999;
+
+
+    box-shadow:
+    0 12px 25px rgba(19,155,69,.3);
+
+
+}
+
+
+
+.fs-scroll-top.show{
+
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+
+
+.fs-scroll-top:hover{
+
+
+    background:#0c7d36;
+
+
+    transform:translateY(-5px);
+
+
+}
+
+
+
+/* MOBILE */
+
+
+@media(max-width:575px){
+
+
+.fs-footer{
+
+    text-align:center;
+
+}
+
+
+
+.fs-social{
+
+    justify-content:center;
+
+}
+
+
+
+.fs-footer-bottom .container{
+
+    justify-content:center!important;
+
+    text-align:center;
+
+    gap:10px;
+
+}
+
+
+
+}
+/* =====================================
+   HOW IT WORKS - NAVBAR FIX
+===================================== */
+
+.fs-navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: 10px 0;
+    background: #ffffff;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    z-index: 9999;
+}
+
+.fs-wide.fs-main-nav {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.fs-logo {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.fs-logo img {
+    display: block;
+    width: 125px;
+    height: auto;
+}
+
+.fs-nav-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.fs-nav-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.fs-nav-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.fs-nav-menu a {
+    display: inline-block;
+    text-decoration: none;
+    color: #101828;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+.fs-nav-menu a:hover,
+.fs-nav-menu a.active {
+    color: #139b45;
+}
+
+.fs-auth-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.fs-signin-btn,
+.fs-login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 20px;
+    border: 2px solid #139b45;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.fs-signin-btn {
+    color: #139b45;
+    background: #ffffff;
+}
+
+.fs-signin-btn:hover {
+    color: #ffffff;
+    background: #139b45;
+}
+
+.fs-login-btn {
+    color: #ffffff;
+    background: #139b45;
+}
+
+.fs-login-btn:hover {
+    color: #ffffff;
+    background: #0c7d36;
+    border-color: #0c7d36;
+}
+
+/* Hamburger button */
+
+.fs-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* TABLET AND MOBILE */
+
+@media (max-width: 991px) {
+    .fs-wide.fs-main-nav {
+        width: calc(100% - 30px);
+        position: relative;
+        gap: 15px;
+    }
+
+    .fs-toggle {
+        display: block;
+    }
+
+    .fs-nav-wrap {
+        position: absolute;
+        top: calc(100% + 15px);
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        padding: 20px;
+        background: #ffffff;
+        border: 1px solid #e8f3eb;
+        border-radius: 14px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease,
+                    visibility 0.3s ease;
+    }
+
+    .fs-nav-wrap.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .fs-nav-menu {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        margin: 0;
+    }
+
+    .fs-nav-menu li,
+    .fs-nav-menu a {
+        display: block;
+        width: 100%;
+    }
+
+    .fs-nav-menu a {
+        padding: 12px 14px;
+        border-radius: 8px;
+        white-space: normal;
+    }
+
+    .fs-nav-menu a:hover,
+    .fs-nav-menu a.active {
+        background: #effaf2;
+    }
+
+    .fs-auth-actions {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .fs-signin-btn,
+    .fs-login-btn {
+        flex: 1;
+    }
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 575px) {
+    .fs-logo img {
+        width: 105px;
+    }
+
+    .fs-nav-wrap {
+        padding: 15px;
+    }
+
+    .fs-auth-actions {
+        flex-direction: column;
+    }
+
+    .fs-signin-btn,
+    .fs-login-btn {
+        width: 100%;
+    }
+}
+
+
+/* =====================================
+PART 2(C) FOOTER END
+===================================== */
+</style>
+</head>
+
+<body>
+
+   
+<nav class="fs-navbar">
+    <div class="fs-wide fs-main-nav">
+
+        <a href="index.html" class="fs-logo">
+            <img src="images/logo.png" alt="Food Saver">
+        </a>
+
+        <button class="fs-toggle" id="fsToggle"
+                type="button" aria-label="Toggle navigation"
+                aria-controls="fsMenu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="fs-nav-wrap" id="fsMenu">
+            <ul class="fs-nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div class="fs-auth-actions">
+                <a href="register.html" class="fs-signin-btn">Register</a>
+                <a href="login.html" class="fs-login-btn">Login</a>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+<!-- NAVBAR END -->
+
+
+    <!-- HOW IT WORKS HERO START -->
+    <section class="fs-how-hero">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <!-- HERO TEXT -->
+                <div class="col-lg-6">
+
+                    <div data-aos="fade-right" data-aos-delay="100">
+
+                        <div class="fs-how-tag">
+
+                            <i class="bi bi-diagram-3-fill"></i>
+
+                            SIMPLE & SMART PROCESS
+
+                        </div>
+
+
+                        <h1>
+
+                            How
+
+                            <span>Food Saver</span>
+
+                            Works
+
+                        </h1>
+
+
+                        <p>
+
+                            Food Saver makes it easy to connect
+                            surplus food with people who need it.
+
+                            Our simple process helps donors,
+                            NGOs, and volunteers work together
+                            to reduce food waste and fight hunger.
+
+                        </p>
+
+
+                        <a href="#steps" class="fs-how-btn">
+
+                            Explore the Process
+
+                            <i class="bi bi-arrow-down"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HERO IMAGE -->
+                <div class="col-lg-6">
+
+                    <div class="fs-how-image-box"
+                         data-aos="zoom-in"
+                         data-aos-delay="250">
+
+                        <div class="fs-image-circle"></div>
+
+
+                        <img
+                            src="images/how-it-works.png"
+                            class="fs-how-image"
+                            alt="How Food Saver Works">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- HOW IT WORKS HERO END -->
+
+<!-- HOW IT WORKS PROCESS SECTION START -->
+<section class="fs-process-section" id="steps">
+    <div class="container">
+
+        <!-- Section Heading -->
+        <div class="fs-process-heading text-center"
+            data-aos="fade-up"
+            data-aos-delay="100">
+
+            <span class="fs-process-label">
+                SIMPLE PROCESS
+            </span>
+
+            <h2>
+                How Food Saver Works
+            </h2>
+
+            <p>
+                Our simple process connects food donors,
+                NGOs, and volunteers to make sure surplus
+                food reaches people who need it.
+            </p>
+
+        </div>
+
+
+        <!-- Process Cards -->
+        <div class="row g-4 justify-content-center">
+
+            <!-- STEP 01 -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="fs-process-card"
+                    data-aos="fade-up"
+                    data-aos-delay="150">
+
+                    <div class="fs-step-number">
+                        01
+                    </div>
+
+                    <div class="fs-process-icon">
+                        <i class="bi bi-basket2-fill"></i>
+                    </div>
+
+                    <h3>
+                        Donate Food
+                    </h3>
+
+                    <p>
+                        Donors add details about their
+                        available surplus food through
+                        the Food Saver platform.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 02 -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="fs-process-card"
+                    data-aos="fade-up"
+                    data-aos-delay="280">
+
+                    <div class="fs-step-number">
+                        02
+                    </div>
+
+                    <div class="fs-process-icon">
+                        <i class="bi bi-clipboard-check-fill"></i>
+                    </div>
+
+                    <h3>
+                        Food Verification
+                    </h3>
+
+                    <p>
+                        The food information is checked
+                        and verified before it becomes
+                        available for NGOs.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 03 -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="fs-process-card"
+                    data-aos="fade-up"
+                    data-aos-delay="410">
+
+                    <div class="fs-step-number">
+                        03
+                    </div>
+
+                    <div class="fs-process-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+
+                    <h3>
+                        NGO Accepts Request
+                    </h3>
+
+                    <p>
+                        Nearby NGOs can view available
+                        food and send a request to
+                        receive the donation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 04 -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="fs-process-card"
+                    data-aos="fade-up"
+                    data-aos-delay="540">
+
+                    <div class="fs-step-number">
+                        04
+                    </div>
+
+                    <div class="fs-process-icon">
+                        <i class="bi bi-truck"></i>
+                    </div>
+
+                    <h3>
+                        Food Delivered
+                    </h3>
+
+                    <p>
+                        Volunteers help collect and
+                        deliver the food safely to
+                        people in need.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Bottom Message -->
+        <div class="fs-process-bottom"
+            data-aos="zoom-in"
+            data-aos-delay="250">
+
+            <div class="fs-process-bottom-icon">
+                <i class="bi bi-heart-fill"></i>
+            </div>
+
+            <div>
+                <h4>
+                    Together, We Can Reduce Food Waste
+                </h4>
+
+                <p>
+                    Every donation can make a meaningful
+                    difference in someone’s life.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<!-- HOW IT WORKS PROCESS SECTION END -->
+
+<!-- FOOTER START -->
+
+<footer class="fs-footer">
+
+    <div class="container">
+
+        <div class="row g-4 fs-footer-main">
+
+
+            <!-- LOGO AREA -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <img src="images/logo.png"
+                     class="fs-footer-logo"
+                     alt="Food Saver">
+
+
+                <p>
+                    Connecting surplus food with people
+                    in need. Together we can build a
+                    hunger-free world.
+                </p>
+
+
+                <div class="fs-social">
+
+                    <a href="#">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+
+
+                    <a href="#">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+
+
+                    <a href="#">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+
+
+                    <a href="#">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="col-lg-2 col-md-6">
+
+                <h4>
+                    Quick Links
+                </h4>
+
+
+                <ul>
+
+                    <li>
+                        <a href="index.html">
+                            Home
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="about.html">
+                            About
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="how-it-works.html">
+                            How It Works
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="services.html">
+                            Services
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="contact.html">
+                            Contact
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+
+
+            <!-- DONOR -->
+
+            <div class="col-lg-2 col-md-6">
+
+                <h4>
+                    For Donors
+                </h4>
+
+
+                <ul>
+
+                    <li>
+                        <a href="#">
+                            Add Donation
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Donation History
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Rewards Program
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Guidelines
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Support
+                        </a>
+                    </li>
+
+                </ul>
+
+
+            </div>
+
+
+
+
+            <!-- NGO -->
+
+            <div class="col-lg-2 col-md-6">
+
+                <h4>
+                    For NGOs
+                </h4>
+
+
+                <ul>
+
+                    <li>
+                        <a href="#">
+                            Available Food
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Requests
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Reports
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Resources
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Support
+                        </a>
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+
+
+            <!-- VOLUNTEER -->
+
+
+            <div class="col-lg-3 col-md-6">
+
+
+                <h4>
+                    For Volunteers
+                </h4>
+
+
+                <ul>
+
+
+                    <li>
+                        <a href="#">
+                            Become Volunteer
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Assignments
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Performance
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Leaderboard
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            Support
+                        </a>
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- FOOTER BOTTOM -->
+
+
+    <div class="fs-footer-bottom">
+
+
+        <div class="container 
+        d-flex flex-wrap 
+        justify-content-between">
+
+
+            <p>
+                © 2026 Food Saver.
+                All rights reserved.
+            </p>
+
+
+            <p>
+
+                <a href="#">
+                    Privacy Policy
+                </a>
+
+                |
+
+                <a href="#">
+                    Terms & Conditions
+                </a>
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</footer>
+
+
+<!-- SCROLL TOP BUTTON -->
+
+
+<button id="fsScrollTop"
+        class="fs-scroll-top">
+
+    <i class="bi bi-arrow-up"></i>
+
+</button>
+
+
+<!-- FOOTER END -->
+
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- OUR JS -->
+    <script >
+        /* AOS ANIMATION */
+
+AOS.init({
+
+    duration: 1200,
+
+    easing: "ease-out-cubic",
+
+    once: true
+
+});
+
+
+/* MOBILE MENU */
+
+const fsToggle =
+    document.getElementById("fsToggle");
+
+
+const fsMenu =
+    document.getElementById("fsMenu");
+
+
+fsToggle.addEventListener(
+    "click",
+
+    function () {
+
+        fsToggle.classList.toggle(
+            "active"
+        );
+
+
+        fsMenu.classList.toggle(
+            "show"
+        );
+
+    }
+
+);
+
+/* CLOSE MOBILE MENU ON LINK CLICK */
+fsMenu.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+        fsMenu.classList.remove("show");
+        fsToggle.classList.remove("active");
+        fsToggle.setAttribute("aria-expanded", "false");
+    });
+});
+
+/* SCROLL TO TOP BUTTON */
+const fsScrollTop = document.getElementById("fsScrollTop");
+if (fsScrollTop) {
+    window.addEventListener("scroll", function () {
+        fsScrollTop.classList.toggle("show", window.scrollY > 400);
+    });
+    fsScrollTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
+
+
+
+    </script>
+
+</body>
+
+</html>

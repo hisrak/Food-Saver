@@ -1,0 +1,6600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Services | Food Saver</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            overflow-x: hidden !important;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #101828;
+        }
+
+        /* =================================
+           PAGE LOADER START
+        ================================= */
+
+        .fs-page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            overflow: hidden;
+            background: transparent;
+            pointer-events: none;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity .45s ease, visibility .45s ease;
+        }
+
+        .fs-page-loader.fs-loader-active {
+            pointer-events: auto;
+        }
+
+        .fs-page-loader.fs-loader-done {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .fs-loader-center {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                #139b45 0%,
+                #16b34f 48%,
+                #0c7d36 100%
+            );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .fs-loader-center img {
+            width: 190px;
+            background: #ffffff;
+            padding: 18px;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .18);
+        }
+
+        .fs-loader-slice {
+            position: absolute;
+            top: 0;
+            width: 25%;
+            height: 100%;
+
+            background: linear-gradient(
+                135deg,
+                #0c7d36,
+                #139b45,
+                #1fd160
+            );
+
+            border-right: 2px solid rgba(255, 255, 255, .16);
+
+            transform: translateY(-105%);
+        }
+
+        .fs-slice-1 {
+            left: 0;
+        }
+
+        .fs-slice-2 {
+            left: 25%;
+        }
+
+        .fs-slice-3 {
+            left: 50%;
+        }
+
+        .fs-slice-4 {
+            left: 75%;
+            border-right: 0;
+        }
+
+        .fs-page-loader.fs-first-load .fs-loader-center {
+            animation: fsCenterHide .7s forwards;
+            animation-delay: 2.7s;
+        }
+
+        .fs-page-loader.fs-first-load .fs-loader-slice {
+            transform: translateY(0);
+        }
+
+        .fs-page-loader.fs-first-load .fs-slice-1 {
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 3s;
+        }
+
+        .fs-page-loader.fs-first-load .fs-slice-2 {
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 3.4s;
+        }
+
+        .fs-page-loader.fs-first-load .fs-slice-3 {
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 3.8s;
+        }
+
+        .fs-page-loader.fs-first-load .fs-slice-4 {
+            animation: fsSliceUp 1.2s forwards;
+            animation-delay: 4.2s;
+        }
+
+        @keyframes fsSliceUp {
+
+            to {
+                transform: translateY(-105%);
+            }
+
+        }
+
+        @keyframes fsCenterHide {
+
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+        }
+
+        /* =================================
+           PAGE LOADER END
+        ================================= */
+
+
+        /* =================================
+           NAVBAR START
+        ================================= */
+
+ /* =====================================
+   FOOD SAVER NAVBAR - CONTACT PAGE
+===================================== */
+
+.fs-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    padding: 10px 0;
+    background: #fff;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .06);
+}
+
+.fs-wide.fs-main-nav {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.fs-logo {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.fs-logo img {
+    display: block;
+    width: 125px;
+    height: auto;
+}
+
+.fs-nav-wrap {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+}
+
+.fs-nav-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.fs-nav-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.fs-nav-menu a {
+    display: inline-block;
+    padding: 8px 0;
+    color: #101828;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: color .3s ease;
+}
+
+.fs-nav-menu a:hover,
+.fs-nav-menu a.active {
+    color: #139b45;
+}
+
+.fs-auth-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.fs-signin-btn,
+.fs-login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 41px;
+    padding: 9px 19px;
+    border: 1px solid #139b45;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: .3s ease;
+}
+
+.fs-signin-btn {
+    color: #139b45;
+    background: #fff;
+}
+
+.fs-signin-btn:hover {
+    color: #fff;
+    background: #139b45;
+}
+
+.fs-login-btn {
+    color: #fff;
+    background: #139b45;
+}
+
+.fs-login-btn:hover {
+    color: #fff;
+    background: #0c7d36;
+    border-color: #0c7d36;
+}
+
+/* HAMBURGER */
+
+.fs-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: #139b45;
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.fs-toggle span {
+    position: absolute;
+    left: 50%;
+    width: 21px;
+    height: 2px;
+    border-radius: 2px;
+    background: #fff;
+    transform: translateX(-50%);
+    transition: .3s ease;
+}
+
+.fs-toggle span:nth-child(1) { top: 13px; }
+.fs-toggle span:nth-child(2) { top: 20px; }
+.fs-toggle span:nth-child(3) { top: 27px; }
+
+.fs-toggle.active span:nth-child(1) {
+    top: 20px;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.fs-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.fs-toggle.active span:nth-child(3) {
+    top: 20px;
+    transform: translateX(-50%) rotate(-45deg);
+}
+
+/* TABLET AND MOBILE */
+
+@media (max-width: 991px) {
+    .fs-wide.fs-main-nav {
+        width: calc(100% - 30px);
+        position: relative;
+        gap: 15px;
+    }
+
+    .fs-toggle {
+        display: block;
+    }
+
+    .fs-nav-wrap {
+        position: absolute;
+        top: calc(100% + 12px);
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        padding: 18px;
+        background: #fff;
+        border: 1px solid #e8f3eb;
+        border-radius: 15px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, .12);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: opacity .3s ease, transform .3s ease,
+                    visibility .3s ease;
+    }
+
+    .fs-nav-wrap.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .fs-nav-menu {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        margin: 0;
+    }
+
+    .fs-nav-menu li,
+    .fs-nav-menu a {
+        display: block;
+        width: 100%;
+    }
+
+    .fs-nav-menu a {
+        padding: 12px 14px;
+        border-radius: 8px;
+        white-space: normal;
+    }
+
+    .fs-nav-menu a:hover,
+    .fs-nav-menu a.active {
+        background: #f0fff4;
+    }
+
+    .fs-auth-actions {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .fs-signin-btn,
+    .fs-login-btn {
+        flex: 1;
+    }
+}
+
+@media (max-width: 575px) {
+    .fs-logo img {
+        width: 105px;
+    }
+
+    .fs-nav-wrap {
+        padding: 15px;
+    }
+
+    .fs-auth-actions {
+        flex-direction: column;
+    }
+
+    .fs-signin-btn,
+    .fs-login-btn {
+        width: 100%;
+    }
+}
+
+/* END NAVBAR CSS */
+/* =================================
+   SERVICES HERO SECTION
+================================= */
+
+.fs-services-hero {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 100px 0 90px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #f3fff6 0%,
+        #ffffff 52%,
+        #e8fff0 100%
+    );
+
+}
+
+
+/* BACKGROUND DECORATION */
+
+.fs-services-hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+
+    height: 420px;
+
+    border-radius: 50%;
+
+    top: -220px;
+
+    left: -180px;
+
+    background:
+
+    rgba(19, 155, 69, .08);
+
+}
+
+
+.fs-services-hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    right: -250px;
+
+    bottom: -300px;
+
+    background:
+
+    rgba(19, 155, 69, .07);
+
+}
+
+
+/* CONTENT */
+
+.fs-services-hero .container {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+/* LABEL */
+
+.fs-services-label {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 17px;
+
+    margin-bottom: 20px;
+
+    border-radius: 50px;
+
+    color: #139b45;
+
+    background: #ffffff;
+
+    border:
+
+    1px solid
+    rgba(19, 155, 69, .18);
+
+    box-shadow:
+
+    0 10px 25px
+    rgba(19, 155, 69, .08);
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.4px;
+
+}
+
+
+.fs-services-label::before {
+
+    content: "";
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #139b45;
+
+    box-shadow:
+
+    0 0 0 5px
+    rgba(19, 155, 69, .10);
+
+}
+
+
+/* MAIN HEADING */
+
+.fs-services-hero h1 {
+
+    max-width: 600px;
+
+    color: #101828;
+
+    font-size: 57px;
+
+    line-height: 1.12;
+
+    font-weight: 900;
+
+    letter-spacing: -1.8px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.fs-services-hero h1 span {
+
+    color: #139b45;
+
+}
+
+
+/* DESCRIPTION */
+
+.fs-services-hero p {
+
+    max-width: 570px;
+
+    color: #667085;
+
+    font-size: 16px;
+
+    line-height: 1.9;
+
+    font-weight: 500;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* HERO BUTTONS */
+
+.fs-services-hero-buttons {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+
+}
+
+
+/* PRIMARY BUTTON */
+
+.fs-primary-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 52px;
+
+    padding: 0 25px;
+
+    border-radius: 9px;
+
+    color: #ffffff;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #0c7d36
+    );
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    box-shadow:
+
+    0 15px 30px
+    rgba(19, 155, 69, .24);
+
+    transition: .35s ease;
+
+}
+
+
+.fs-primary-btn:hover {
+
+    color: #ffffff;
+
+    transform:
+
+    translateY(-5px);
+
+    box-shadow:
+
+    0 21px 38px
+    rgba(19, 155, 69, .34);
+
+}
+
+
+.fs-primary-btn i {
+
+    font-size: 18px;
+
+    transition: .35s;
+
+}
+
+
+.fs-primary-btn:hover i {
+
+    transform:
+
+    translateX(5px);
+
+}
+
+
+/* OUTLINE BUTTON */
+
+.fs-outline-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 52px;
+
+    padding: 0 24px;
+
+    border-radius: 9px;
+
+    color: #101828;
+
+    background: #ffffff;
+
+    border:
+
+    1px solid
+    #dce7df;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    box-shadow:
+
+    0 10px 25px
+    rgba(16, 24, 40, .06);
+
+    transition: .35s;
+
+}
+
+
+.fs-outline-btn i {
+
+    color: #139b45;
+
+    font-size: 19px;
+
+}
+
+
+.fs-outline-btn:hover {
+
+    color: #139b45;
+
+    border-color: #139b45;
+
+    transform:
+
+    translateY(-5px);
+
+}
+
+
+/* MINI FEATURES */
+
+.fs-hero-mini-features {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 25px;
+
+    margin-top: 38px;
+
+}
+
+
+.fs-mini-feature {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+}
+
+
+.fs-mini-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    color: #139b45;
+
+    background:
+
+    rgba(19, 155, 69, .11);
+
+    font-size: 20px;
+
+}
+
+
+.fs-mini-feature h6 {
+
+    color: #101828;
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    margin: 0 0 3px;
+
+}
+
+
+.fs-mini-feature span {
+
+    color: #667085;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+/* =================================
+   HERO IMAGE
+================================= */
+
+.fs-services-image-wrap {
+
+    position: relative;
+
+    max-width: 560px;
+
+    margin-left: auto;
+
+    padding: 22px;
+
+}
+
+
+/* GREEN IMAGE BACKGROUND */
+
+.fs-services-image-wrap::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 35px 0 20px 55px;
+
+    z-index: -1;
+
+    border-radius:
+
+    120px 35px
+    120px 35px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #0b7131
+    );
+
+    transform:
+
+    rotate(4deg);
+
+    box-shadow:
+
+    0 30px 65px
+    rgba(19, 155, 69, .23);
+
+}
+
+
+/* MAIN IMAGE */
+
+.fs-services-main-image {
+
+    width: 100%;
+
+    height: 490px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius:
+
+    105px 28px
+    105px 28px;
+
+    background: #e7f8ec;
+
+    border:
+
+    9px solid
+    #ffffff;
+
+    box-shadow:
+
+    0 25px 55px
+    rgba(16, 24, 40, .14);
+
+}
+/* =================================
+   SERVICES CARDS SECTION
+================================= */
+
+.fs-services-section {
+
+    position: relative;
+
+    padding: 105px 0;
+
+    overflow: hidden;
+
+    background:
+
+    linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #f5fff8 100%
+    );
+
+}
+
+
+/* BACKGROUND DECORATION */
+
+.fs-services-section::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 330px;
+
+    height: 330px;
+
+    border-radius: 50%;
+
+    top: 80px;
+
+    left: -190px;
+
+    background:
+
+    rgba(19, 155, 69, .06);
+
+}
+
+
+.fs-services-section::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+
+    height: 280px;
+
+    border-radius: 50%;
+
+    right: -150px;
+
+    bottom: 40px;
+
+    background:
+
+    rgba(19, 155, 69, .06);
+
+}
+
+
+/* CONTAINER */
+
+.fs-services-section .container {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+/* =================================
+   SECTION HEADING
+================================= */
+
+.fs-section-heading {
+
+    max-width: 760px;
+
+    margin:
+
+    0 auto 45px;
+
+}
+
+
+.fs-section-tag {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 18px;
+
+    margin-bottom: 18px;
+
+    border-radius: 50px;
+
+    color: #139b45;
+
+    background: #ffffff;
+
+    border:
+
+    1px solid
+    rgba(19, 155, 69, .16);
+
+    box-shadow:
+
+    0 10px 25px
+    rgba(19, 155, 69, .07);
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.fs-section-tag::before {
+
+    content: "";
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #139b45;
+
+}
+
+
+.fs-section-heading h2 {
+
+    color: #101828;
+
+    font-size: 45px;
+
+    line-height: 1.2;
+
+    font-weight: 900;
+
+    letter-spacing: -1.3px;
+
+    margin-bottom: 16px;
+
+}
+
+
+.fs-section-heading h2 span {
+
+    color: #139b45;
+
+}
+
+
+.fs-section-heading p {
+
+    max-width: 650px;
+
+    margin: auto;
+
+    color: #667085;
+
+    font-size: 15px;
+
+    line-height: 1.85;
+
+    font-weight: 500;
+
+}
+
+
+/* =================================
+   SERVICE CARD
+================================= */
+
+.fs-service-card {
+
+    position: relative;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    padding: 34px 28px 30px;
+
+    border-radius: 24px;
+
+    background: #ffffff;
+
+    border:
+
+    1px solid
+    #e5eee8;
+
+    box-shadow:
+
+    0 14px 38px
+    rgba(16, 24, 40, .07);
+
+    transition:
+
+    transform .4s ease,
+    box-shadow .4s ease,
+    border-color .4s ease;
+
+}
+
+
+/* TOP GREEN LINE */
+
+.fs-service-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 5px;
+
+    transform:
+
+    scaleX(0);
+
+    transform-origin:
+
+    left;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #139b45,
+        #32c968
+    );
+
+    transition: .4s;
+
+}
+
+
+/* LIGHT BACKGROUND SHAPE */
+
+.fs-service-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+
+    height: 150px;
+
+    border-radius: 50%;
+
+    right: -85px;
+
+    top: -85px;
+
+    background:
+
+    rgba(19, 155, 69, .055);
+
+    transition: .4s;
+
+}
+
+
+.fs-service-card:hover {
+
+    transform:
+
+    translateY(-12px);
+
+    border-color:
+
+    rgba(19, 155, 69, .28);
+
+    box-shadow:
+
+    0 25px 55px
+    rgba(19, 155, 69, .14);
+
+}
+
+
+.fs-service-card:hover::before {
+
+    transform:
+
+    scaleX(1);
+
+}
+
+
+.fs-service-card:hover::after {
+
+    transform:
+
+    scale(1.25);
+
+}
+
+
+/* =================================
+   SERVICE NUMBER
+================================= */
+
+.fs-service-number {
+
+    position: absolute;
+
+    top: 23px;
+
+    right: 25px;
+
+    z-index: 2;
+
+    color:
+
+    rgba(16, 24, 40, .20);
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* =================================
+   SERVICE ICON
+================================= */
+
+.fs-service-icon {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 66px;
+
+    height: 66px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 25px;
+
+    border-radius: 19px;
+
+    color: #ffffff;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #0b7633
+    );
+
+    box-shadow:
+
+    0 14px 28px
+    rgba(19, 155, 69, .20);
+
+    font-size: 27px;
+
+    transition: .4s;
+
+}
+
+
+.fs-service-card:hover
+.fs-service-icon {
+
+    transform:
+
+    rotate(-7deg)
+    scale(1.08);
+
+}
+
+/* FOOTER SESSION STRT */
+
+.fs-footer {
+    background: #fff;
+    padding-top: 32px;
+    margin-top: auto;
+}
+
+.fs-footer-main {
+    padding-bottom: 28px;
+}
+
+.fs-footer-logo {
+    width: 145px;
+    margin-bottom: 12px;
+}
+
+.fs-footer p {
+    font-size: 14px;
+    color: #344054;
+    line-height: 1.7;
+    font-weight: 500;
+    margin-bottom: 14px;
+}
+
+.fs-social {
+    display: flex;
+    gap: 12px;
+}
+
+.fs-social a {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #139b45;
+    color: #fff !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    font-size: 13px;
+
+    transition: 0.3s;
+}
+
+.fs-social a:hover {
+    transform: translateY(-4px);
+    background: #0c7d36;
+}
+
+.fs-footer h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 13px;
+}
+
+.fs-footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.fs-footer li {
+    margin-bottom: 8px;
+}
+
+.fs-footer a {
+    color: #344054;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.fs-footer a:hover {
+    color: #139b45;
+    padding-left: 4px;
+}
+
+.fs-footer-bottom {
+    background: #139b45;
+    padding: 13px 0;
+}
+
+.fs-footer-bottom p {
+    margin: 0;
+    color: #fff;
+    font-size: 14px;
+}
+
+.fs-footer-bottom a {
+    color: #fff;
+    font-size: 14px;
+}
+
+
+/* MOBILE FOOTER */
+
+@media (max-width: 575px) {
+
+    .fs-footer {
+        text-align: center;
+    }
+
+    .fs-social {
+        justify-content: center;
+    }
+
+    .fs-footer-bottom .container {
+        justify-content: center !important;
+        text-align: center;
+    }
+
+}
+
+/* FOOTER SESSION END */
+/* =================================
+   CARD TEXT
+================================= */
+
+.fs-service-card h3 {
+
+    position: relative;
+
+    z-index: 2;
+
+    color: #101828;
+
+    font-size: 21px;
+
+    font-weight: 900;
+
+    margin-bottom: 13px;
+
+}
+
+
+.fs-service-card > p {
+
+    position: relative;
+
+    z-index: 2;
+
+    min-height: 95px;
+
+    color: #667085;
+
+    font-size: 13px;
+
+    line-height: 1.85;
+
+    font-weight: 500;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* =================================
+   CARD LIST
+================================= */
+
+.fs-service-card ul {
+
+    position: relative;
+
+    z-index: 2;
+
+    list-style: none;
+
+    padding: 0;
+
+    margin:
+
+    0 0 24px;
+
+}
+
+
+.fs-service-card ul li {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #475467;
+
+    font-size: 12px;
+
+    font-weight: 650;
+
+    margin-bottom: 11px;
+
+}
+
+
+.fs-service-card ul li i {
+
+    color: #139b45;
+
+    font-size: 14px;
+
+}
+
+
+/* =================================
+   CARD BUTTON
+================================= */
+
+.fs-service-link {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding-bottom: 4px;
+
+    color: #139b45;
+
+    border-bottom:
+
+    1px solid
+    rgba(19, 155, 69, .28);
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    transition: .3s;
+
+}
+
+
+.fs-service-link i {
+
+    font-size: 16px;
+
+    transition: .3s;
+
+}
+
+
+.fs-service-link:hover {
+
+    color: #0b7633;
+
+}
+
+
+.fs-service-link:hover i {
+
+    transform:
+
+    translateX(6px);
+
+}
+
+
+/* =================================
+   POPULAR CARD
+================================= */
+
+.fs-featured-service {
+
+    border:
+
+    2px solid
+    rgba(19, 155, 69, .42);
+
+    background:
+
+    linear-gradient(
+        180deg,
+        #ffffff,
+        #f4fff7
+    );
+
+    transform:
+
+    translateY(-10px);
+
+    box-shadow:
+
+    0 22px 50px
+    rgba(19, 155, 69, .13);
+
+}
+
+
+.fs-featured-service::before {
+
+    transform:
+
+    scaleX(1);
+
+}
+
+
+.fs-featured-service:hover {
+
+    transform:
+
+    translateY(-20px);
+
+}
+
+
+/* POPULAR BADGE */
+
+.fs-popular-badge {
+
+    position: absolute;
+
+    z-index: 5;
+
+    top: 0;
+
+    left: 50%;
+
+    transform:
+
+    translateX(-50%);
+
+    padding: 7px 18px;
+
+    border-radius:
+
+    0 0 13px 13px;
+
+    color: #ffffff;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #0b7633
+    );
+
+    box-shadow:
+
+    0 10px 20px
+    rgba(19, 155, 69, .20);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: .7px;
+
+}
+
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 991px) {
+
+    .fs-services-section {
+
+        padding:
+
+        80px 0;
+
+    }
+
+
+    .fs-section-heading {
+
+        margin-bottom:
+
+        35px;
+
+    }
+
+
+    .fs-service-card {
+
+        padding:
+
+        32px 25px;
+
+    }
+
+
+    .fs-featured-service {
+
+        transform:
+
+        translateY(0);
+
+    }
+
+
+    .fs-featured-service:hover {
+
+        transform:
+
+        translateY(-12px);
+
+    }
+
+}
+
+
+@media (max-width: 575px) {
+
+    .fs-services-section {
+
+        padding:
+
+        65px 0;
+
+    }
+
+
+    .fs-section-heading h2 {
+
+        font-size:
+
+        32px;
+
+        letter-spacing:
+
+        -.7px;
+
+    }
+
+
+    .fs-section-heading p {
+
+        font-size:
+
+        13px;
+
+        line-height:
+
+        1.8;
+
+    }
+
+
+    .fs-section-tag {
+
+        font-size:
+
+        9px;
+
+        padding:
+
+        8px 13px;
+
+    }
+
+
+    .fs-service-card {
+
+        padding:
+
+        30px 22px;
+
+        border-radius:
+
+        20px;
+
+    }
+
+
+    .fs-service-card > p {
+
+        min-height:
+
+        auto;
+
+    }
+
+
+    .fs-service-icon {
+
+        width:
+
+        60px;
+
+        height:
+
+        60px;
+
+        font-size:
+
+        24px;
+
+        border-radius:
+
+        17px;
+
+    }
+
+
+    .fs-service-card h3 {
+
+        font-size:
+
+        20px;
+
+    }
+
+}
+/* =================================
+   WHY CHOOSE FOOD SAVER
+================================= */
+
+.fs-why-section {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 110px 0;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #f2fff6 0%,
+        #ffffff 52%,
+        #effff4 100%
+    );
+
+}
+
+
+/* BACKGROUND DECORATION */
+
+.fs-why-section::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+
+    height: 420px;
+
+    border-radius: 50%;
+
+    left: -250px;
+
+    bottom: -180px;
+
+    background:
+
+    rgba(19, 155, 69, .07);
+
+}
+
+
+.fs-why-section::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+
+    height: 280px;
+
+    border-radius: 50%;
+
+    top: -130px;
+
+    right: -130px;
+
+    border:
+
+    55px solid
+    rgba(19, 155, 69, .045);
+
+}
+
+
+/* MAIN CONTAINER */
+
+.fs-why-section .container {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+/* =================================
+   LEFT IMAGE AREA
+================================= */
+
+.fs-why-image-box {
+
+    position: relative;
+
+    max-width: 560px;
+
+    padding: 20px;
+
+}
+
+
+/* GREEN BACKGROUND SHAPE */
+
+.fs-why-image-box::before {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: -1;
+
+    top: 45px;
+
+    left: 0;
+
+    width: 87%;
+
+    height: 83%;
+
+    border-radius:
+
+    35px 120px
+    35px 120px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #087132
+    );
+
+    transform:
+
+    rotate(-5deg);
+
+    box-shadow:
+
+    0 30px 65px
+    rgba(19, 155, 69, .22);
+
+}
+
+
+/* MAIN IMAGE */
+
+.fs-why-main-image {
+
+    width: 100%;
+
+    height: 510px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border:
+
+    9px solid
+    #ffffff;
+
+    border-radius:
+
+    30px 115px
+    30px 115px;
+
+    background: #e8f8ed;
+
+    box-shadow:
+
+    0 28px 60px
+    rgba(16, 24, 40, .15);
+
+}
+
+
+/* =================================
+   FLOATING CARD
+================================= */
+
+.fs-why-floating-card {
+
+    position: absolute;
+
+    z-index: 5;
+
+    right: -20px;
+
+    bottom: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    width: 235px;
+
+    padding: 17px;
+
+    border-radius: 18px;
+
+    background:
+
+    rgba(255, 255, 255, .97);
+
+    border:
+
+    1px solid
+    rgba(255, 255, 255, .80);
+
+    box-shadow:
+
+    0 20px 45px
+    rgba(16, 24, 40, .16);
+
+    backdrop-filter:
+
+    blur(12px);
+
+    animation:
+
+    fsWhyFloat
+    3.8s ease-in-out
+    infinite;
+
+}
+
+
+.fs-why-card-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 16px;
+
+    color: #ffffff;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #087132
+    );
+
+    box-shadow:
+
+    0 12px 24px
+    rgba(19, 155, 69, .22);
+
+    font-size: 21px;
+
+}
+
+
+.fs-why-floating-card h4 {
+
+    color: #101828;
+
+    font-size: 14px;
+
+    font-weight: 900;
+
+    margin:
+
+    0 0 5px;
+
+}
+
+
+.fs-why-floating-card p {
+
+    color: #667085;
+
+    font-size: 11px;
+
+    line-height: 1.55;
+
+    font-weight: 600;
+
+    margin: 0;
+
+}
+
+
+/* =================================
+   ROUND BADGE
+================================= */
+
+.fs-why-round-badge {
+
+    position: absolute;
+
+    z-index: 6;
+
+    top: 8px;
+
+    right: 12px;
+
+    width: 68px;
+
+    height: 68px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #ffffff;
+
+    background: #101828;
+
+    border:
+
+    6px solid
+    #ffffff;
+
+    box-shadow:
+
+    0 15px 32px
+    rgba(16, 24, 40, .18);
+
+    font-size: 25px;
+
+    animation:
+
+    fsWhyRotate
+    7s linear
+    infinite;
+
+}
+
+
+/* =================================
+   RIGHT CONTENT
+================================= */
+
+.fs-why-content {
+
+    max-width: 590px;
+
+    margin-left: auto;
+
+}
+
+
+/* TAG */
+
+.fs-why-tag {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 17px;
+
+    margin-bottom: 19px;
+
+    border-radius: 50px;
+
+    color: #139b45;
+
+    background: #ffffff;
+
+    border:
+
+    1px solid
+    rgba(19, 155, 69, .17);
+
+    box-shadow:
+
+    0 10px 25px
+    rgba(19, 155, 69, .07);
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.4px;
+
+}
+
+
+.fs-why-tag::before {
+
+    content: "";
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #139b45;
+
+}
+
+
+/* HEADING */
+
+.fs-why-content h2 {
+
+    color: #101828;
+
+    font-size: 47px;
+
+    line-height: 1.18;
+
+    font-weight: 900;
+
+    letter-spacing: -1.4px;
+
+    margin-bottom: 19px;
+
+}
+
+
+.fs-why-content h2 span {
+
+    color: #139b45;
+
+}
+
+
+/* DESCRIPTION */
+
+.fs-why-description {
+
+    max-width: 550px;
+
+    color: #667085;
+
+    font-size: 15px;
+
+    line-height: 1.9;
+
+    font-weight: 500;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* =================================
+   BENEFIT BOXES
+================================= */
+
+.fs-why-benefit {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 17px;
+
+    padding: 17px 18px;
+
+    margin-bottom: 12px;
+
+    border-radius: 18px;
+
+    background:
+
+    rgba(255, 255, 255, .72);
+
+    border:
+
+    1px solid
+    rgba(19, 155, 69, .10);
+
+    transition:
+
+    transform .35s ease,
+    background .35s ease,
+    box-shadow .35s ease;
+
+}
+
+
+.fs-why-benefit:hover {
+
+    transform:
+
+    translateX(9px);
+
+    background: #ffffff;
+
+    box-shadow:
+
+    0 17px 35px
+    rgba(16, 24, 40, .08);
+
+}
+
+
+/* BENEFIT ICON */
+
+.fs-why-benefit-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 16px;
+
+    color: #139b45;
+
+    background:
+
+    rgba(19, 155, 69, .11);
+
+    font-size: 22px;
+
+    transition: .35s;
+
+}
+
+
+.fs-why-benefit:hover
+.fs-why-benefit-icon {
+
+    color: #ffffff;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #087132
+    );
+
+    transform:
+
+    rotate(-7deg);
+
+}
+
+
+/* BENEFIT TEXT */
+
+.fs-why-benefit h4 {
+
+    color: #101828;
+
+    font-size: 16px;
+
+    font-weight: 900;
+
+    margin:
+
+    2px 0 6px;
+
+}
+
+
+.fs-why-benefit p {
+
+    color: #667085;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+    font-weight: 500;
+
+    margin: 0;
+
+}
+
+
+/* =================================
+   JOIN BUTTON
+================================= */
+
+.fs-why-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 52px;
+
+    padding: 0 25px;
+
+    margin-top: 14px;
+
+    border-radius: 9px;
+
+    color: #ffffff;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #087132
+    );
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    box-shadow:
+
+    0 15px 30px
+    rgba(19, 155, 69, .23);
+
+    transition: .35s;
+
+}
+
+
+.fs-why-button:hover {
+
+    color: #ffffff;
+
+    transform:
+
+    translateY(-5px);
+
+    box-shadow:
+
+    0 21px 40px
+    rgba(19, 155, 69, .33);
+
+}
+
+
+.fs-why-button i {
+
+    font-size: 17px;
+
+    transition: .3s;
+
+}
+
+
+.fs-why-button:hover i {
+
+    transform:
+
+    translateX(5px);
+
+}
+
+
+/* =================================
+   ANIMATIONS
+================================= */
+
+@keyframes fsWhyFloat {
+
+    0%,
+    100% {
+
+        transform:
+
+        translateY(0);
+
+    }
+
+
+    50% {
+
+        transform:
+
+        translateY(-11px);
+
+    }
+
+}
+
+
+@keyframes fsWhyRotate {
+
+    from {
+
+        transform:
+
+        rotate(0deg);
+
+    }
+
+
+    to {
+
+        transform:
+
+        rotate(360deg);
+
+    }
+
+}
+
+
+/* =================================
+   TABLET RESPONSIVE
+================================= */
+
+@media (max-width: 1199px) {
+
+    .fs-why-main-image {
+
+        height: 455px;
+
+    }
+
+
+    .fs-why-content h2 {
+
+        font-size: 41px;
+
+    }
+
+
+    .fs-why-floating-card {
+
+        right: -8px;
+
+    }
+
+}
+
+
+@media (max-width: 991px) {
+
+    .fs-why-section {
+
+        padding:
+
+        80px 0;
+
+    }
+
+
+    .fs-why-image-box {
+
+        max-width: 600px;
+
+        margin:
+
+        0 auto 35px;
+
+    }
+
+
+    .fs-why-content {
+
+        max-width: 650px;
+
+        margin: auto;
+
+    }
+
+
+    .fs-why-main-image {
+
+        height: 520px;
+
+    }
+
+}
+
+
+/* =================================
+   MOBILE RESPONSIVE
+================================= */
+
+@media (max-width: 575px) {
+
+    .fs-why-section {
+
+        padding:
+
+        65px 0;
+
+    }
+
+
+    .fs-why-image-box {
+
+        padding:
+
+        9px;
+
+    }
+
+
+    .fs-why-image-box::before {
+
+        top: 30px;
+
+        width: 88%;
+
+        height: 84%;
+
+        border-radius:
+
+        25px 75px
+        25px 75px;
+
+    }
+
+
+    .fs-why-main-image {
+
+        height: 390px;
+
+        border-width:
+
+        6px;
+
+        border-radius:
+
+        25px 80px
+        25px 80px;
+
+    }
+
+
+    .fs-why-floating-card {
+
+        width:
+
+        205px;
+
+        right:
+
+        -3px;
+
+        bottom:
+
+        27px;
+
+        padding:
+
+        12px;
+
+        border-radius:
+
+        15px;
+
+    }
+
+
+    .fs-why-card-icon {
+
+        width:
+
+        43px;
+
+        height:
+
+        43px;
+
+        border-radius:
+
+        13px;
+
+        font-size:
+
+        18px;
+
+    }
+
+
+    .fs-why-floating-card h4 {
+
+        font-size:
+
+        11px;
+
+    }
+
+
+    .fs-why-floating-card p {
+
+        font-size:
+
+        9px;
+
+    }
+
+
+    .fs-why-round-badge {
+
+        width:
+
+        52px;
+
+        height:
+
+        52px;
+
+        right:
+
+        0;
+
+        border-width:
+
+        4px;
+
+        font-size:
+
+        19px;
+
+    }
+
+
+    .fs-why-content h2 {
+
+        font-size:
+
+        33px;
+
+        letter-spacing:
+
+        -.8px;
+
+    }
+
+
+    .fs-why-description {
+
+        font-size:
+
+        13px;
+
+        line-height:
+
+        1.8;
+
+    }
+
+
+    .fs-why-benefit {
+
+        gap:
+
+        12px;
+
+        padding:
+
+        14px;
+
+        border-radius:
+
+        15px;
+
+    }
+
+
+    .fs-why-benefit:hover {
+
+        transform:
+
+        translateX(4px);
+
+    }
+
+
+    .fs-why-benefit-icon {
+
+        width:
+
+        44px;
+
+        height:
+
+        44px;
+
+        border-radius:
+
+        13px;
+
+        font-size:
+
+        18px;
+
+    }
+
+
+    .fs-why-benefit h4 {
+
+        font-size:
+
+        14px;
+
+    }
+
+
+    .fs-why-benefit p {
+
+        font-size:
+
+        10px;
+
+    }
+
+
+    .fs-why-button {
+
+        width: 100%;
+
+    }
+
+}
+/* =================================
+   IMPACT COUNTER SECTION
+================================= */
+
+.fs-impact-section {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 105px 0;
+
+    background:
+
+    linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #effff4 100%
+    );
+
+}
+
+
+/* BACKGROUND DECORATION */
+
+.fs-impact-section::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+
+    height: 420px;
+
+    border-radius: 50%;
+
+    top: -230px;
+
+    right: -180px;
+
+    background:
+
+    rgba(19, 155, 69, .07);
+
+}
+
+
+.fs-impact-section::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+
+    height: 300px;
+
+    border-radius: 50%;
+
+    left: -180px;
+
+    bottom: -160px;
+
+    background:
+
+    rgba(19, 155, 69, .06);
+
+}
+
+
+/* MAIN IMPACT BOX */
+
+.fs-impact-box {
+
+    position: relative;
+
+    z-index: 2;
+
+    overflow: hidden;
+
+    padding: 75px 55px 55px;
+
+    border-radius: 35px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #0b7131 0%,
+        #139b45 50%,
+        #18b550 100%
+    );
+
+    box-shadow:
+
+    0 30px 70px
+    rgba(19, 155, 69, .25);
+
+}
+
+
+/* LIGHT CIRCLES */
+
+.fs-impact-box::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 330px;
+
+    height: 330px;
+
+    border-radius: 50%;
+
+    top: -180px;
+
+    right: -100px;
+
+    border:
+
+    55px solid
+    rgba(255, 255, 255, .07);
+
+}
+
+
+.fs-impact-box::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 240px;
+
+    height: 240px;
+
+    border-radius: 50%;
+
+    left: -120px;
+
+    bottom: -130px;
+
+    background:
+
+    rgba(255, 255, 255, .045);
+
+}
+
+
+/* =================================
+   IMPACT HEADING
+================================= */
+
+.fs-impact-heading {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 750px;
+
+    margin:
+
+    0 auto 38px;
+
+}
+
+
+.fs-impact-tag {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 18px;
+
+    margin-bottom: 18px;
+
+    border-radius: 50px;
+
+    color: #ffffff;
+
+    background:
+
+    rgba(255, 255, 255, .12);
+
+    border:
+
+    1px solid
+    rgba(255, 255, 255, .22);
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.fs-impact-tag::before {
+
+    content: "";
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+}
+
+
+/* HEADING */
+
+.fs-impact-heading h2 {
+
+    color: #ffffff;
+
+    font-size: 45px;
+
+    line-height: 1.2;
+
+    font-weight: 900;
+
+    letter-spacing: -1.3px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.fs-impact-heading h2 span {
+
+    color: #d8ffe5;
+
+}
+
+
+/* DESCRIPTION */
+
+.fs-impact-heading p {
+
+    max-width: 620px;
+
+    margin: auto;
+
+    color:
+
+    rgba(255, 255, 255, .82);
+
+    font-size: 15px;
+
+    line-height: 1.85;
+
+    font-weight: 500;
+
+}
+
+
+/* =================================
+   IMPACT CARDS
+================================= */
+
+.fs-impact-card {
+
+    position: relative;
+
+    z-index: 2;
+
+    height: 100%;
+
+    padding: 28px 18px;
+
+    text-align: center;
+
+    border-radius: 22px;
+
+    background:
+
+    rgba(255, 255, 255, .11);
+
+    border:
+
+    1px solid
+    rgba(255, 255, 255, .19);
+
+    backdrop-filter:
+
+    blur(10px);
+
+    transition:
+
+    transform .35s ease,
+    background .35s ease,
+    box-shadow .35s ease;
+
+}
+
+
+.fs-impact-card:hover {
+
+    transform:
+
+    translateY(-10px);
+
+    background:
+
+    rgba(255, 255, 255, .18);
+
+    box-shadow:
+
+    0 20px 40px
+    rgba(0, 0, 0, .12);
+
+}
+
+
+/* ICON */
+
+.fs-impact-icon {
+
+    width: 62px;
+
+    height: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin:
+
+    0 auto 18px;
+
+    border-radius: 19px;
+
+    color: #139b45;
+
+    background: #ffffff;
+
+    box-shadow:
+
+    0 12px 28px
+    rgba(0, 0, 0, .10);
+
+    font-size: 25px;
+
+    transition: .35s;
+
+}
+
+
+.fs-impact-card:hover
+.fs-impact-icon {
+
+    transform:
+
+    rotate(-8deg)
+    scale(1.08);
+
+}
+
+
+/* COUNTER */
+
+.fs-impact-card h3 {
+
+    color: #ffffff;
+
+    font-size: 35px;
+
+    font-weight: 900;
+
+    letter-spacing: -.8px;
+
+    margin:
+
+    0 0 7px;
+
+}
+
+
+/* COUNTER TEXT */
+
+.fs-impact-card p {
+
+    color:
+
+    rgba(255, 255, 255, .80);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin: 0;
+
+}
+
+
+/* =================================
+   TABLET RESPONSIVE
+================================= */
+
+@media (max-width: 991px) {
+
+    .fs-impact-section {
+
+        padding:
+
+        80px 0;
+
+    }
+
+
+    .fs-impact-box {
+
+        padding:
+
+        60px 30px 35px;
+
+        border-radius:
+
+        28px;
+
+    }
+
+
+    .fs-impact-heading h2 {
+
+        font-size:
+
+        40px;
+
+    }
+
+}
+
+
+/* =================================
+   MOBILE RESPONSIVE
+================================= */
+
+@media (max-width: 575px) {
+
+    .fs-impact-section {
+
+        padding:
+
+        65px 0;
+
+    }
+
+
+    .fs-impact-box {
+
+        padding:
+
+        50px 17px 20px;
+
+        border-radius:
+
+        23px;
+
+    }
+
+
+    .fs-impact-heading {
+
+        margin-bottom:
+
+        28px;
+
+    }
+
+
+    .fs-impact-tag {
+
+        font-size:
+
+        9px;
+
+        padding:
+
+        8px 13px;
+
+    }
+
+
+    .fs-impact-heading h2 {
+
+        font-size:
+
+        31px;
+
+        letter-spacing:
+
+        -.7px;
+
+    }
+
+
+    .fs-impact-heading p {
+
+        font-size:
+
+        12px;
+
+        line-height:
+
+        1.8;
+
+    }
+
+
+    .fs-impact-card {
+
+        padding:
+
+        23px 14px;
+
+        border-radius:
+
+        18px;
+
+    }
+
+
+    .fs-impact-icon {
+
+        width:
+
+        55px;
+
+        height:
+
+        55px;
+
+        border-radius:
+
+        17px;
+
+        font-size:
+
+        22px;
+
+    }
+
+
+    .fs-impact-card h3 {
+
+        font-size:
+
+        30px;
+
+    }
+
+
+    .fs-impact-card p {
+
+        font-size:
+
+        11px;
+
+    }
+
+}
+/* =================================
+   SERVICES CTA SECTION
+================================= */
+
+.fs-services-cta {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 105px 0;
+
+    background:
+
+    linear-gradient(
+        180deg,
+        #f5fff8 0%,
+        #ffffff 100%
+    );
+
+}
+
+
+/* MAIN CTA BOX */
+
+.fs-services-cta-box {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 65px 60px;
+
+    border-radius: 34px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #101828 0%,
+        #172233 48%,
+        #0b7131 100%
+    );
+
+    box-shadow:
+
+    0 30px 70px
+    rgba(16, 24, 40, .22);
+
+}
+
+
+/* LIGHT OVERLAY */
+
+.fs-services-cta-box::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        rgba(255, 255, 255, .02),
+        rgba(19, 155, 69, .10)
+    );
+
+    pointer-events: none;
+
+}
+
+
+/* =================================
+   DECORATION CIRCLES
+================================= */
+
+.fs-cta-circle {
+
+    position: absolute;
+
+    z-index: 1;
+
+    border-radius: 50%;
+
+    border:
+
+    45px solid
+    rgba(255, 255, 255, .055);
+
+    pointer-events: none;
+
+}
+
+
+.fs-cta-circle-one {
+
+    width: 330px;
+
+    height: 330px;
+
+    top: -190px;
+
+    right: -100px;
+
+}
+
+
+.fs-cta-circle-two {
+
+    width: 240px;
+
+    height: 240px;
+
+    left: -130px;
+
+    bottom: -150px;
+
+    border-width: 35px;
+
+}
+
+
+/* CONTENT ABOVE DECORATION */
+
+.fs-services-cta-box .row {
+
+    position: relative;
+
+    z-index: 3;
+
+}
+
+
+/* =================================
+   CTA CONTENT
+================================= */
+
+.fs-cta-content {
+
+    max-width: 700px;
+
+}
+
+
+/* SMALL LABEL */
+
+.fs-cta-content > span {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 16px;
+
+    margin-bottom: 19px;
+
+    border-radius: 50px;
+
+    color: #bfffd3;
+
+    background:
+
+    rgba(19, 155, 69, .16);
+
+    border:
+
+    1px solid
+    rgba(92, 230, 135, .20);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.4px;
+
+}
+
+
+.fs-cta-content > span::before {
+
+    content: "";
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #36d66e;
+
+    box-shadow:
+
+    0 0 0 5px
+    rgba(54, 214, 110, .10);
+
+}
+
+
+/* MAIN HEADING */
+
+.fs-cta-content h2 {
+
+    color: #ffffff;
+
+    font-size: 46px;
+
+    line-height: 1.18;
+
+    font-weight: 900;
+
+    letter-spacing: -1.4px;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* DESCRIPTION */
+
+.fs-cta-content p {
+
+    max-width: 650px;
+
+    color:
+
+    rgba(255, 255, 255, .72);
+
+    font-size: 15px;
+
+    line-height: 1.85;
+
+    font-weight: 500;
+
+    margin: 0;
+
+}
+
+
+/* =================================
+   CTA BUTTON AREA
+================================= */
+
+.fs-cta-buttons {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    justify-content: center;
+
+    gap: 13px;
+
+    max-width: 230px;
+
+    margin-left: auto;
+
+}
+
+
+/* PRIMARY BUTTON */
+
+.fs-cta-primary {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 55px;
+
+    padding: 0 24px;
+
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #0b7633
+    );
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    box-shadow:
+
+    0 15px 30px
+    rgba(19, 155, 69, .28);
+
+    transition: .35s;
+
+}
+
+
+.fs-cta-primary:hover {
+
+    color: #ffffff;
+
+    transform:
+
+    translateY(-5px);
+
+    box-shadow:
+
+    0 21px 40px
+    rgba(19, 155, 69, .38);
+
+}
+
+
+.fs-cta-primary i {
+
+    font-size: 18px;
+
+    transition: .3s;
+
+}
+
+
+.fs-cta-primary:hover i {
+
+    transform:
+
+    translateX(6px);
+
+}
+
+
+/* SECONDARY BUTTON */
+
+.fs-cta-secondary {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 53px;
+
+    padding: 0 24px;
+
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    background:
+
+    rgba(255, 255, 255, .06);
+
+    border:
+
+    1px solid
+    rgba(255, 255, 255, .20);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 850;
+
+    transition: .35s;
+
+}
+
+
+.fs-cta-secondary:hover {
+
+    color: #ffffff;
+
+    background:
+
+    rgba(255, 255, 255, .13);
+
+    border-color:
+
+    rgba(255, 255, 255, .38);
+
+    transform:
+
+    translateY(-5px);
+
+}
+
+
+/* =================================
+   TABLET RESPONSIVE
+================================= */
+
+@media (max-width: 991px) {
+
+    .fs-services-cta {
+
+        padding:
+
+        80px 0;
+
+    }
+
+
+    .fs-services-cta-box {
+
+        padding:
+
+        55px 38px;
+
+        border-radius:
+
+        28px;
+
+    }
+
+
+    .fs-cta-content h2 {
+
+        font-size:
+
+        40px;
+
+    }
+
+
+    .fs-cta-buttons {
+
+        flex-direction:
+
+        row;
+
+        max-width:
+
+        none;
+
+        margin:
+
+        12px 0 0;
+
+    }
+
+
+    .fs-cta-primary,
+
+    .fs-cta-secondary {
+
+        flex: 1;
+
+    }
+
+}
+
+
+/* =================================
+   MOBILE RESPONSIVE
+================================= */
+
+@media (max-width: 575px) {
+
+    .fs-services-cta {
+
+        padding:
+
+        65px 0;
+
+    }
+
+
+    .fs-services-cta-box {
+
+        padding:
+
+        45px 20px;
+
+        border-radius:
+
+        22px;
+
+    }
+
+
+    .fs-cta-content > span {
+
+        font-size:
+
+        8px;
+
+        padding:
+
+        8px 12px;
+
+    }
+
+
+    .fs-cta-content h2 {
+
+        font-size:
+
+        31px;
+
+        line-height:
+
+        1.22;
+
+        letter-spacing:
+
+        -.7px;
+
+    }
+
+
+    .fs-cta-content p {
+
+        font-size:
+
+        12px;
+
+        line-height:
+
+        1.8;
+
+    }
+
+
+    .fs-cta-buttons {
+
+        flex-direction:
+
+        column;
+
+        gap:
+
+        11px;
+
+        margin-top:
+
+        20px;
+
+    }
+
+
+    .fs-cta-primary,
+
+    .fs-cta-secondary {
+
+        width: 100%;
+
+        min-height:
+
+        51px;
+
+    }
+
+
+    .fs-cta-circle-one {
+
+        width:
+
+        220px;
+
+        height:
+
+        220px;
+
+        top:
+
+        -135px;
+
+        right:
+
+        -115px;
+
+        border-width:
+
+        32px;
+
+    }
+
+
+    .fs-cta-circle-two {
+
+        width:
+
+        170px;
+
+        height:
+
+        170px;
+
+        left:
+
+        -100px;
+
+        bottom:
+
+        -110px;
+
+        border-width:
+
+        25px;
+
+    }
+
+}
+
+
+/* FLOATING CARDS */
+
+.fs-floating-card {
+
+    position: absolute;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 210px;
+
+    padding: 13px 15px;
+
+    border-radius: 16px;
+
+    background:
+
+    rgba(255, 255, 255, .96);
+
+    border:
+
+    1px solid
+    rgba(255, 255, 255, .75);
+
+    box-shadow:
+
+    0 18px 40px
+    rgba(16, 24, 40, .16);
+
+    backdrop-filter:
+
+    blur(10px);
+
+    animation:
+
+    fsFloatCard
+    3.5s ease-in-out
+    infinite;
+
+}
+
+
+.fs-card-top {
+
+    top: 60px;
+
+    left: -30px;
+
+}
+
+
+.fs-card-bottom {
+
+    right: -25px;
+
+    bottom: 50px;
+
+    animation-delay: .8s;
+
+}
+
+
+/* FLOATING ICON */
+
+.fs-floating-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    color: #ffffff;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #139b45,
+        #0c7d36
+    );
+
+    font-size: 20px;
+
+}
+
+
+.fs-floating-card strong {
+
+    display: block;
+
+    color: #101828;
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    margin-bottom: 3px;
+
+}
+
+
+.fs-floating-card span {
+
+    display: block;
+
+    color: #667085;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+}
+
+
+/* ROUND ICON */
+
+.fs-services-circle {
+
+    position: absolute;
+
+    z-index: 6;
+
+    top: 18px;
+
+    right: 12px;
+
+    width: 65px;
+
+    height: 65px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #ffffff;
+
+    background:
+
+    #101828;
+
+    border:
+
+    6px solid
+    #ffffff;
+
+    box-shadow:
+
+    0 15px 30px
+    rgba(16, 24, 40, .18);
+
+    font-size: 25px;
+
+    animation:
+
+    fsRotateCircle
+    7s linear
+    infinite;
+
+}
+
+
+/* ANIMATIONS */
+
+@keyframes fsFloatCard {
+
+    0%,
+    100% {
+
+        transform:
+
+        translateY(0);
+
+    }
+
+
+    50% {
+
+        transform:
+
+        translateY(-10px);
+
+    }
+
+}
+
+
+@keyframes fsRotateCircle {
+
+    from {
+
+        transform:
+
+        rotate(0deg);
+
+    }
+
+
+    to {
+
+        transform:
+
+        rotate(360deg);
+
+    }
+
+}
+
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 1199px) {
+
+    .fs-services-hero h1 {
+
+        font-size: 48px;
+
+    }
+
+
+    .fs-services-main-image {
+
+        height: 440px;
+
+    }
+
+
+    .fs-floating-card {
+
+        min-width: 190px;
+
+    }
+
+}
+
+
+@media (max-width: 991px) {
+
+    .fs-services-hero {
+
+        padding:
+
+        80px 0;
+
+    }
+
+
+    .fs-services-hero h1 {
+
+        font-size: 48px;
+
+    }
+
+
+    .fs-services-image-wrap {
+
+        max-width: 600px;
+
+        margin:
+
+        15px auto 0;
+
+    }
+
+
+    .fs-services-image-wrap::before {
+
+        inset:
+
+        35px 25px
+        20px 65px;
+
+    }
+
+
+    .fs-services-main-image {
+
+        height: 500px;
+
+    }
+
+}
+
+
+@media (max-width: 575px) {
+
+    .fs-services-hero {
+
+        padding:
+
+        60px 0;
+
+    }
+
+
+    .fs-services-label {
+
+        font-size: 10px;
+
+        padding:
+
+        8px 13px;
+
+    }
+
+
+    .fs-services-hero h1 {
+
+        font-size: 37px;
+
+        letter-spacing:
+
+        -1px;
+
+    }
+
+
+    .fs-services-hero p {
+
+        font-size: 14px;
+
+        line-height: 1.8;
+
+    }
+
+
+    .fs-services-hero-buttons {
+
+        flex-direction:
+
+        column;
+
+        align-items:
+
+        stretch;
+
+    }
+
+
+    .fs-primary-btn,
+
+    .fs-outline-btn {
+
+        width: 100%;
+
+    }
+
+
+    .fs-hero-mini-features {
+
+        gap: 15px;
+
+        flex-direction:
+
+        column;
+
+        align-items:
+
+        flex-start;
+
+    }
+
+
+    .fs-services-image-wrap {
+
+        padding:
+
+        10px;
+
+        margin-top:
+
+        25px;
+
+    }
+
+
+    .fs-services-image-wrap::before {
+
+        inset:
+
+        25px 5px
+        15px 30px;
+
+        border-radius:
+
+        70px 22px
+        70px 22px;
+
+    }
+
+
+    .fs-services-main-image {
+
+        height: 380px;
+
+        border-width:
+
+        6px;
+
+        border-radius:
+
+        70px 20px
+        70px 20px;
+
+    }
+
+
+    .fs-floating-card {
+
+        min-width:
+
+        auto;
+
+        padding:
+
+        10px;
+
+        gap: 8px;
+
+        border-radius:
+
+        13px;
+
+    }
+
+
+    .fs-card-top {
+
+        left:
+
+        -3px;
+
+        top:
+
+        35px;
+
+    }
+
+
+    .fs-card-bottom {
+
+        right:
+
+        -3px;
+
+        bottom:
+
+        28px;
+
+    }
+
+
+    .fs-floating-icon {
+
+        width:
+
+        37px;
+
+        height:
+
+        37px;
+
+        border-radius:
+
+        11px;
+
+        font-size:
+
+        16px;
+
+    }
+
+
+    .fs-floating-card strong {
+
+        font-size:
+
+        10px;
+
+    }
+
+
+    .fs-floating-card span {
+
+        font-size:
+
+        8px;
+
+    }
+
+
+    .fs-services-circle {
+
+        width:
+
+        50px;
+
+        height:
+
+        50px;
+
+        border-width:
+
+        4px;
+
+        font-size:
+
+        18px;
+
+        right:
+
+        0;
+
+    }
+
+}
+
+        /* Mobile Toggle */
+
+        .fs-toggle {
+
+            width: 42px;
+
+            height: 42px;
+
+            border: 0;
+
+            background: #139b45;
+
+            border-radius: 10px;
+
+            display: none;
+
+            position: relative;
+
+        }
+
+        .fs-toggle span {
+
+            position: absolute;
+
+            width: 21px;
+
+            height: 2px;
+
+            background: #ffffff;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            transition: .35s;
+
+        }
+
+        .fs-toggle span:nth-child(1) {
+
+            top: 13px;
+
+        }
+
+        .fs-toggle span:nth-child(2) {
+
+            top: 20px;
+
+        }
+
+        .fs-toggle span:nth-child(3) {
+
+            top: 27px;
+
+        }
+
+        .fs-toggle.active span:nth-child(1) {
+
+            top: 20px;
+
+            transform:
+                translateX(-50%)
+                rotate(45deg);
+
+        }
+
+        .fs-toggle.active span:nth-child(2) {
+
+            opacity: 0;
+
+        }
+
+        .fs-toggle.active span:nth-child(3) {
+
+            top: 20px;
+
+            transform:
+                translateX(-50%)
+                rotate(-45deg);
+
+        }
+
+        /* =================================
+           NAVBAR END
+        ================================= */
+
+
+        /* =================================
+           MOBILE RESPONSIVE
+        ================================= */
+
+        @media (max-width: 991px) {
+
+            .fs-toggle {
+
+                display: block;
+
+            }
+
+            .fs-menu {
+
+                position: absolute;
+
+                top: 76px;
+
+                left: 15px;
+
+                right: 15px;
+
+                background: #ffffff;
+
+                padding: 18px;
+
+                border-radius: 18px;
+
+                box-shadow:
+                    0 20px 45px
+                    rgba(0, 0, 0, .12);
+
+                opacity: 0;
+
+                visibility: hidden;
+
+                transform:
+                    translateY(-15px)
+                    scale(.96);
+
+                transition: .35s;
+
+            }
+
+            .fs-menu.show {
+
+                opacity: 1;
+
+                visibility: visible;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+            }
+
+            .fs-nav {
+
+                flex-direction: column;
+
+                gap: 8px;
+
+            }
+
+            .fs-nav li {
+
+                width: 100%;
+
+            }
+
+            .fs-nav a {
+
+                display: block;
+
+                width: 100%;
+
+                padding: 12px 15px;
+
+                border-radius: 12px;
+
+                background: #f0fff4;
+
+            }
+
+            .fs-login {
+
+                display: none;
+
+            }
+
+        }
+
+        @media (max-width: 575px) {
+
+            .fs-logo img {
+
+                width: 105px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         PAGE LOADER START
+    ========================== -->
+
+    <div
+        class="fs-page-loader fs-loader-active fs-first-load"
+        id="fsLoader">
+
+        <div class="fs-loader-slice fs-slice-1"></div>
+
+        <div class="fs-loader-slice fs-slice-2"></div>
+
+        <div class="fs-loader-slice fs-slice-3"></div>
+
+        <div class="fs-loader-slice fs-slice-4"></div>
+
+
+        <div class="fs-loader-center">
+
+            <img
+                src="images/logo.png"
+                alt="Food Saver">
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         PAGE LOADER END
+    ========================== -->
+
+
+    <!-- =========================
+         NAVBAR START
+    ========================== -->
+
+    
+<!-- NAVBAR START -->
+
+<nav class="fs-navbar">
+    <div class="fs-wide fs-main-nav">
+
+        <a href="index.html" class="fs-logo">
+            <img src="images/logo.png" alt="Food Saver">
+        </a>
+
+        <button class="fs-toggle" id="fsToggle"
+                type="button" aria-label="Toggle navigation"
+                aria-controls="fsMenu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="fs-nav-wrap" id="fsMenu">
+            <ul class="fs-nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div class="fs-auth-actions">
+                <a href="register.html" class="fs-signin-btn">Register</a>
+                <a href="login.html" class="fs-login-btn">Login</a>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+<!-- NAVBAR END -->
+
+    <!-- NAVBAR END -->
+
+
+    <!-- NEXT PART:
+         SERVICES HERO SECTION
+    --><!-- =================================
+     SERVICES HERO SECTION START
+================================= -->
+
+<section class="fs-services-hero">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <!-- LEFT CONTENT -->
+
+            <div class="col-lg-6">
+
+                <span
+                    class="fs-services-label"
+                    data-aos="fade-down"
+                    data-aos-delay="100">
+
+                    OUR SERVICES
+
+                </span>
+
+
+                <h1
+                    data-aos="fade-up"
+                    data-aos-delay="220">
+
+                    Smart Food Solutions<br>
+
+                    <span>For Everyone</span>
+
+                </h1>
+
+
+                <p
+                    data-aos="fade-up"
+                    data-aos-delay="350">
+
+                    Food Saver connects donors, NGOs, volunteers,
+                    and communities through one smart platform
+                    to reduce food waste and help people in need.
+
+                </p>
+
+
+                <div
+                    class="fs-services-hero-buttons"
+                    data-aos="fade-up"
+                    data-aos-delay="480">
+
+                    <a
+                        href="#services"
+                        class="fs-primary-btn">
+
+                        Explore Services
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                    <a
+                        href="how-it-works.html"
+                        class="fs-outline-btn">
+
+                        <i class="bi bi-play-circle"></i>
+
+                        How It Works
+
+                    </a>
+
+                </div>
+
+
+                <!-- MINI FEATURES -->
+
+                <div
+                    class="fs-hero-mini-features"
+                    data-aos="fade-up"
+                    data-aos-delay="600">
+
+
+                    <div class="fs-mini-feature">
+
+                        <div class="fs-mini-icon">
+
+                            <i class="bi bi-shield-check"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h6>Safe & Trusted</h6>
+
+                            <span>Verified community</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="fs-mini-feature">
+
+                        <div class="fs-mini-icon">
+
+                            <i class="bi bi-lightning-charge-fill"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h6>Quick Support</h6>
+
+                            <span>Fast food matching</span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT IMAGE -->
+
+            <div class="col-lg-6">
+
+                <div
+                    class="fs-services-image-wrap"
+                    data-aos="zoom-in"
+                    data-aos-delay="250">
+
+
+                    <!-- MAIN IMAGE -->
+
+                    <img
+                        src="images/services.png"
+                        class="fs-services-main-image"
+                        alt="Food Saver Services">
+
+
+                    <!-- TOP CARD -->
+
+                    <div class="fs-floating-card fs-card-top">
+
+                        <div class="fs-floating-icon">
+
+                            <i class="bi bi-basket2-fill"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>Food Donation</strong>
+
+                            <span>Share surplus food</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BOTTOM CARD -->
+
+                    <div class="fs-floating-card fs-card-bottom">
+
+                        <div class="fs-floating-icon">
+
+                            <i class="bi bi-heart-fill"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>Community Support</strong>
+
+                            <span>Helping people together</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SMALL CIRCLE -->
+
+                    <div class="fs-services-circle">
+
+                        <i class="bi bi-arrow-repeat"></i>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =================================
+     SERVICES HERO SECTION END
+================================= -->
+<!-- =================================
+     SERVICES CARDS SECTION START
+================================= -->
+
+<section class="fs-services-section" id="services">
+
+    <div class="container">
+
+        <!-- SECTION HEADING -->
+
+        <div
+            class="fs-section-heading text-center"
+            data-aos="fade-up">
+
+            <span class="fs-section-tag">
+
+                WHAT WE OFFER
+
+            </span>
+
+            <h2>
+
+                Services Designed To
+
+                <span>Make An Impact</span>
+
+            </h2>
+
+            <p>
+
+                Our platform provides smart and simple services
+                that connect food donors, organizations,
+                volunteers, and communities.
+
+            </p>
+
+        </div>
+
+
+        <!-- SERVICES CARDS -->
+
+        <div class="row g-4 mt-2">
+
+
+            <!-- CARD 1 -->
+
+            <div
+                class="col-lg-3 col-md-6"
+                data-aos="fade-up"
+                data-aos-delay="100">
+
+                <div class="fs-service-card">
+
+                    <div class="fs-service-number">
+
+                        01
+
+                    </div>
+
+
+                    <div class="fs-service-icon">
+
+                        <i class="bi bi-basket2-fill"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Food Donation
+
+                    </h3>
+
+
+                    <p>
+
+                        Share fresh and surplus food with
+                        trusted organizations and help reduce
+                        food waste in your community.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Easy food listing
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Quick donation matching
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Safe food sharing
+
+                        </li>
+
+                    </ul>
+
+
+                    <a
+                        href="register.html"
+                        class="fs-service-link">
+
+                        Donate Food
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 2 -->
+
+            <div
+                class="col-lg-3 col-md-6"
+                data-aos="fade-up"
+                data-aos-delay="220">
+
+                <div class="fs-service-card fs-featured-service">
+
+                    <div class="fs-popular-badge">
+
+                        Popular
+
+                    </div>
+
+
+                    <div class="fs-service-number">
+
+                        02
+
+                    </div>
+
+
+                    <div class="fs-service-icon">
+
+                        <i class="bi bi-buildings-fill"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        NGO Support
+
+                    </h3>
+
+
+                    <p>
+
+                        NGOs can discover available food,
+                        manage requests, and connect with
+                        verified donors through one platform.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Verified food requests
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Donor connections
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Request management
+
+                        </li>
+
+                    </ul>
+
+
+                    <a
+                        href="register.html"
+                        class="fs-service-link">
+
+                        Join As NGO
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 3 -->
+
+            <div
+                class="col-lg-3 col-md-6"
+                data-aos="fade-up"
+                data-aos-delay="340">
+
+                <div class="fs-service-card">
+
+                    <div class="fs-service-number">
+
+                        03
+
+                    </div>
+
+
+                    <div class="fs-service-icon">
+
+                        <i class="bi bi-bicycle"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Volunteer Network
+
+                    </h3>
+
+
+                    <p>
+
+                        Volunteers can support food pickup
+                        and delivery while helping donations
+                        reach people who need them.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Pickup assistance
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Delivery support
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Flexible volunteering
+
+                        </li>
+
+                    </ul>
+
+
+                    <a
+                        href="register.html"
+                        class="fs-service-link">
+
+                        Become A Volunteer
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 4 -->
+
+            <div
+                class="col-lg-3 col-md-6"
+                data-aos="fade-up"
+                data-aos-delay="460">
+
+                <div class="fs-service-card">
+
+                    <div class="fs-service-number">
+
+                        04
+
+                    </div>
+
+
+                    <div class="fs-service-icon">
+
+                        <i class="bi bi-people-fill"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Community Help
+
+                    </h3>
+
+
+                    <p>
+
+                        Build stronger communities by
+                        connecting available food with
+                        families and people who need support.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Community connections
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Food accessibility
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Social impact
+
+                        </li>
+
+                    </ul>
+
+
+                    <a
+                        href="register.html"
+                        class="fs-service-link">
+
+                        Explore Community
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =================================
+     SERVICES CARDS SECTION END
+================================= -->
+<!-- =================================
+     WHY CHOOSE FOOD SAVER START
+================================= -->
+
+<section class="fs-why-section">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+
+            <!-- LEFT IMAGE -->
+
+            <div
+                class="col-lg-6"
+                data-aos="fade-right">
+
+                <div class="fs-why-image-box">
+
+
+                    <!-- Main Image -->
+
+                    <img
+                        src="images/why-food-saver.png"
+                        alt="Why Choose Food Saver"
+                        class="fs-why-main-image">
+
+
+                    <!-- Experience Card -->
+
+                    <div class="fs-why-floating-card">
+
+                        <div class="fs-why-card-icon">
+
+                            <i class="bi bi-heart-fill"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h4>Making A Difference</h4>
+
+                            <p>
+
+                                One meal can create
+                                a big impact.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Small Badge -->
+
+                    <div class="fs-why-round-badge">
+
+                        <i class="bi bi-check2-all"></i>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT CONTENT -->
+
+            <div class="col-lg-6">
+
+                <div class="fs-why-content">
+
+
+                    <span
+                        class="fs-why-tag"
+                        data-aos="fade-down">
+
+                        WHY CHOOSE US
+
+                    </span>
+
+
+                    <h2
+                        data-aos="fade-up"
+                        data-aos-delay="100">
+
+                        Together We Can
+
+                        <span>
+
+                            Save More Food
+
+                        </span>
+
+                    </h2>
+
+
+                    <p
+                        class="fs-why-description"
+                        data-aos="fade-up"
+                        data-aos-delay="200">
+
+                        Food Saver makes food sharing
+                        simple, safe, and meaningful.
+                        Our platform connects people
+                        and organizations so surplus
+                        food can reach those who need it.
+
+                    </p>
+
+
+                    <!-- BENEFIT 1 -->
+
+                    <div
+                        class="fs-why-benefit"
+                        data-aos="fade-up"
+                        data-aos-delay="300">
+
+                        <div class="fs-why-benefit-icon">
+
+                            <i class="bi bi-lightning-charge-fill"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h4>
+
+                                Fast & Easy Process
+
+                            </h4>
+
+
+                            <p>
+
+                                List available food,
+                                connect with trusted
+                                organizations, and
+                                complete donations easily.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BENEFIT 2 -->
+
+                    <div
+                        class="fs-why-benefit"
+                        data-aos="fade-up"
+                        data-aos-delay="400">
+
+                        <div class="fs-why-benefit-icon">
+
+                            <i class="bi bi-shield-check"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h4>
+
+                                Safe & Trusted Network
+
+                            </h4>
+
+
+                            <p>
+
+                                We create reliable
+                                connections between
+                                donors, NGOs, and
+                                community volunteers.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BENEFIT 3 -->
+
+                    <div
+                        class="fs-why-benefit"
+                        data-aos="fade-up"
+                        data-aos-delay="500">
+
+                        <div class="fs-why-benefit-icon">
+
+                            <i class="bi bi-graph-up-arrow"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h4>
+
+                                Real Community Impact
+
+                            </h4>
+
+
+                            <p>
+
+                                Every donation helps
+                                reduce food waste and
+                                supports people in need.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+
+                    <a
+                        href="contact.html"
+                        class="fs-why-button"
+                        data-aos="fade-up"
+                        data-aos-delay="600">
+
+                        Join Our Mission
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =================================
+     WHY CHOOSE FOOD SAVER END
+================================= -->
+<!-- =================================
+     IMPACT COUNTER SECTION START
+================================= -->
+
+<section class="fs-impact-section">
+
+    <div class="container">
+
+        <div class="fs-impact-box">
+
+            <!-- TOP HEADING -->
+
+            <div
+                class="fs-impact-heading text-center"
+                data-aos="fade-up">
+
+                <span class="fs-impact-tag">
+
+                    OUR IMPACT
+
+                </span>
+
+                <h2>
+
+                    Small Actions Can Create
+
+                    <span>Big Changes</span>
+
+                </h2>
+
+                <p>
+
+                    Every food donation brings hope,
+                    reduces waste, and helps build
+                    a stronger community.
+
+                </p>
+
+            </div>
+
+
+            <!-- COUNTERS -->
+
+            <div class="row g-4 mt-2">
+
+
+                <!-- COUNTER 1 -->
+
+                <div
+                    class="col-lg-3 col-md-6"
+                    data-aos="zoom-in"
+                    data-aos-delay="100">
+
+                    <div class="fs-impact-card">
+
+                        <div class="fs-impact-icon">
+
+                            <i class="bi bi-basket2-fill"></i>
+
+                        </div>
+
+                        <h3>
+
+                            <span
+                                class="fs-counter"
+                                data-target="2500">
+
+                                0
+
+                            </span>+
+
+                        </h3>
+
+                        <p>
+
+                            Food Donations
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COUNTER 2 -->
+
+                <div
+                    class="col-lg-3 col-md-6"
+                    data-aos="zoom-in"
+                    data-aos-delay="200">
+
+                    <div class="fs-impact-card">
+
+                        <div class="fs-impact-icon">
+
+                            <i class="bi bi-people-fill"></i>
+
+                        </div>
+
+                        <h3>
+
+                            <span
+                                class="fs-counter"
+                                data-target="1800">
+
+                                0
+
+                            </span>+
+
+                        </h3>
+
+                        <p>
+
+                            People Supported
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COUNTER 3 -->
+
+                <div
+                    class="col-lg-3 col-md-6"
+                    data-aos="zoom-in"
+                    data-aos-delay="300">
+
+                    <div class="fs-impact-card">
+
+                        <div class="fs-impact-icon">
+
+                            <i class="bi bi-buildings-fill"></i>
+
+                        </div>
+
+                        <h3>
+
+                            <span
+                                class="fs-counter"
+                                data-target="120">
+
+                                0
+
+                            </span>+
+
+                        </h3>
+
+                        <p>
+
+                            Partner Organizations
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COUNTER 4 -->
+
+                <div
+                    class="col-lg-3 col-md-6"
+                    data-aos="zoom-in"
+                    data-aos-delay="400">
+
+                    <div class="fs-impact-card">
+
+                        <div class="fs-impact-icon">
+
+                            <i class="bi bi-heart-fill"></i>
+
+                        </div>
+
+                        <h3>
+
+                            <span
+                                class="fs-counter"
+                                data-target="350">
+
+                                0
+
+                            </span>+
+
+                        </h3>
+
+                        <p>
+
+                            Active Volunteers
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =================================
+     IMPACT COUNTER SECTION END
+================================= -->
+
+
+
+<!-- =================================
+     SERVICES CTA SECTION START
+================================= -->
+
+<section class="fs-services-cta">
+
+    <div class="container">
+
+        <div
+            class="fs-services-cta-box"
+            data-aos="zoom-in">
+
+
+            <!-- DECORATION -->
+
+            <div class="fs-cta-circle fs-cta-circle-one"></div>
+
+            <div class="fs-cta-circle fs-cta-circle-two"></div>
+
+
+            <!-- CONTENT -->
+
+            <div class="row align-items-center g-4">
+
+
+                <div class="col-lg-8">
+
+                    <div class="fs-cta-content">
+
+                        <span>
+
+                            START MAKING A DIFFERENCE
+
+                        </span>
+
+
+                        <h2>
+
+                            Ready To Share Food
+
+                            <br>
+
+                            And Spread Hope?
+
+                        </h2>
+
+
+                        <p>
+
+                            Join Food Saver today and become
+                            part of a community that turns
+                            surplus food into meaningful support.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-4">
+
+                    <div class="fs-cta-buttons">
+
+
+                        <a
+                            href="register.html"
+                            class="fs-cta-primary">
+
+                            Donate Food
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+
+                        <a
+                            href="contact.html"
+                            class="fs-cta-secondary">
+
+                            Contact Us
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =================================
+     SERVICES CTA SECTION END
+================================= -->
+
+<!-- FOOTER SESSION STRT -->
+<footer class="fs-footer">
+
+    <div class="container">
+
+        <div class="row g-4 fs-footer-main">
+
+            <!-- ABOUT -->
+            <div class="col-lg-3 col-md-6">
+
+                <img src="images/logo.png"
+                     class="fs-footer-logo"
+                     alt="Food Saver">
+
+                <p>
+                    Connecting surplus food with people in need.
+                    Together we can build a hunger-free world.
+                </p>
+
+                <div class="fs-social">
+
+                    <a href="#">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK LINKS -->
+            <div class="col-lg-2 col-md-6">
+
+                <h4>Quick Links</h4>
+
+                <ul>
+
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+
+                    <li>
+                        <a href="index.html#works">
+                            How It Works
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="services.html">
+                            Services
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="contact.html">
+                            Contact
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- FOR DONORS -->
+            <div class="col-lg-2 col-md-6">
+
+                <h4>For Donors</h4>
+
+                <ul>
+
+                    <li>
+                        <a href="#">
+                            Add Donation
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Donation History
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Rewards Program
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Guidelines
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Support
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- FOR NGOS -->
+            <div class="col-lg-2 col-md-6">
+
+                <h4>For NGOs</h4>
+
+                <ul>
+
+                    <li>
+                        <a href="#">
+                            Available Donations
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            My Requests
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Reports
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Resources
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Support
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- FOR VOLUNTEERS -->
+            <div class="col-lg-3 col-md-6">
+
+                <h4>For Volunteers</h4>
+
+                <ul>
+
+                    <li>
+                        <a href="#">
+                            Become a Volunteer
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            My Assignments
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Performance
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Leaderboard
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Support
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+    <div class="fs-footer-bottom">
+
+        <div class="container d-flex flex-wrap justify-content-between gap-2">
+
+            <p>
+                © 2026 Food Saver. All rights reserved.
+            </p>
+
+            <p>
+
+                <a href="#">
+                    Privacy Policy
+                </a>
+
+                |
+
+                <a href="#">
+                    Terms & Conditions
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+<!-- FOOTER SESSION END -->
+
+
+
+<!-- =================================
+     SCROLL TO TOP BUTTON START
+================================= -->
+
+
+
+<!-- =================================
+     SCROLL TO TOP BUTTON END
+
+     
+================================= -->
+    <!-- AOS JS -->
+
+    <script
+        src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+    </script>
+
+
+    <script>
+/* =================================
+   IMPACT COUNTER ANIMATION
+================================= */
+
+const fsCounters =
+
+document.querySelectorAll(
+".fs-counter"
+);
+
+
+let fsCounterStarted = false;
+
+
+const fsStartCounters = () => {
+
+    if (fsCounterStarted) {
+
+        return;
+
+    }
+
+
+    const fsImpactSection =
+
+    document.querySelector(
+    ".fs-impact-section"
+    );
+
+
+    const fsSectionTop =
+
+    fsImpactSection
+    .getBoundingClientRect()
+    .top;
+
+
+    if (
+
+        fsSectionTop
+
+        <
+
+        window.innerHeight
+        - 100
+
+    ) {
+
+        fsCounterStarted = true;
+
+
+        fsCounters.forEach(
+        counter => {
+
+
+            const target =
+
+            +counter
+            .getAttribute(
+            "data-target"
+            );
+
+
+            const duration = 1800;
+
+
+            const startTime =
+
+            performance.now();
+
+
+            const updateCounter =
+
+            currentTime => {
+
+
+                const progress =
+
+                Math.min(
+
+                    (
+                        currentTime
+                        - startTime
+                    )
+
+                    /
+
+                    duration,
+
+                    1
+
+                );
+
+
+                const value =
+
+                Math.floor(
+
+                    progress
+                    * target
+
+                );
+
+
+                counter.textContent =
+
+                value.toLocaleString();
+
+
+                if (
+
+                    progress < 1
+
+                ) {
+
+                    requestAnimationFrame(
+
+                        updateCounter
+
+                    );
+
+                }
+
+                else {
+
+                    counter.textContent =
+
+                    target
+                    .toLocaleString();
+
+                }
+
+            };
+
+
+            requestAnimationFrame(
+
+                updateCounter
+
+            );
+
+
+        });
+
+    }
+
+};
+
+
+window.addEventListener(
+
+"scroll",
+
+fsStartCounters
+
+);
+
+
+window.addEventListener(
+
+"load",
+
+fsStartCounters
+
+);
+        /* AOS */
+
+        AOS.init({
+
+            duration: 1800,
+
+            easing:
+            "ease-out-cubic",
+
+            once: true
+
+        });
+
+
+        /* MOBILE MENU */
+
+        const fsToggle =
+        document.getElementById(
+        "fsToggle"
+        );
+
+
+        const fsMenu =
+        document.getElementById(
+        "fsMenu"
+        );
+
+
+     // NAVBAR TOGGLE
+if (fsToggle && fsMenu) {
+
+    fsToggle.addEventListener("click", () => {
+        const isOpen = fsMenu.classList.toggle("show");
+
+        fsToggle.classList.toggle("active", isOpen);
+        fsToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    // Menu link click hone par mobile menu close hoga
+    fsMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            fsMenu.classList.remove("show");
+            fsToggle.classList.remove("active");
+            fsToggle.setAttribute("aria-expanded", "false");
+        });
+    });
+}
+
+
+        /* LOADER */
+
+        window.addEventListener(
+        "load",
+        () => {
+
+            setTimeout(
+            () => {
+
+                fsLoader
+                .className =
+                "fs-page-loader fs-loader-done";
+
+            },
+
+            5400
+            );
+
+        });
+        
+
+    </script>
+
+
+</body>
+
+</html>
