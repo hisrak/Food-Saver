@@ -1,39 +1,68 @@
 # 🍃 Food Saver — Reduce Food Waste, Share Hope
 
-Welcome to **Food Saver**! 🌍💚
+<p align="center">
+  <img src="images/logo.png" alt="Food Saver Logo" width="150">
+</p>
 
-Food Saver is a web-based project designed to help reduce food waste and promote responsible food sharing. It provides a simple and user-friendly interface to encourage people to save food, share resources, and contribute to a better environment.
+<h3 align="center">Save Food. Share Hope. Make a Difference.</h3>
+
+<p align="center">
+  A responsive frontend website designed to connect food donors with people and organizations in need.
+</p>
+
+<p align="center">
+  <a href="https://food-saverrr.vercel.app/"><strong>🌐 View Live Website</strong></a>
+  |
+  <a href="https://github.com/hisrak/Food-Saver"><strong>💻 GitHub Repository</strong></a>
+</p>
+
+---
+
+## 🌐 Live Website
+
+**Visit Food Saver:**  
+https://food-saverrr.vercel.app/
+
+**GitHub Repository:**  
+https://github.com/hisrak/Food-Saver
+
+---
 
 ## 📌 About the Project
 
-Every day, a large amount of food goes to waste while many people need food. Food Saver aims to spread awareness about food waste and encourage sustainable habits through a clean, responsive, and easy-to-use website.
+Food Saver is a frontend web development project focused on reducing food waste and promoting food sharing.
 
-This project is developed using **HTML, CSS, JavaScript, and Bootstrap**.
+The platform aims to connect restaurants, food businesses, donors, NGOs, and communities so that surplus food can reach people who need it instead of being wasted.
+
+The website provides a clean, modern, and user-friendly interface to introduce the platform and its services.
 
 ## ✨ Features
 
-- 🏠 **Home Page** — Introduces the Food Saver project.
-- ℹ️ **About Page** — Explains the purpose and mission of Food Saver.
-- 🔐 **Login Page** — Provides a login interface for users.
-- 📝 **Register Page** — Provides a registration interface for new users.
-- ⚙️ **How It Works** — Explains the basic working process.
-- 🛠️ **Services Page** — Presents the services offered by the project.
-- 📩 **Contact Page** — Provides a way for visitors to get in touch.
-- 📱 **Responsive Design** — Uses Bootstrap to support different screen sizes.
-- 🎨 **User-Friendly Interface** — Includes navigation, styling, and visual elements.
-- 🌱 **Environmental Awareness** — Promotes reducing food waste and responsible food use.
+- 🏠 **Home Page** — An attractive landing page introducing Food Saver.
+- ℹ️ **About Page** — Information about the platform and its mission.
+- 🔐 **Login Page** — User login interface.
+- 📝 **Register Page** — User registration interface.
+- 🔄 **How It Works** — Explains the food-sharing process.
+- 🛠️ **Services Page** — Highlights the platform's services.
+- 📩 **Contact Page** — Contact information and inquiry interface.
+- 📱 **Responsive Design** — Designed for desktop, tablet, and mobile screens.
+- 🎨 **Modern UI** — Clean layout, attractive styling, and easy navigation.
+- 🌱 **Environmental Awareness** — Promotes food waste reduction and responsible food sharing.
 
-> Note: Login and registration are currently frontend interfaces unless backend authentication has been implemented separately.
+> **Note:** This is currently a frontend project. Login and registration pages provide user interfaces; backend authentication and database functionality can be implemented in future development.
 
-## 🖥️ Technologies Used
+## 🛠️ Technologies Used
 
-- 🌐 HTML5
-- 🎨 CSS3
-- ⚡ JavaScript
-- 🅱️ Bootstrap 5
-- 🖼️ Bootstrap Icons
-- 💻 Visual Studio Code
-- 🐙 Git and GitHub
+| Technology | Purpose |
+|---|---|
+| HTML5 | Website structure |
+| CSS3 | Styling and layout |
+| JavaScript | Interactive functionality |
+| Bootstrap 5 | Responsive design |
+| Bootstrap Icons | Interface icons |
+| Visual Studio Code | Code editor |
+| Git & GitHub | Version control and project hosting |
+| Vercel | Website deployment |
 
 ## 📂 Project Structure
 
@@ -55,107 +84,97 @@ Food-Saver/
 │   └── auth.js
 │
 ├── images/
-│   └── logo.png
-│
-├── image.png
-├── image-1.png
-├── image-2.png
-├── image-3.png
-├── image-4.png
+│   ├── logo.png
+│   ├── image.png
+│   ├── image-1.png
+│   ├── image-2.png
+│   ├── image-3.png
+│   └── image-4.png
 │
 └── README.md
 ```
 
-## 📸 Project Screenshots
+## 📸 Screenshots
 
-### 🏠 Homepage
+### 🏠 Home Page
 
-![Food Saver Homepage](image.png)
+![Home Page](images/image.png)
 
-### 📷 Website Preview 1
+### 📸 Website Preview
 
-![Food Saver Preview 1](image-1.png)
+![Website Screenshot 1](images/image-1.png)
 
-### 📷 Website Preview 2
+![Website Screenshot 2](images/image-2.png)
 
-![Food Saver Preview 2](image-2.png)
+![Website Screenshot 3](images/image-3.png)
 
-### 📷 Website Preview 3
-
-![Food Saver Preview 3](image-3.png)
-
-### 📷 Website Preview 4
-
-![Food Saver Preview 4](image-4.png)
+![Website Screenshot 4](images/image-4.png)
 
 ## 🚀 Getting Started
 
-Follow these steps to run the project on your computer.
+Follow these steps to run the project locally.
 
-### 1️⃣ Clone the Repository
-
-Open your terminal or command prompt and run:
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/hisrak/Food-Saver.git
 ```
 
-### 2️⃣ Open the Project Folder
+### 2. Open the Project Folder
 
 ```bash
 cd Food-Saver
 ```
 
-### 3️⃣ Open in Visual Studio Code
+### 3. Open in Visual Studio Code
 
 ```bash
 code .
 ```
 
-### 4️⃣ Run the Website
+### 4. Run the Website
 
-- Open the project folder in Visual Studio Code.
-- Open `index.html`.
-- Run it in your browser, or use the **Live Server** extension for a convenient development experience.
+Open `index.html` in your browser or use the **Live Server** extension in Visual Studio Code.
 
-## 🖼️ Logo
+## 🎯 Project Goals
 
-The project logo is stored in the `images` folder.
-
-```html
-<img src="images/logo.png" alt="Food Saver Logo">
-```
-
-## 🌱 Project Goals
-
-- ♻️ Encourage people to reduce food waste.
-- 🍎 Promote responsible food consumption.
-- 🤝 Spread awareness about food sharing.
-- 🌍 Support a cleaner and more sustainable environment.
-- 💚 Inspire small actions that can make a positive difference.
+- Promote food donation and sharing.
+- Reduce unnecessary food waste.
+- Create awareness about food sustainability.
+- Encourage community participation.
+- Provide a simple and accessible web interface.
 
 ## 🔮 Future Improvements
 
-Possible future enhancements include:
+The following features can be added in future development:
 
-- 👤 User authentication with a backend.
-- 🥗 Food donation and food-sharing functionality.
-- 📍 Location-based food donation listings.
-- 📊 Food waste tracking and statistics.
-- 🗄️ Database integration.
-- 🔔 Notifications for available food donations.
-- 🔒 Improved user security and validation.
+- Backend development using ASP.NET Core MVC.
+- User authentication and authorization.
+- Database integration using SQL Server.
+- Donor and NGO dashboards.
+- Food donation management system.
+- Food pickup and delivery tracking.
+- Real-time notifications.
+- Admin panel for platform management.
 
-## 👩‍💻 Author
+## 👩‍💻 Developed By
 
 **Hisra Khan**
 
-GitHub: [@hisrak](https://github.com/hisrak)
+Software Development Student | Frontend Developer
 
-## 📜 License
+- **GitHub:** [@hisrak](https://github.com/hisrak)
+- **Project Repository:** [Food Saver](https://github.com/hisrak/Food-Saver)
+- **Live Website:** [Food Saver](https://food-saverrr.vercel.app/)
 
-This project is created for educational and learning purposes. You may adapt it for personal learning and development.
+## 📄 License
+
+This project is developed for educational and learning purposes.
 
 ---
+
+<p align="center">
+  <strong>🍃 Save Food. Share Hope. Build a Better Future.</strong>
+</p>
 
 ### 💚 Save Food, Share Hope, Protect Our Planet! 🌍🍃
