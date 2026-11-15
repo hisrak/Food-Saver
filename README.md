@@ -92,23 +92,6 @@ Food-Saver/
 │   └── image-4.png
 │
 └── README.md
-```
-
-## 📸 Screenshots
-
-### 🏠 Home Page
-
-![Home Page](images/image.png)
-
-### 📸 Website Preview
-
-![Website Screenshot 1](images/image-1.png)
-
-![Website Screenshot 2](images/image-2.png)
-
-![Website Screenshot 3](images/image-3.png)
-
-![Website Screenshot 4](images/image-4.png)
 
 ## 🚀 Getting Started
 
